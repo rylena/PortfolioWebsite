@@ -156,9 +156,12 @@ body {
 
 .projects-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: 2rem;
-    padding: 1rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .project-card {
@@ -287,37 +290,61 @@ html {
 
 .tech-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1rem;
     padding: 1rem;
+    width: 100%;
+    margin: 0 auto;
 }
 
+/* Desktop specific styles */
+@media screen and (min-width: 769px) {
+    .tech-grid {
+        grid-template-columns: repeat(9, 1fr); /* 9 items in one row */
+        gap: 2rem;
+    }
+}
+
+/* Mobile specific styles */
+@media screen and (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .tech-item {
+        padding: 0.8rem;
+    }
+
+    .tech-item img {
+        width: 40px; /* Slightly larger on mobile */
+        height: 40px;
+    }
+}
+
+/* Tech items styling */
 .tech-item {
-    background: rgba(17, 34, 64, 0.9);
+    background: rgba(17, 34, 64, 0.7);
     border-radius: 8px;
-    padding: 1.5rem;
-    transition: all 0.3s ease;
-    cursor: pointer;
-    box-shadow: 0 4px 20px -10px rgba(2, 12, 27, 0.5);
-    border: 1px solid rgba(100, 255, 218, 0.1);
+    padding: 1rem;
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
     text-align: center;
+    border: 1px solid rgba(100, 255, 218, 0.1);
 }
 
 .tech-item img {
-    width: 50px;
-    height: 50px;
+    width: 30px; /* Reduced size */
+    height: 30px; /* Reduced size */
     object-fit: contain;
-    margin-bottom: 1rem;
 }
 
 .tech-item span {
     color: #8892b0;
-    font-size: 0.9rem;
+    font-size: 0.8rem; /* Smaller font size */
     margin-top: 0.5rem;
-    text-align: center;
 }
 
 .tech-description {
@@ -398,6 +425,9 @@ section {
     width: 100%;
     max-width: 100vw;
     padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .about-card p {
@@ -449,16 +479,32 @@ section {
 @media (max-width: 768px) {
     .projects-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
-        padding: 0.5rem;
+        gap: 2rem;
+        padding: 1rem;
+        margin: 0;
+        width: 100%;
     }
 
     .project-card {
+        width: calc(100% - 2rem);
+        margin: 1rem;
         padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .project-logo {
-        max-width: 150px;
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .projects-card {
+        margin: 1rem;
+        padding: 1rem;
+        width: calc(100% - 2rem);
     }
 }
 
@@ -544,4 +590,419 @@ section {
     background-clip: text;
     color: transparent;
     animation: gradientFlow 8s ease infinite;
+}
+
+/* Base responsive styles */
+.hero-content {
+    padding: 0 20px;
+    text-align: center;
+}
+
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Mobile menu styles */
+.menu-toggle {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+    padding: 10px;
+}
+
+/* Media Queries */
+@media screen and (max-width: 768px) {
+    /* Navigation */
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        width: 100%;
+        position: absolute;
+        top: 60px;
+        left: 0;
+        background: #fff;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .nav-links li {
+        margin: 10px 0;
+    }
+
+    /* Hero section */
+    .hero-content h1 {
+        font-size: 2rem;
+    }
+
+    .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    /* About section */
+    .about-card, .technologies-card {
+        margin: 20px;
+    }
+
+    /* Project cards */
+    .project-card {
+        margin: 10px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 1.75rem;
+    }
+
+    .tech-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .social-links {
+        gap: 15px;
+    }
+}
+
+/* Hide navbar on mobile */
+@media screen and (max-width: 768px) {
+    .navbar {
+        display: none;
+    }
+    
+    /* Adjust top section padding since navbar is gone */
+    #home {
+        padding-top: 20px;
+    }
+    
+    /* Remove the space reserved for fixed navbar */
+    body {
+        padding-top: 0;
+    }
+}
+
+/* Mobile margins and spacing */
+@media screen and (max-width: 768px) {
+    section {
+        margin: 2rem 1rem;
+        padding: 1rem;
+    }
+
+    .hero-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .about-card, 
+    .technologies-card, 
+    .project-card {
+        margin: 1.5rem 1rem;
+        padding: 1.5rem;
+    }
+
+    .tech-grid {
+        margin: 1rem;
+    }
+
+    .projects-grid {
+        margin: 1rem;
+    }
+
+    .section-title {
+        margin-bottom: 1.5rem;
+    }
+
+    /* Add space between sections */
+    section + section {
+        margin-top: 3rem;
+    }
+}
+
+/* Additional spacing for very small screens */
+@media screen and (max-width: 480px) {
+    section {
+        margin: 1.5rem 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .about-card, 
+    .technologies-card, 
+    .project-card {
+        margin: 1rem 0.75rem;
+        padding: 1rem;
+    }
+}
+
+/* Additional fixes for very small screens */
+@media screen and (max-width: 480px) {
+    .projects-grid {
+        gap: 1.5rem;
+        padding: 0.5rem;
+    }
+
+    .project-card {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .project-logo {
+        max-width: 150px;
+    }
+}
+
+/* Fix horizontal scrolling and centering */
+body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Mobile container fixes */
+@media screen and (max-width: 768px) {
+    section {
+        width: 100%;
+        max-width: 100vw;
+        padding: 0 1rem;
+    }
+
+    .hero-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+
+    .about-card, 
+    .technologies-card, 
+    .project-card {
+        margin: 1.5rem 1rem;
+        padding: 1.5rem;
+    }
+
+    .tech-grid {
+        margin: 1rem;
+    }
+
+    .projects-grid {
+        margin: 1rem;
+    }
+
+    /* Ensure cards don't overflow */
+    .card, 
+    .technologies-card, 
+    .project-card {
+        width: calc(100% - 2rem);
+        margin: 1rem;
+        box-sizing: border-box;
+    }
+
+    /* Center content */
+    .hero-content,
+    .about-card,
+    .technologies-card,
+    .projects-card {
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%;
+    }
+}
+
+/* Additional fixes for very small screens */
+@media screen and (max-width: 480px) {
+    section {
+        margin: 1.5rem 0.75rem;
+        padding: 0.75rem;
+    }
+
+    .about-card, 
+    .technologies-card, 
+    .project-card {
+        margin: 1rem 0.75rem;
+        padding: 1rem;
+    }
+}
+
+/* Projects Section Responsive Fixes */
+@media screen and (max-width: 768px) {
+    .projects-grid {
+        grid-template-columns: 1fr;  /* Single column on mobile */
+        gap: 2rem;
+        padding: 1rem;
+        margin: 0;
+        width: 100%;
+    }
+
+    .project-card {
+        width: calc(100% - 2rem);  /* Full width minus margins */
+        margin: 1rem;
+        padding: 1.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .project-logo {
+        width: 100%;
+        max-width: 200px;
+        height: auto;
+        margin-bottom: 1rem;
+    }
+
+    .projects-card {
+        margin: 1rem;
+        padding: 1rem;
+        width: calc(100% - 2rem);
+    }
+}
+
+/* Additional fixes for very small screens */
+@media screen and (max-width: 480px) {
+    .projects-grid {
+        gap: 1.5rem;
+        padding: 0.5rem;
+    }
+
+    .project-card {
+        margin: 0.5rem;
+        padding: 1rem;
+    }
+
+    .project-logo {
+        max-width: 150px;
+    }
+}
+
+/* Root level fixes */
+html, body {
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* Container fixes */
+section {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Projects Grid specific centering */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+@media screen and (max-width: 768px) {
+    section {
+        padding: 0 1rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .project-card {
+        width: 100%;
+    }
+}
+
+/* Tech Grid Layout */
+.tech-grid {
+    display: grid;
+    grid-template-columns: repeat(9, 1fr);
+    gap: 1rem;
+    padding: 1rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Desktop specific styles */
+@media screen and (min-width: 769px) {
+    .tech-grid {
+        grid-template-columns: repeat(9, 1fr); /* 9 items in one row */
+        gap: 2rem;
+    }
+}
+
+/* Mobile specific styles */
+@media screen and (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .tech-item {
+        padding: 0.8rem;
+    }
+
+    .tech-item img {
+        width: 40px; /* Slightly larger on mobile */
+        height: 40px;
+    }
+}
+
+/* Section Cards Alignment */
+.about-card, 
+.technologies-card, 
+.projects-card,
+.main-card {
+    background: rgba(17, 34, 64, 0.7);
+    border-radius: 8px;
+    padding: 2rem;
+    margin: 2rem auto;
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+}
+
+/* Projects Grid */
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Mobile adjustments */
+@media screen and (max-width: 768px) {
+    .tech-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1rem;
+    }
+
+    .projects-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .about-card, 
+    .technologies-card, 
+    .projects-card {
+        margin: 1rem;
+        padding: 1.5rem;
+        width: calc(100% - 2rem);
+    }
 }
