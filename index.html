@@ -20,6 +20,7 @@
         <ul class="nav-links">
             <li><a href="#home" class="hvr-underline-from-center">Home</a></li>
             <li><a href="#about" class="hvr-underline-from-center">About</a></li>
+            <li><a href="#experience" class="hvr-underline-from-center">Experience</a></li>
             <li><a href="#projects" class="hvr-underline-from-center">Projects</a></li>
         </ul>
     </nav>
@@ -37,13 +38,16 @@
                 <a href="https://github.com/rylena" target="_blank" class="social-icon hvr-float">
                     <i class="fab fa-github"></i>
                 </a>
+                <a href="https://www.linkedin.com/in/rylen-anil-perumkannaril/" target="_blank" class="social-icon hvr-float">
+                    <i class="fab fa-linkedin"></i>
+                </a>
+                <a href="#" class="social-icon hvr-float" onclick="copyEmail(event)">
+                    <i class="fas fa-envelope"></i>
+                </a>
             </div>
             <div class="hero-cta">
                 <a href="#projects" class="cta-button scroll-link">View My Work</a>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <div class="mouse"></div>
         </div>
     </section>
 
@@ -174,6 +178,52 @@
         </div>
     </section>
 
+    <section id="experience" class="experience">
+        <div class="card experience-card">
+            <h2 class="section-title" data-aos="flip-up" data-aos-duration="800">Experience</h2>
+            <div class="experience-grid">
+                <div class="experience-item" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="100">
+                    <div class="experience-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Intel CBSE AISC Leader - Core Committee Member</h3>
+                        <h4>Intel Corporation</h4>
+                        <span class="experience-date">2025 - Present</span>
+                        <p>Currently serving as one of only 6 Core Committee Members who control and manage Intel's CBSE AISC platform, overseeing a community of over 85,000 students. Leading strategic initiatives and decision-making processes for student innovation and skill development programs.</p>
+                    </div>
+                </div>
+                <div class="experience-item" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200">
+                    <div class="experience-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="experience-content">
+                        <h3>Intel CBSE AISC Leader</h3>
+                        <h4>Intel Corporation</h4>
+                        <span class="experience-date">2025 - 2025</span>
+                        <p>Served as an AISC Leader, facilitating student engagement with Intel's educational programs and technology initiatives. Guided students in developing technical skills and innovative projects within the CBSE framework, contributing to the platform's growth and success.</p>
+                    </div>
+                </div>
+                <div class="experience-item" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="300">
+                    <div class="experience-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <div class="experience-content">
+                        <h3>AI Committee Ambassador</h3>
+                        <h4>Intel Corporation</h4>
+                        <span class="experience-date">2025 - Present</span>
+                        <p>Representing Intel's AI initiatives and promoting artificial intelligence education among students. Working to bridge the gap between AI technology and educational programs, fostering innovation and technical advancement in the student community.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="toast" class="toast">
+        <i class="fas fa-check-circle"></i>
+        <span>Email copied to clipboard!</span>
+    </div>
+
     <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script>
         AOS.init({
@@ -181,7 +231,7 @@
             offset: 200 
         });
     </script>
-    <script src="script.js"></script>
+    <script src="main.js"></script>
     <footer>
         <p>© 2025 Rylen Anil. Made with <i class="fas fa-heart"></i></p>
     </footer>

@@ -1,6 +1,4 @@
-// Only run navbar code if screen is wider than 768px
 if (window.innerWidth > 768) {
-    // Change navbar background on scroll
     window.addEventListener('scroll', () => {
         const navbar = document.querySelector('.navbar');
         if (window.scrollY > 50) {
@@ -10,7 +8,6 @@ if (window.innerWidth > 768) {
         }
     });
 
-    // Smooth scroll for navigation links
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.scroll-link, .nav-links a').forEach(link => {
             link.addEventListener('click', e => {
@@ -26,7 +23,6 @@ if (window.innerWidth > 768) {
     });
 }
 
-// Add scroll reveal animations
 const sections = document.querySelectorAll('section');
 
 const observerOptions = {
@@ -39,7 +35,6 @@ const observer = new IntersectionObserver((entries) => {
         if (entry.isIntersecting) {
             entry.target.classList.add('section-visible');
         } else {
-            // Optional: remove class when section is out of view for repeat animations
             // entry.target.classList.remove('section-visible');
         }
     });
@@ -56,7 +51,6 @@ document.querySelector('.menu-toggle').addEventListener('click', function() {
     document.querySelector('.nav-links').classList.toggle('active');
 });
 
-// Close menu when clicking outside
 document.addEventListener('click', function(e) {
     const nav = document.querySelector('.navbar');
     const navLinks = document.querySelector('.nav-links');
@@ -64,3 +58,24 @@ document.addEventListener('click', function(e) {
         navLinks.classList.remove('active');
     }
 });
+
+function copyEmail(event) {
+    event.preventDefault();
+    const email = 'rylen.anil@gmail.com';
+    
+    navigator.clipboard.writeText(email).then(function() {
+        showToast();
+    }).catch(function(err) {
+        console.error('Could not copy email: ', err);
+        alert('Email: ' + email);
+    });
+}
+
+function showToast() {
+    const toast = document.getElementById('toast');
+    toast.classList.add('show');
+    
+    setTimeout(function() {
+        toast.classList.remove('show');
+    }, 3000);
+}

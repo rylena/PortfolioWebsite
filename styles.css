@@ -1,8 +1,16 @@
-/* Base styles */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    display: none;
+}
+
+* {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
 }
 
 body {
@@ -14,7 +22,17 @@ body {
     width: 100%;
 }
 
-/* Navbar */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+    display: none;
+}
+
+html,
+body {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
 .navbar {
     position: fixed;
     top: 0;
@@ -69,7 +87,6 @@ body {
     width: 100%;
 }
 
-/* Hero Section */
 .hero {
     padding-top: 80px;
     height: 100vh;
@@ -130,7 +147,6 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Cards */
 .card, .technologies-card, .about-card {
     background: rgba(17, 34, 64, 0.7);
     border-radius: 8px;
@@ -146,7 +162,6 @@ body {
     transform: translateY(-5px);
 }
 
-/* Projects Section */
 .projects-card {
     margin: 2rem;
     background: rgba(17, 34, 64, 0.7);
@@ -216,7 +231,6 @@ body {
     transform: translateX(5px);
 }
 
-/* Animations */
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -231,7 +245,6 @@ body {
     }
 }
 
-/* Section Titles */
 .section-title {
     font-size: 2.5rem;
     margin-bottom: 2rem;
@@ -244,7 +257,6 @@ body {
     animation: fadeInDown 0.8s ease forwards;
 }
 
-/* Add this animation */
 @keyframes fadeInDown {
     0% {
         opacity: 0;
@@ -256,7 +268,6 @@ body {
     }
 }
 
-/* CTA Button */
 .cta-button {
     display: inline-block;
     padding: 1rem 2rem;
@@ -273,17 +284,14 @@ body {
     background: rgba(100, 255, 218, 0.1);
 }
 
-/* Optional: Hide navbar on scroll down, show on scroll up */
 .navbar.hidden {
     transform: translateY(-100%);
 }
 
-/* Add at the top of your CSS file */
 html {
     scroll-behavior: smooth;
 }
 
-/* Technologies Section */
 .technologies-card {
     margin-top: 2rem;
 }
@@ -297,15 +305,13 @@ html {
     margin: 0 auto;
 }
 
-/* Desktop specific styles */
 @media screen and (min-width: 769px) {
     .tech-grid {
-        grid-template-columns: repeat(9, 1fr); /* 9 items in one row */
+        grid-template-columns: repeat(9, 1fr);
         gap: 2rem;
     }
 }
 
-/* Mobile specific styles */
 @media screen and (max-width: 768px) {
     .tech-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -317,12 +323,11 @@ html {
     }
 
     .tech-item img {
-        width: 40px; /* Slightly larger on mobile */
+        width: 40px;
         height: 40px;
     }
 }
 
-/* Tech items styling */
 .tech-item {
     background: rgba(17, 34, 64, 0.7);
     border-radius: 8px;
@@ -336,14 +341,14 @@ html {
 }
 
 .tech-item img {
-    width: 30px; /* Reduced size */
-    height: 30px; /* Reduced size */
+    width: 30px;
+    height: 30px;
     object-fit: contain;
 }
 
 .tech-item span {
     color: #8892b0;
-    font-size: 0.8rem; /* Smaller font size */
+    font-size: 0.8rem;
     margin-top: 0.5rem;
 }
 
@@ -383,7 +388,6 @@ html {
     transform: scale(1.1);
 }
 
-/* GitHub Link in Hero Section */
 .github-link {
     margin-top: 1rem;
     font-size: 2rem;
@@ -397,7 +401,6 @@ html {
     transform: translateY(-3px);
 }
 
-/* Animations */
 @keyframes fadeIn {
     from {
         opacity: 0;
@@ -409,7 +412,6 @@ html {
     }
 }
 
-/* Add animation delay for each item */
 .tech-item:nth-child(1) { animation-delay: 0.1s; }
 .tech-item:nth-child(2) { animation-delay: 0.2s; }
 .tech-item:nth-child(3) { animation-delay: 0.3s; }
@@ -420,7 +422,6 @@ html {
 .tech-item:nth-child(8) { animation-delay: 0.8s; }
 .tech-item:nth-child(9) { animation-delay: 0.9s; }
 
-/* Update section styles */
 section {
     width: 100%;
     max-width: 100vw;
@@ -449,7 +450,6 @@ section {
     border-radius: 8px;
 }
 
-/* Hero Section Responsive */
 @media (max-width: 768px) {
     .hero {
         margin-top: 4rem;
@@ -475,7 +475,6 @@ section {
     }
 }
 
-/* Projects Grid Responsive */
 @media (max-width: 768px) {
     .projects-grid {
         grid-template-columns: 1fr;
@@ -508,7 +507,6 @@ section {
     }
 }
 
-/* Tech Grid Responsive */
 @media (max-width: 768px) {
     .tech-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -521,7 +519,6 @@ section {
     }
 }
 
-/* Cards Responsive */
 @media (max-width: 768px) {
     .card {
         margin: 1rem;
@@ -534,7 +531,6 @@ section {
     }
 }
 
-/* General spacing and text adjustments */
 @media (max-width: 768px) {
     section {
         padding: 0 0.5rem;
@@ -551,14 +547,136 @@ section {
     }
 }
 
+.social-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
 .social-icon {
-    font-size: 2rem; /* Makes GitHub icon bigger */
+    font-size: 2rem;
     color: white;
-    transition: color 0.3s ease;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
 }
 
 .social-icon:hover {
-    color: #4CAF50; /* Green color on hover */
+    color: #64ffda;
+    transform: translateY(-3px);
+}
+
+.toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: rgba(17, 34, 64, 0.95);
+    color: #64ffda;
+    padding: 1rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(100, 255, 218, 0.3);
+    box-shadow: 0 10px 30px -15px rgba(2, 12, 27, 0.7);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(100%);
+    transition: all 0.3s ease;
+    z-index: 10000;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.toast.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.toast i {
+    font-size: 1.1rem;
+    color: #64ffda;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.experience-item {
+    background: rgba(17, 34, 64, 0.9);
+    border-radius: 8px;
+    padding: 2rem;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    width: 100%;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    cursor: pointer;
+}
+
+.experience-item:hover {
+    transform: translateY(-5px);
+    background-color: rgba(100, 255, 218, 0.1);
+}
+
+.experience-icon {
+    width: 60px;
+    height: 60px;
+    background: rgba(17, 34, 64, 0.9);
+    border: 3px solid #64ffda;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+}
+
+.experience-icon i {
+    font-size: 1.5rem;
+    color: #64ffda;
+}
+
+.experience-content h3 {
+    color: #64ffda;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.experience-content h4 {
+    color: #8892b0;
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.experience-date {
+    color: #64ffda;
+    font-size: 0.9rem;
+    font-weight: 500;
+    background: rgba(100, 255, 218, 0.1);
+    padding: 0.3rem 0.8rem;
+    border-radius: 20px;
+    display: inline-block;
+    margin-bottom: 1rem;
+}
+
+.experience-content p {
+    color: #8892b0;
+    line-height: 1.6;
+    margin-bottom: 0;
 }
 
 .tech-item {
@@ -566,10 +684,9 @@ section {
 }
 
 .tech-item:hover {
-    transform: scale(1.05); /* Makes tech cards pop out slightly on hover */
+    transform: scale(1.05);
 }
 
-/* Add this new animation */
 @keyframes gradientFlow {
     0% { background-position: 0% 50%; }
     50% { background-position: 100% 50%; }
@@ -592,7 +709,6 @@ section {
     animation: gradientFlow 8s ease infinite;
 }
 
-/* Base responsive styles */
 .hero-content {
     padding: 0 20px;
     text-align: center;
@@ -615,7 +731,6 @@ section {
     margin: 0 auto;
 }
 
-/* Mobile menu styles */
 .menu-toggle {
     display: none;
     cursor: pointer;
@@ -623,9 +738,7 @@ section {
     padding: 10px;
 }
 
-/* Media Queries */
 @media screen and (max-width: 768px) {
-    /* Navigation */
     .menu-toggle {
         display: block;
     }
@@ -650,7 +763,6 @@ section {
         margin: 10px 0;
     }
 
-    /* Hero section */
     .hero-content h1 {
         font-size: 2rem;
     }
@@ -659,12 +771,10 @@ section {
         font-size: 1rem;
     }
 
-    /* About section */
     .about-card, .technologies-card {
         margin: 20px;
     }
 
-    /* Project cards */
     .project-card {
         margin: 10px;
     }
@@ -684,24 +794,20 @@ section {
     }
 }
 
-/* Hide navbar on mobile */
 @media screen and (max-width: 768px) {
     .navbar {
         display: none;
     }
     
-    /* Adjust top section padding since navbar is gone */
     #home {
         padding-top: 20px;
     }
     
-    /* Remove the space reserved for fixed navbar */
     body {
         padding-top: 0;
     }
 }
 
-/* Mobile margins and spacing */
 @media screen and (max-width: 768px) {
     section {
         margin: 2rem 1rem;
@@ -732,13 +838,11 @@ section {
         margin-bottom: 1.5rem;
     }
 
-    /* Add space between sections */
     section + section {
         margin-top: 3rem;
     }
 }
 
-/* Additional spacing for very small screens */
 @media screen and (max-width: 480px) {
     section {
         margin: 1.5rem 0.75rem;
@@ -753,7 +857,6 @@ section {
     }
 }
 
-/* Additional fixes for very small screens */
 @media screen and (max-width: 480px) {
     .projects-grid {
         gap: 1.5rem;
@@ -770,13 +873,11 @@ section {
     }
 }
 
-/* Fix horizontal scrolling and centering */
 body {
     overflow-x: hidden;
     width: 100%;
 }
 
-/* Mobile container fixes */
 @media screen and (max-width: 768px) {
     section {
         width: 100%;
@@ -804,7 +905,6 @@ body {
         margin: 1rem;
     }
 
-    /* Ensure cards don't overflow */
     .card, 
     .technologies-card, 
     .project-card {
@@ -813,7 +913,6 @@ body {
         box-sizing: border-box;
     }
 
-    /* Center content */
     .hero-content,
     .about-card,
     .technologies-card,
@@ -824,7 +923,6 @@ body {
     }
 }
 
-/* Additional fixes for very small screens */
 @media screen and (max-width: 480px) {
     section {
         margin: 1.5rem 0.75rem;
@@ -839,10 +937,9 @@ body {
     }
 }
 
-/* Projects Section Responsive Fixes */
 @media screen and (max-width: 768px) {
     .projects-grid {
-        grid-template-columns: 1fr;  /* Single column on mobile */
+        grid-template-columns: 1fr;
         gap: 2rem;
         padding: 1rem;
         margin: 0;
@@ -850,7 +947,7 @@ body {
     }
 
     .project-card {
-        width: calc(100% - 2rem);  /* Full width minus margins */
+        width: calc(100% - 2rem);
         margin: 1rem;
         padding: 1.5rem;
         display: flex;
@@ -872,7 +969,6 @@ body {
     }
 }
 
-/* Additional fixes for very small screens */
 @media screen and (max-width: 480px) {
     .projects-grid {
         gap: 1.5rem;
@@ -889,13 +985,11 @@ body {
     }
 }
 
-/* Root level fixes */
 html, body {
     overflow-x: hidden;
     width: 100%;
 }
 
-/* Container fixes */
 section {
     width: 100%;
     max-width: 1200px;
@@ -903,7 +997,6 @@ section {
     padding: 0 1rem;
 }
 
-/* Projects Grid specific centering */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -927,7 +1020,6 @@ section {
     }
 }
 
-/* Tech Grid Layout */
 .tech-grid {
     display: grid;
     grid-template-columns: repeat(9, 1fr);
@@ -937,15 +1029,13 @@ section {
     margin: 0 auto;
 }
 
-/* Desktop specific styles */
 @media screen and (min-width: 769px) {
     .tech-grid {
-        grid-template-columns: repeat(9, 1fr); /* 9 items in one row */
+        grid-template-columns: repeat(9, 1fr);
         gap: 2rem;
     }
 }
 
-/* Mobile specific styles */
 @media screen and (max-width: 768px) {
     .tech-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -957,12 +1047,11 @@ section {
     }
 
     .tech-item img {
-        width: 40px; /* Slightly larger on mobile */
+        width: 40px;
         height: 40px;
     }
 }
 
-/* Section Cards Alignment */
 .about-card, 
 .technologies-card, 
 .projects-card,
@@ -978,7 +1067,6 @@ section {
     box-sizing: border-box;
 }
 
-/* Projects Grid */
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -987,7 +1075,6 @@ section {
     margin: 0 auto;
 }
 
-/* Mobile adjustments */
 @media screen and (max-width: 768px) {
     .tech-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -1000,9 +1087,24 @@ section {
 
     .about-card, 
     .technologies-card, 
-    .projects-card {
+    .projects-card,
+    .experience-card {
         margin: 1rem;
         padding: 1.5rem;
         width: calc(100% - 2rem);
+    }
+
+    .experience-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
+
+    .experience-item {
+        padding: 1.5rem;
+    }
+
+    .experience-content h3 {
+        font-size: 1.1rem;
     }
 }
