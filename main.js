@@ -125,9 +125,17 @@ gsap.utils.toArray('.reveal, .slide-left, .slide-right, .scale-in').forEach(el =
     { x: xPos, y: yPos, scale: sStart, autoAlpha: 0 },
     {
       x: 0, y: 0, scale: 1, autoAlpha: 1, duration: 0.8, ease: easeStr, delay: d,
-      scrollTrigger: { trigger: el, start: 'top bottom', once: true }
+      scrollTrigger: {
+        trigger: el,
+        start: 'top 95%',
+        toggleActions: 'play none none none',
+        invalidateOnRefresh: true
+      }
     });
 });
+
+// Refresh triggers after setup to account for pin layout shifts
+setTimeout(() => ScrollTrigger.refresh(), 100);
 
 // Copy Email Button
 document.querySelectorAll('.copy-email-btn').forEach(btn => {
