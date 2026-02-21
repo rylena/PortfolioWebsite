@@ -21,7 +21,6 @@
 }
 
 html {
-    scroll-behavior: smooth;
     overflow-x: hidden;
     width: 100%;
 }
@@ -161,67 +160,7 @@ nav ul a:hover {
     align-items: center;
 }
 
-@keyframes glitch1 {
 
-    0%,
-    100% {
-        clip-path: polygon(0 0, 100% 0, 100% 35%, 0 35%);
-        transform: translate(-4px, 0) skew(-1deg);
-    }
-
-    50% {
-        clip-path: polygon(0 55%, 100% 55%, 100% 85%, 0 85%);
-        transform: translate(4px, 0) skew(1deg);
-    }
-}
-
-@keyframes glitch2 {
-
-    0%,
-    100% {
-        clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
-        transform: translate(4px, 0);
-    }
-
-    50% {
-        clip-path: polygon(0 10%, 100% 10%, 100% 45%, 0 45%);
-        transform: translate(-4px, 0);
-    }
-}
-
-.glitch-wrap {
-    position: relative;
-    display: inline;
-}
-
-.glitch-wrap::before,
-.glitch-wrap::after {
-    content: attr(data-text);
-    position: absolute;
-    top: 0;
-    left: 0;
-    font-family: var(--display);
-    font-weight: 800;
-    font-size: inherit;
-    letter-spacing: inherit;
-    color: var(--white);
-    opacity: 0;
-    pointer-events: none;
-    line-height: 1.0;
-    white-space: nowrap;
-}
-
-.glitch-wrap.glitching::before {
-    color: var(--accent);
-    opacity: 0.75;
-    animation: glitch1 0.12s steps(2) 4;
-}
-
-.glitch-wrap.glitching::after {
-    color: var(--accent3);
-    opacity: 0.75;
-    animation: glitch2 0.12s steps(2) 4 0.04s;
-}
 
 .hero-name-hover {
     display: inline-block;
@@ -251,21 +190,17 @@ nav ul a:hover {
 }
 
 @keyframes charWave {
-    0% {
-        transform: translateY(0);
-    }
 
-    30% {
-        transform: translateY(-12px);
-        color: var(--accent);
-    }
-
-    60% {
-        transform: translateY(4px);
-    }
-
+    0%,
     100% {
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
+        color: inherit;
+    }
+
+    50% {
+        transform: translateY(-4px) scale(1.02);
+        color: var(--accent);
+        text-shadow: 0 4px 12px rgba(88, 166, 255, 0.4);
     }
 }
 
@@ -278,8 +213,8 @@ nav ul a:hover {
     color: var(--accent2);
     letter-spacing: 0.04em;
     margin-bottom: 2rem;
+    visibility: hidden;
     opacity: 0;
-    animation: fadeUp 0.7s ease 0.2s forwards;
 }
 
 .hero-badge::before {
@@ -298,8 +233,8 @@ h1 {
     letter-spacing: -0.035em;
     color: var(--white);
     margin-bottom: 1.5rem;
+    visibility: hidden;
     opacity: 0;
-    animation: fadeUp 0.8s ease 0.35s forwards;
 }
 
 h1 .accent {
@@ -312,8 +247,8 @@ h1 .accent {
     color: var(--muted);
     max-width: 520px;
     margin-bottom: 2.5rem;
+    visibility: hidden;
     opacity: 0;
-    animation: fadeUp 0.8s ease 0.5s forwards;
 }
 
 .hero-sub strong {
@@ -326,8 +261,8 @@ h1 .accent {
     gap: 0.75rem;
     flex-wrap: wrap;
     justify-content: center;
+    visibility: hidden;
     opacity: 0;
-    animation: fadeUp 0.7s ease 0.65s forwards;
 }
 
 .btn {
@@ -356,17 +291,7 @@ h1 .accent {
     box-shadow: 0 8px 24px rgba(88, 166, 255, 0.25);
 }
 
-@keyframes fadeUp {
-    from {
-        opacity: 0;
-        transform: translateY(16px);
-    }
 
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
 
 .scroll-ind {
     position: absolute;
@@ -378,8 +303,8 @@ h1 .accent {
     display: flex;
     align-items: center;
     gap: 0.6rem;
+    visibility: hidden;
     opacity: 0;
-    animation: fadeUp 0.7s ease 1s forwards;
 }
 
 .scroll-ind::after {
@@ -521,11 +446,18 @@ h2 {
 }
 
 #projects {
-    background: var(--surface);
+    background: var(--bg);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
 }
 
 .projects-outer {
-    padding: 6rem 0 4rem;
+    padding: 0;
+    width: 100%;
 }
 
 .projects-header {
@@ -562,10 +494,17 @@ h2 {
     will-change: transform;
 }
 
+.track::after {
+    content: '';
+    display: block;
+    width: 3rem;
+    flex-shrink: 0;
+}
+
 .pcard {
     width: 360px;
     flex-shrink: 0;
-    background: var(--bg);
+    background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 1.75rem;
@@ -901,66 +840,24 @@ footer {
     color: var(--white);
 }
 
+.btn-icon.email-btn:hover {
+    border-color: rgba(255, 255, 255, 0.4);
+    color: var(--white);
+    background: rgba(255, 255, 255, 0.1);
+}
+
 .btn-icon.linkedin-btn:hover {
     border-color: rgba(10, 102, 194, 0.6);
     color: #0a66c2;
     background: rgba(10, 102, 194, 0.08);
 }
 
-.reveal {
-    opacity: 0;
-    transform: translateY(22px);
-    transition: opacity 0.65s ease, transform 0.65s cubic-bezier(.23, 1, .32, 1);
-}
-
-.reveal.in {
-    opacity: 1;
-    transform: none;
-}
-
-.reveal-d1 {
-    transition-delay: 0.12s;
-}
-
-.reveal-d2 {
-    transition-delay: 0.24s;
-}
-
-.reveal-d3 {
-    transition-delay: 0.36s;
-}
-
-.slide-left {
-    opacity: 0;
-    transform: translateX(-30px);
-    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.23, 1, .32, 1);
-}
-
-.slide-left.in {
-    opacity: 1;
-    transform: translateX(0);
-}
-
-.slide-right {
-    opacity: 0;
-    transform: translateX(30px);
-    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(.23, 1, .32, 1);
-}
-
-.slide-right.in {
-    opacity: 1;
-    transform: translateX(0);
-}
-
+.reveal,
+.slide-left,
+.slide-right,
 .scale-in {
     opacity: 0;
-    transform: scale(0.92);
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(.23, 1, .32, 1);
-}
-
-.scale-in.in {
-    opacity: 1;
-    transform: scale(1);
+    visibility: hidden;
 }
 
 @media (max-width: 900px) {
@@ -1032,7 +929,7 @@ footer {
     }
 
     .projects-outer {
-        padding: 4rem 0 2rem;
+        padding: 0;
     }
 
     .projects-header {
@@ -1040,7 +937,7 @@ footer {
         flex-direction: column;
         align-items: flex-start;
         gap: 0.5rem;
-        margin-bottom: 1.5rem;
+        margin-bottom: 2rem;
     }
 
     .drag-hint {
@@ -1064,6 +961,10 @@ footer {
     .track {
         padding: 0.5rem 1.5rem 2rem;
         gap: 1rem;
+    }
+
+    .track::after {
+        width: 3rem;
     }
 
     .pcard {
@@ -1222,4 +1123,35 @@ footer {
     .contrib-wrap {
         padding: 1rem;
     }
+}
+
+.copy-toast {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: var(--surface);
+    border: 1px solid var(--border);
+    color: var(--white);
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-size: 0.8rem;
+    font-weight: 500;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    z-index: 1000;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+    pointer-events: none;
+}
+
+.copy-toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+}
+
+.copy-toast svg {
+    color: var(--accent2);
 }

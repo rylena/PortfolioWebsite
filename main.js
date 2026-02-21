@@ -6,7 +6,7 @@ window.addEventListener('scroll', () => {
 
 // Hamburger menu
 const navToggle = document.getElementById('navToggle');
-const navMenu   = document.getElementById('navMenu');
+const navMenu = document.getElementById('navMenu');
 navToggle.addEventListener('click', () => {
   navToggle.classList.toggle('open');
   navMenu.classList.toggle('open');
@@ -37,10 +37,10 @@ if (!isMobile()) {
     scrollTrigger: {
       trigger: '#projects',
       pin: true,
-      scrub: 1,
+      scrub: 0.5,
       start: 'top top',
       end: () => '+=' + (track.scrollWidth - window.innerWidth + 96),
-      invalidateOnRefresh: true,
+      invalidateOnRefresh: true
     }
   });
 }
@@ -52,10 +52,10 @@ document.querySelectorAll('[data-tilt]').forEach(card => {
   card.style.transition = 'transform 0.08s ease-out, border-color 0.25s, box-shadow 0.25s';
   card.addEventListener('mousemove', e => {
     const r = card.getBoundingClientRect();
-    const x = (e.clientX - r.left) / r.width  - 0.5;
-    const y = (e.clientY - r.top)  / r.height - 0.5;
-    card.style.transform = `perspective(700px) rotateY(${x*16}deg) rotateX(${-y*8}deg) translateZ(6px)`;
-    card.style.boxShadow = `${-x*12}px ${-y*12}px 40px rgba(88,166,255,0.08),0 8px 32px rgba(0,0,0,0.4)`;
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    card.style.transform = `perspective(700px) rotateY(${x * 16}deg) rotateX(${-y * 8}deg) translateZ(6px)`;
+    card.style.boxShadow = `${-x * 12}px ${-y * 12}px 40px rgba(88,166,255,0.08),0 8px 32px rgba(0,0,0,0.4)`;
   });
   card.addEventListener('mouseleave', () => {
     card.style.transition = 'transform 0.5s cubic-bezier(.23,1,.32,1),border-color 0.25s,box-shadow 0.4s';
@@ -67,28 +67,99 @@ document.querySelectorAll('[data-tilt]').forEach(card => {
   });
 });
 
-// Glitch on hover
+// Clean hover animation
 const heroName = document.getElementById('heroName');
 if (heroName) {
   heroName.addEventListener('mouseenter', () => {
     heroName.querySelectorAll('.name-char').forEach((c, i) => {
       c.style.animation = 'none';
       void c.offsetWidth;
-      c.style.animation = `charWave 0.6s ease ${i * 0.05}s forwards`;
+      c.style.animation = `charWave 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${i * 0.04}s forwards`;
     });
-    heroName.classList.add('glitching');
-    setTimeout(() => heroName.classList.remove('glitching'), 600);
   });
 }
 
-// Intersection Observer reveals
-const revealEls = document.querySelectorAll('.reveal,.slide-left,.slide-right,.scale-in');
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('in'); revealObs.unobserve(e.target); }
+// Intro GSAP timeline
+const tl = gsap.timeline();
+tl.fromTo('.hero-badge',
+  { y: 20, autoAlpha: 0 },
+  { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
+)
+  .fromTo('h1',
+    { y: 30, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+    "-=0.6"
+  )
+  .fromTo('.hero-sub',
+    { y: 20, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+    "-=0.6"
+  )
+  .fromTo('.hero-actions',
+    { y: 20, autoAlpha: 0 },
+    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+    "-=0.6"
+  )
+  .fromTo('.scroll-ind',
+    { autoAlpha: 0 },
+    { autoAlpha: 1, duration: 1, ease: 'power2.out' },
+    "-=0.2"
+  );
+
+// GSAP ScrollTrigger reveals
+gsap.utils.toArray('.reveal, .slide-left, .slide-right, .scale-in').forEach(el => {
+  let d = 0;
+  if (el.classList.contains('reveal-d1')) d = 0.12;
+  if (el.classList.contains('reveal-d2')) d = 0.24;
+  if (el.classList.contains('reveal-d3')) d = 0.36;
+
+  let yPos = el.classList.contains('reveal') ? 30 : 0;
+  let xPos = el.classList.contains('slide-left') ? -40 : (el.classList.contains('slide-right') ? 40 : 0);
+  let sStart = el.classList.contains('scale-in') ? 0.9 : 1;
+  let easeStr = el.classList.contains('scale-in') ? 'back.out(1.5)' : 'power3.out';
+
+  // Make scale-in triggers pop slightly more
+  if (el.classList.contains('scale-in')) yPos = 15;
+
+  gsap.fromTo(el,
+    { x: xPos, y: yPos, scale: sStart, autoAlpha: 0 },
+    {
+      x: 0, y: 0, scale: 1, autoAlpha: 1, duration: 0.8, ease: easeStr, delay: d,
+      scrollTrigger: { trigger: el, start: 'top bottom', once: true }
+    });
+});
+
+// Copy Email Button
+document.querySelectorAll('.copy-email-btn').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    navigator.clipboard.writeText('rylen.anil@gmail.com');
+
+    // Toast Notification
+    let toast = document.querySelector('.copy-toast');
+    if (!toast) {
+      toast = document.createElement('div');
+      toast.className = 'copy-toast';
+      toast.innerHTML = `
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="20 6 9 17 4 12"></polyline>
+        </svg>
+        Email copied!
+      `;
+      document.body.appendChild(toast);
+    }
+
+    // Trigger animation
+    requestAnimationFrame(() => {
+      toast.classList.add('show');
+    });
+
+    // Remove after 2.5s
+    setTimeout(() => {
+      toast.classList.remove('show');
+    }, 2500);
   });
-}, { threshold: 0.1, rootMargin: '0px 0px -30px 0px' });
-revealEls.forEach(el => revealObs.observe(el));
+});
 
 // Tech stagger
 gsap.utils.toArray('.tech-item').forEach((item, i) => {
@@ -111,7 +182,7 @@ const statObs = new IntersectionObserver(entries => {
     const step = ts => {
       if (!t0) t0 = ts;
       const p = Math.min((ts - t0) / 1200, 1);
-      el.innerHTML = Math.floor((1 - Math.pow(1-p, 3)) * num) + suf;
+      el.innerHTML = Math.floor((1 - Math.pow(1 - p, 3)) * num) + suf;
       if (p < 1) requestAnimationFrame(step);
     };
     requestAnimationFrame(step);
@@ -120,14 +191,10 @@ const statObs = new IntersectionObserver(entries => {
 }, { threshold: 0.5 });
 document.querySelectorAll('.stat-n').forEach(s => statObs.observe(s));
 
-// About parallax
-gsap.to('.about-body', {
-  y: -30, ease: 'none',
-  scrollTrigger: { trigger: '#about', start: 'top bottom', end: 'bottom top', scrub: true }
-});
+// About parallax removed to avoid conflict with CSS observer reveal causing jerks
 
 // Custom Contribution Graph
-(async function() {
+(async function () {
   const canvas = document.getElementById('contribCanvas');
   const tooltip = document.getElementById('contribTooltip');
   const countEl = document.getElementById('contribCount');
@@ -137,7 +204,7 @@ gsap.to('.about-body', {
 
   function seededRand(seed) {
     let s = seed;
-    return function() { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; };
+    return function () { s = (s * 1664525 + 1013904223) & 0xffffffff; return (s >>> 0) / 0xffffffff; };
   }
   function generateFallback() {
     const rand = seededRand(42), data = [], now = new Date();
@@ -174,8 +241,8 @@ gsap.to('.about-body', {
 
   function getColor(count) {
     if (count === 0) return 'rgba(88,166,255,0.06)';
-    if (count <= 2)  return 'rgba(88,166,255,0.22)';
-    if (count <= 5)  return 'rgba(88,166,255,0.45)';
+    if (count <= 2) return 'rgba(88,166,255,0.22)';
+    if (count <= 5) return 'rgba(88,166,255,0.45)';
     if (count <= 10) return 'rgba(88,166,255,0.72)';
     return 'rgba(88,166,255,1)';
   }
@@ -216,11 +283,11 @@ gsap.to('.about-body', {
     ctx.globalAlpha = 1;
   }
   function roundRect(ctx, x, y, w, h, r) {
-    ctx.beginPath(); ctx.moveTo(x+r,y); ctx.lineTo(x+w-r,y);
-    ctx.quadraticCurveTo(x+w,y,x+w,y+r); ctx.lineTo(x+w,y+h-r);
-    ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h); ctx.lineTo(x+r,y+h);
-    ctx.quadraticCurveTo(x,y+h,x,y+h-r); ctx.lineTo(x,y+r);
-    ctx.quadraticCurveTo(x,y,x+r,y); ctx.closePath();
+    ctx.beginPath(); ctx.moveTo(x + r, y); ctx.lineTo(x + w - r, y);
+    ctx.quadraticCurveTo(x + w, y, x + w, y + r); ctx.lineTo(x + w, y + h - r);
+    ctx.quadraticCurveTo(x + w, y + h, x + w - r, y + h); ctx.lineTo(x + r, y + h);
+    ctx.quadraticCurveTo(x, y + h, x, y + h - r); ctx.lineTo(x, y + r);
+    ctx.quadraticCurveTo(x, y, x + r, y); ctx.closePath();
   }
   let animated = false;
   const obs = new IntersectionObserver(entries => {
