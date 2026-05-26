@@ -1,0 +1,5 @@
+# Official portfolio for Rylen Anil: https://rylenanil.xyz/
+User-agent: *
+Allow: /
+
+Sitemap: https://rylenanil.xyz/sitemap.xml

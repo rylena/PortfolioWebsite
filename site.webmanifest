@@ -1,0 +1,11 @@
+{
+  "name": "Rylen Anil",
+  "short_name": "Rylen",
+  "description": "Official portfolio for Rylen Anil, cybersecurity researcher, full-stack developer, AI builder, and computer science-focused technologist.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#07090f",
+  "theme_color": "#07090f",
+  "lang": "en"
+}

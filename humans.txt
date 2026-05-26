@@ -1,0 +1,14 @@
+/* TEAM */
+
+Creator: Rylen Anil
+Site: https://rylenanil.xyz/
+GitHub: https://github.com/rylena
+LinkedIn: https://linkedin.com/in/rylen-anil-perumkannaril
+Location: Dubai, UAE
+
+/* SITE */
+
+Purpose: Official portfolio for Rylen Anil, covering cybersecurity research, computer science, full-stack development, AI projects, hardware work, and leadership at AI Student Community.
+Language: English
+Standards: HTML, CSS, JavaScript
+Hosting: GitHub Pages
