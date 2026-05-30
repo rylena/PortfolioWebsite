@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Another OnMark System Failure: Evaluation Portal Pwned | Rylen Anil</title>
+    <meta name="description"
+        content="Rylen Anil writes about a critical OnMark evaluation portal vulnerability affecting evaluator accounts, scanned answer scripts, and marking workflows.">
+    <meta name="keywords"
+        content="Rylen Anil blog, OnMark vulnerability, evaluation portal security, academic evaluation security, CERT-In, cybersecurity research">
+    <meta name="author" content="Rylen Anil">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <meta name="theme-color" content="#07090f">
+    <link rel="canonical" href="https://rylenanil.xyz/blog.html">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="me" href="https://github.com/rylena">
+    <link rel="me" href="https://linkedin.com/in/rylen-anil-perumkannaril">
+
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="Rylen Anil">
+    <meta property="og:title" content="Another OnMark System Failure: Evaluation Portal Pwned">
+    <meta property="og:description"
+        content="A writeup on a critical OnMark evaluation portal vulnerability affecting evaluator accounts, answer scripts, and marking workflows.">
+    <meta property="og:url" content="https://rylenanil.xyz/blog.html">
+    <meta property="og:image" content="https://rylenanil.xyz/assets/blog/onmark-marking-interface.png">
+
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Another OnMark System Failure: Evaluation Portal Pwned">
+    <meta name="twitter:description"
+        content="A writeup on a critical OnMark evaluation portal vulnerability affecting evaluator accounts, answer scripts, and marking workflows.">
+    <meta name="twitter:image" content="https://rylenanil.xyz/assets/blog/onmark-marking-interface.png">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "@id": "https://rylenanil.xyz/blog.html#blog",
+        "url": "https://rylenanil.xyz/blog.html",
+        "name": "Rylen Anil Blog",
+        "description": "Security research writeups by Rylen Anil.",
+        "inLanguage": "en",
+        "author": {
+            "@type": "Person",
+            "name": "Rylen Anil",
+            "url": "https://rylenanil.xyz/"
+        },
+        "blogPost": [
+            {
+                "@type": "BlogPosting",
+                "headline": "Another OnMark System Failure: Evaluation Portal Pwned",
+                "datePublished": "2026-05-30",
+                "author": {"@type": "Person", "name": "Rylen Anil"},
+                "url": "https://rylenanil.xyz/blog.html#onmark-system-failure",
+                "image": "https://rylenanil.xyz/assets/blog/onmark-marking-interface.png"
+            }
+        ]
+    }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body class="blog-page">
+    <nav id="nav">
+        <a href="index.html#home" class="logo">Rylen<span>.</span></a>
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+            <span></span><span></span><span></span>
+        </button>
+        <ul id="navMenu">
+            <li><a href="index.html#about">About</a></li>
+            <li><a href="index.html#projects">Projects</a></li>
+            <li><a href="blog.html" aria-current="page">Blog</a></li>
+            <li><a href="index.html#experience">Experience</a></li>
+            <li><a href="index.html#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main class="blog-main">
+        <div class="blog-container">
+            <a href="index.html" class="blog-back">Back home</a>
+
+            <header class="blog-page-header">
+                <h1 class="blog-title">Blog</h1>
+                <p class="blog-subtitle">Security research notes and disclosure writeups.</p>
+            </header>
+
+            <section class="blog-list" aria-label="Blog posts">
+                <article class="blog-post blog-post-full" id="onmark-system-failure">
+                    <time datetime="2026-05-30" class="blog-date">May 30, 2026</time>
+                    <h2>Another OnMark System Failure: Evaluation Portal Pwned</h2>
+
+                    <p class="blog-lede"><strong>Another integral OnMark subdomain has been pwn'ed.</strong></p>
+
+                    <h3>Overview</h3>
+                    <p><strong>Nisarga and I found a critical vulnerability</strong> in an OnMark evaluation portal that appears to be
+                        used for exam evaluation across universities and affiliated institutions. The portal handled
+                        <strong>evaluator accounts</strong>, <strong>subject assignments</strong>, <strong>scanned
+                            answer scripts</strong>, and the <strong>marking workflow itself</strong>.</p>
+
+                    <figure class="blog-figure">
+                        <img src="assets/blog/onmark-marking-interface.png"
+                            alt="OnMark marking interface showing scanned answer scripts and marks controls">
+                        <figcaption>Evidence screenshot: scanned answer-script evaluation interface.</figcaption>
+                    </figure>
+
+                    <h3>Initial Access</h3>
+                    <p>The initial access came through <strong>guessable credentials</strong>. Once logged in, the portal
+                        exposed <strong>administrative-level access</strong>, including CRUD functionality over user
+                        accounts. This meant accounts could be <strong>viewed</strong>, <strong>created</strong>,
+                        <strong>edited</strong>, and <strong>managed directly</strong> from the portal.</p>
+
+                    <h3>Impact</h3>
+                    <p><strong>The impact was severe.</strong> Evaluator emails, usernames, passwords, phone numbers,
+                        institution details, and assigned subjects were exposed. The same access also allowed pivoting
+                        into evaluator accounts, where <strong>scanned answer scripts</strong> and the
+                        <strong>marking interface</strong> were accessible.</p>
+
+                    <figure class="blog-figure">
+                        <img src="assets/blog/onmark-evaluator-admin.png"
+                            alt="OnMark administrative table showing evaluator account records and actions">
+                        <figcaption>Evidence screenshot: evaluator administration and assignment view.</figcaption>
+                    </figure>
+
+                    <div class="blog-callout">
+                        <p><strong>This was not just a data leak.</strong> The portal exposed the actual exam evaluation
+                            workflow, including answer scripts, editable marks fields, comments, reject-script controls,
+                            and submission-related functionality.</p>
+                    </div>
+
+                    <p>That makes this both a <strong>confidentiality issue</strong> and a potential
+                        <strong>integrity issue</strong> for academic evaluation.</p>
+
+                    <h3>Disclosure</h3>
+                    <p>This is yet another failure of an OnMark system. A platform responsible for handling exam scripts
+                        and evaluator access should not rely on <strong>weak credentials</strong>, expose
+                        <strong>passwords in plaintext</strong>, or allow sensitive academic records to be accessed
+                        through <strong>broken access control</strong>.</p>
+
+                    <p><strong>Nisarga and I have already reported this vulnerability to CERT-In.</strong></p>
+
+                    <p><strong>No marks were submitted, no answer scripts were modified, and no destructive testing was
+                            performed.</strong> The purpose of this disclosure is to highlight how fragile these systems
+                        can be when basic security controls are missing.</p>
+                </article>
+            </section>
+        </div>
+    </main>
+
+    <footer class="blog-footer">
+        <div class="foot-links">
+            <a href="index.html#home">Home</a>
+            <a href="index.html#about">About</a>
+            <a href="index.html#projects">Projects</a>
+            <a href="blog.html">Blog</a>
+            <a href="index.html#contact">Contact</a>
+            <a href="https://github.com/rylena" target="_blank">GitHub</a>
+            <a href="https://linkedin.com/in/rylen-anil-perumkannaril" target="_blank">LinkedIn</a>
+        </div>
+    </footer>
+    <p class="copy">&copy; 2026 Rylen Anil &middot; Dubai, UAE</p>
+
+    <script src="main.js"></script>
+</body>
+
+</html>

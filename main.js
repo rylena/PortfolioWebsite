@@ -29,7 +29,7 @@ gsap.registerPlugin(ScrollTrigger);
 const track = document.getElementById('track');
 const isMobile = () => window.innerWidth <= 900;
 
-if (!isMobile()) {
+if (track && !isMobile()) {
   const getScrollAmount = () => -(track.scrollWidth - window.innerWidth + 96);
   gsap.to(track, {
     x: getScrollAmount,
@@ -79,32 +79,34 @@ if (heroName) {
   });
 }
 
-// Intro GSAP timeline
-const tl = gsap.timeline();
-tl.fromTo('.hero-badge',
-  { y: 20, autoAlpha: 0 },
-  { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
-)
-  .fromTo('h1',
-    { y: 30, autoAlpha: 0 },
-    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
-    "-=0.6"
-  )
-  .fromTo('.hero-sub',
+// Intro GSAP timeline - homepage only
+if (document.getElementById('home')) {
+  const tl = gsap.timeline();
+  tl.fromTo('.hero-badge',
     { y: 20, autoAlpha: 0 },
-    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
-    "-=0.6"
+    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out', delay: 0.2 }
   )
-  .fromTo('.hero-actions',
-    { y: 20, autoAlpha: 0 },
-    { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
-    "-=0.6"
-  )
-  .fromTo('.scroll-ind',
-    { autoAlpha: 0 },
-    { autoAlpha: 1, duration: 1, ease: 'power2.out' },
-    "-=0.2"
-  );
+    .fromTo('h1',
+      { y: 30, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+      "-=0.6"
+    )
+    .fromTo('.hero-sub',
+      { y: 20, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+      "-=0.6"
+    )
+    .fromTo('.hero-actions',
+      { y: 20, autoAlpha: 0 },
+      { y: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out' },
+      "-=0.6"
+    )
+    .fromTo('.scroll-ind',
+      { autoAlpha: 0 },
+      { autoAlpha: 1, duration: 1, ease: 'power2.out' },
+      "-=0.2"
+    );
+}
 
 // GSAP ScrollTrigger reveals
 gsap.utils.toArray('.reveal, .slide-left, .slide-right, .scale-in').forEach(el => {
@@ -135,7 +137,9 @@ gsap.utils.toArray('.reveal, .slide-left, .slide-right, .scale-in').forEach(el =
 });
 
 // Refresh triggers after setup to account for pin layout shifts
-setTimeout(() => ScrollTrigger.refresh(), 100);
+if (window.ScrollTrigger) {
+  setTimeout(() => ScrollTrigger.refresh(), 100);
+}
 
 // Copy Email Button
 document.querySelectorAll('.copy-email-btn').forEach(btn => {
