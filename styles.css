@@ -240,20 +240,24 @@ body {
 
 .github-card {
     width: 100%;
-    max-width: 1200px;
-    margin: 2rem auto;
+    max-width: 980px;
+    margin: 2rem auto 3rem;
+    padding: 2rem;
 }
 
 .github-card-header {
     display: flex;
     justify-content: space-between;
     gap: 1.5rem;
-    align-items: flex-start;
-    margin-bottom: 1.5rem;
+    align-items: center;
+    margin-bottom: 1.35rem;
 }
 
-.github-card-header .section-title {
-    margin-bottom: 0.75rem;
+.github-card-header h2 {
+    color: #64ffda;
+    font-size: 2rem;
+    line-height: 1.2;
+    margin-bottom: 0.35rem;
 }
 
 .github-card-header p {
@@ -261,7 +265,12 @@ body {
     font-size: 1rem;
 }
 
-.github-profile-link {
+.github-card-header p span {
+    color: #ccd6f6;
+}
+
+.github-card a.github-profile-link,
+.github-card a.github-profile-link:visited {
     display: inline-flex;
     align-items: center;
     gap: 0.55rem;
@@ -274,7 +283,7 @@ body {
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.github-profile-link:hover {
+.github-card a.github-profile-link:hover {
     background: rgba(100, 255, 218, 0.08);
     border-color: rgba(100, 255, 218, 0.5);
 }
@@ -283,16 +292,17 @@ body {
     display: block;
     width: 100%;
     overflow-x: auto;
-    padding: 1rem;
-    background: rgba(10, 25, 47, 0.52);
+    padding: 1.15rem;
+    background: #f6f8fa;
     border: 1px solid rgba(100, 255, 218, 0.1);
     border-radius: 8px;
+    line-height: 0;
 }
 
 .github-heatmap {
     display: block;
     width: 100%;
-    min-width: 760px;
+    min-width: 720px;
     height: auto;
 }
 
@@ -1900,6 +1910,7 @@ body {
 
     .github-card-header {
         flex-direction: column;
+        align-items: flex-start;
     }
 
     .github-profile-link {
@@ -1908,6 +1919,10 @@ body {
 
     .github-heatmap-link {
         padding: 0.75rem;
+    }
+
+    .github-card {
+        padding: 1.5rem;
     }
 }
 
