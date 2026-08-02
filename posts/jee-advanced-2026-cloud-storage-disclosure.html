@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How I Found a Critical JEE Advanced 2026 Data Exposure | Rylen Anil</title>
+    <meta name="description" content="Rylen Anil's writeup on finding and responsibly disclosing a JEE Advanced 2026 cloud storage misconfiguration that exposed candidate result and admit-card files.">
+    <meta name="keywords" content="Rylen Anil, JEE Advanced 2026 data exposure, JEE Advanced vulnerability, cloud storage misconfiguration, Google Cloud Storage security, responsible disclosure, cybersecurity research">
+    <meta name="author" content="Rylen Anil">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="theme-color" content="#0a192f">
+    <link rel="canonical" href="https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="manifest" href="/site.webmanifest">
+    <link rel="me" href="https://github.com/rylena">
+    <link rel="me" href="https://www.linkedin.com/in/rylen-anil-perumkannaril/">
+    <link rel="me" href="https://x.com/DarthKermi72747">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Rylen Anil">
+    <meta property="og:title" content="How I Found a Critical JEE Advanced 2026 Data Exposure">
+    <meta property="og:description" content="A writeup on finding a publicly listable Google Cloud Storage bucket affecting JEE Advanced 2026 candidate result and admit-card infrastructure.">
+    <meta property="og:url" content="https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html">
+    <meta property="og:image" content="https://rylenanil.xyz/assets/jee-x-evidence-1.jpg">
+    <meta property="article:published_time" content="2026-06-02T15:05:38+00:00">
+    <meta property="article:modified_time" content="2026-08-02T00:00:00+00:00">
+    <meta property="article:author" content="https://rylenanil.xyz/">
+    <meta property="article:tag" content="Cybersecurity">
+    <meta property="article:tag" content="Responsible Disclosure">
+    <meta property="article:tag" content="Cloud Security">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DarthKermi72747">
+    <meta name="twitter:creator" content="@DarthKermi72747">
+    <meta name="twitter:title" content="How I Found a Critical JEE Advanced 2026 Data Exposure">
+    <meta name="twitter:description" content="Rylen Anil's writeup on a JEE Advanced 2026 cloud storage misconfiguration that exposed candidate result and admit-card files.">
+    <meta name="twitter:image" content="https://rylenanil.xyz/assets/jee-x-evidence-1.jpg">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html#blogposting",
+        "headline": "How I Found a Critical JEE Advanced 2026 Data Exposure",
+        "description": "Rylen Anil's writeup on finding and responsibly disclosing a JEE Advanced 2026 cloud storage misconfiguration that exposed candidate result and admit-card files.",
+        "image": [
+            "https://rylenanil.xyz/assets/jee-x-evidence-1.jpg",
+            "https://rylenanil.xyz/assets/jee-x-evidence-2.png"
+        ],
+        "datePublished": "2026-06-02",
+        "dateModified": "2026-08-02",
+        "author": {
+            "@type": "Person",
+            "name": "Rylen Anil",
+            "url": "https://rylenanil.xyz/"
+        },
+        "publisher": {
+            "@type": "Person",
+            "name": "Rylen Anil",
+            "url": "https://rylenanil.xyz/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html"
+        },
+        "keywords": [
+            "JEE Advanced 2026",
+            "cloud storage misconfiguration",
+            "Google Cloud Storage",
+            "responsible disclosure",
+            "cybersecurity research"
+        ],
+        "inLanguage": "en"
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+</head>
+<body class="post-page minimal-post-page">
+    <main class="minimal-shell post-shell">
+        <nav class="minimal-nav" aria-label="Post navigation">
+            <a href="../index.html">rylen</a>
+            <div>
+                <a href="../index.html#about">about</a>
+                <a href="../index.html#projects">projects</a>
+                <a href="../blog.html">blog</a>
+            </div>
+        </nav>
+
+        <section class="post-hero">
+            <a href="../blog.html" class="post-breadcrumb">← back to blog</a>
+            <div class="post-meta">
+                <span>Jun 2, 2026</span>
+                <span>7 min read</span>
+            </div>
+            <h1>How I Found a Critical JEE Advanced 2026 Data Exposure</h1>
+            <p class="post-dek">
+                A small storage error led to a publicly listable Google Cloud Storage bucket containing candidate result and admit-card files.
+            </p>
+            <div class="post-tags">
+                <span>Security</span>
+                <span>Disclosure</span>
+                <span>Cloud</span>
+            </div>
+        </section>
+
+        <section class="post-layout">
+            <article class="post-content">
+                <p class="post-lede">
+                    On June 2, 2026, between about 17:40 and 18:15 GST (13:40-14:15 UTC), I found a critical vulnerability affecting the JEE Advanced 2026 candidate and result infrastructure. The issue was not a login bypass or an application exploit. It was a cloud storage access-control mistake with very real consequences.
+                </p>
+
+                <h2>Where The Thread Started</h2>
+                <p>
+                    I was looking at how the candidate/result portal handled static files and storage-backed paths. One harmless request to a non-existent object returned an error message that revealed the backend storage bucket name. That was the first important clue: the application was exposing implementation detail from the storage layer.
+                </p>
+
+                <p>
+                    From there, I checked whether the bucket was only leaking its name or whether access controls were also misconfigured. A small, limited listing request showed that unauthenticated users could enumerate objects under result and admit-card prefixes.
+                </p>
+
+                <h2>What Was Exposed</h2>
+                <p>
+                    The exposed storage paths included result JSON records, admit-card redirect HTML files, and admit-card PDFs. A result record contained fields such as candidate name, date of birth, mobile number, serial or roll identifiers, subject marks, total score, positive score, and rank-related fields.
+                </p>
+
+                <p>
+                    My impact count at the time of reporting was:
+                </p>
+
+                <ul>
+                    <li>179,694 result JSON records exposed</li>
+                    <li>187,389 admit-card redirect HTML files exposed</li>
+                    <li>187,390 admit-card PDFs exposed</li>
+                </ul>
+
+                <figure class="post-image-stack">
+                    <img src="../assets/jee-x-evidence-1.jpg" alt="Redacted screenshot from Rylen Anil's X post showing exposed JEE Advanced admit-card PDF entries">
+                    <img src="../assets/jee-x-evidence-2.png" alt="Redacted screenshot from Rylen Anil's X post showing a sample exposed JEE Advanced result JSON record">
+                    <figcaption>Screenshots from my original X post, with candidate details redacted.</figcaption>
+                </figure>
+
+                <h2>Why It Was Critical</h2>
+                <p>
+                    The issue did not require credentials, cookies, a valid candidate session, or access to the portal UI. Any unauthenticated internet user who knew how to query the storage endpoint could list and download sensitive candidate files in bulk.
+                </p>
+
+                <p>
+                    That combination matters: public listing plus public read access turns a storage bucket from an internal backend dependency into a data exposure surface. In this case, the data included personal information and exam-related records for a large number of students.
+                </p>
+
+                <h2>The Main Lesson</h2>
+                <p>
+                    Cloud storage bugs often look boring until you measure the blast radius. A single leaked bucket name is not automatically a breach, but it is a signal worth following. If the bucket is listable, readable, and contains sensitive records, the impact becomes immediate.
+                </p>
+
+                <p>
+                    The best version of this kind of work is quiet and precise: confirm the minimum evidence needed, avoid collecting unnecessary data, report quickly, and give the team a clear path to fix it.
+                </p>
+
+                <h2>Coverage</h2>
+                <p>
+                    The disclosure and follow-up discussion were covered across national and regional outlets:
+                </p>
+                <ul class="coverage-list">
+                    <li><a href="https://www.hindustantimes.com/india-news/16-year-old-rylen-anil-flags-data-issues-on-jee-advanced-results-site-iit-roorkee-says-thank-you-takes-corrective-action-101780453586849-amp.html" target="_blank" rel="noopener noreferrer">Hindustan Times</a></li>
+                    <li><a href="https://www.deccanherald.com/amp/story/india/iit-roorkee-admits-flaws-in-cloud-storage-linked-to-jee-advanced-results-portal-after-teens-discovery-4026466" target="_blank" rel="noopener noreferrer">Deccan Herald</a></li>
+                    <li><a href="https://www.indiatoday.in/amp/education-today/news/story/he-is-sixteen-he-broke-into-neet-jee-to-fix-it-2921609-2026-06-04" target="_blank" rel="noopener noreferrer">India Today</a></li>
+                    <li><a href="https://www.cnbctv18.com/education/meet-rylen-anil-the-teen-ethical-hacker-who-smelt-a-rat-in-neet-jee-portals-ws-l-19920405.htm" target="_blank" rel="noopener noreferrer">CNBC TV18</a></li>
+                    <li><a href="https://www.khaleejtimes.com/uae/education/dubai-student-exposes-security-flaws-india-neet-jee-exam" target="_blank" rel="noopener noreferrer">Khaleej Times</a></li>
+                    <li><a href="https://www.firstpost.com/tech/meet-the-16-year-old-who-spotted-and-fixed-a-jee-advanced-portal-flaw-before-cybercriminals-could-ws-e-14019184.html" target="_blank" rel="noopener noreferrer">Firstpost</a></li>
+                    <li><a href="https://www.newsx.com/education/meet-rylen-anil-16-year-old-cybersecurity-researcher-who-exposed-a-security-flaw-in-jee-advanced-2026-portal-230299/" target="_blank" rel="noopener noreferrer">NewsX</a></li>
+                    <li><a href="https://www.ndtv.com/education/not-large-scale-leak-16-year-old-student-issues-clarification-on-jee-advanced-2026-data-leak-11594687/amp/1" target="_blank" rel="noopener noreferrer">NDTV</a></li>
+                    <li><a href="https://economictimes.indiatimes.com/news/new-updates/after-cbse-and-nta-row-jee-advanced-2026-data-exposure-claim-by-a-dubai-based-researcher-sparks-security-debate-institute-responds/articleshow/131481279.cms?from=mdr" target="_blank" rel="noopener noreferrer">The Economic Times</a></li>
+                    <li><a href="https://www.freepressjournal.in/education/dubai-based-16-year-old-flags-data-issue-on-jee-advanced-2026-results-site-iit-roorkee-responds-swiftly-fpj-exclusive" target="_blank" rel="noopener noreferrer">Free Press Journal</a></li>
+                    <li><a href="https://gulfnews.com/uae/education/the-16-year-old-in-dubai-who-exposed-indias-most-critical-exam-portals-and-reported-what-he-found-1.500564493" target="_blank" rel="noopener noreferrer">Gulf News</a></li>
+                    <li><a href="https://www.telegraphindia.com/amp/india/jee-advanced-2026-data-leak-row-sparks-fresh-questions-on-exam-cyber-security-prnt/cid/2164008" target="_blank" rel="noopener noreferrer">Telegraph India</a></li>
+                    <li><a href="https://newsable.asianetnews.com/amp/india/iit-roorkee-refutes-jee-advanced-data-breach-claims-as-misleading-articleshow-7frf8x0" target="_blank" rel="noopener noreferrer">Asianet Newsable</a></li>
+                    <li><a href="https://www.shiksha.com/news/engineering-iit-roorkee-refutes-data-breach-claims-in-jee-advanced-2026-result-blogId-232153" target="_blank" rel="noopener noreferrer">Shiksha</a></li>
+                    <li><a href="https://www.manabadi.co.in/entrance-exams/jee-advanced-2026-data-leak/" target="_blank" rel="noopener noreferrer">Manabadi</a></li>
+                </ul>
+
+                <p>
+                    Original X post: <a href="https://x.com/DarthKermi72747/status/2061826579525984295?s=20" target="_blank" rel="noopener noreferrer">x.com/DarthKermi72747/status/2061826579525984295</a>
+                </p>
+            </article>
+
+        </section>
+    </main>
+
+    <footer class="minimal-footer">
+        <p>&copy; 2026 Rylen Anil</p>
+    </footer>
+</body>
+</html>

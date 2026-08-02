@@ -1,0 +1,9 @@
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="630" fill="#0a192f"/>
+    <rect x="72" y="72" width="1056" height="486" rx="24" fill="#112240" opacity="0.82"/>
+    <path d="M108 500H1092" stroke="#64ffda" stroke-width="4" opacity="0.45"/>
+    <text x="108" y="178" fill="#64ffda" font-family="Poppins, Arial, sans-serif" font-size="32" font-weight="700">Rylen Anil</text>
+    <text x="108" y="286" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="68" font-weight="700">Cybersecurity Researcher</text>
+    <text x="108" y="365" fill="#ffffff" font-family="Poppins, Arial, sans-serif" font-size="68" font-weight="700">Developer &amp; AI Builder</text>
+    <text x="108" y="448" fill="#8892b0" font-family="Poppins, Arial, sans-serif" font-size="30">Security disclosures, full-stack projects, AI tools, and ESP32 hardware.</text>
+</svg>

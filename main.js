@@ -11,13 +11,19 @@ if (window.innerWidth > 768) {
     document.addEventListener('DOMContentLoaded', () => {
         document.querySelectorAll('.scroll-link, .nav-links a').forEach(link => {
             link.addEventListener('click', e => {
-                e.preventDefault();
                 const targetId = link.getAttribute('href');
+                if (!targetId || !targetId.startsWith('#')) {
+                    return;
+                }
+
+                e.preventDefault();
                 const targetSection = document.querySelector(targetId);
-                
-                targetSection.scrollIntoView({
-                    behavior: 'smooth'
-                });
+
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     });

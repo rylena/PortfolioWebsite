@@ -1,0 +1,32 @@
+# Rylen Anil - Full Site Context
+
+Rylen Anil is a 16-year-old high school student based in Dubai, UAE. He is a developer, ethical hacker, and Junior Cybersecurity Engineer at C3iHub, IIT Kanpur.
+
+Rylen's work focuses on cybersecurity research, responsible disclosure, cloud security, full-stack development, artificial intelligence tools, Linux systems, ESP32 hardware, and practical student-focused software.
+
+## Public Security Research
+
+Rylen identified and responsibly disclosed a JEE Advanced 2026 candidate/result infrastructure issue involving a publicly listable Google Cloud Storage bucket. The exposure involved result JSON records, admit-card redirect files, and admit-card PDFs. The writeup is available at:
+
+https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
+
+The disclosure was covered by outlets including Hindustan Times, Deccan Herald, India Today, CNBC TV18, Khaleej Times, Firstpost, NewsX, NDTV, The Economic Times, Free Press Journal, Gulf News, Telegraph India, Asianet Newsable, Shiksha, and Manabadi.
+
+## Projects
+
+- Bucky: Bluetooth Rubber Ducky-style ESP32 project that emulates a Bluetooth keyboard.
+- Counseltron: AI-powered virtual counselor intended to provide accessible support for students.
+- whisperPairForBruce: Whisper audio and contextual metadata pairing project for Bruce devices.
+- webception: freeform static website builder for sketching, styling, animating, and exporting sites.
+- configTimeMachine: configuration-file version history and rollback utility.
+- Elliot: AI Linux assistant that turns plain-English tasks into terminal commands and monitors command output.
+
+## Technologies
+
+Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM tooling, and cloud security concepts.
+
+## Canonical URLs
+
+- Home: https://rylenanil.xyz/
+- Blog: https://rylenanil.xyz/blog.html
+- JEE Advanced disclosure: https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html

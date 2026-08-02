@@ -1,0 +1,15 @@
+/* TEAM */
+
+Creator: Rylen Anil
+Site: https://rylenanil.xyz/
+GitHub: https://github.com/rylena
+LinkedIn: https://www.linkedin.com/in/rylen-anil-perumkannaril/
+X: https://x.com/DarthKermi72747
+Location: Dubai, UAE
+
+/* SITE */
+
+Purpose: Official portfolio and blog for Rylen Anil, covering cybersecurity research, responsible disclosure, software projects, AI tools, and hardware work.
+Language: English
+Standards: HTML, CSS, JavaScript
+Hosting: GitHub Pages

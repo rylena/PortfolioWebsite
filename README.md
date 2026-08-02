@@ -1,2 +1,3 @@
-https://rylena.github.io/PortfolioWebsite/ 
-this is my portfolio site
+https://rylenanil.xyz/
+
+Official portfolio and blog for Rylen Anil.

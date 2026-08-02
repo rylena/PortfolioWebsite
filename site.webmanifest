@@ -1,0 +1,19 @@
+{
+  "name": "Rylen Anil",
+  "short_name": "Rylen",
+  "description": "Official portfolio and blog for Rylen Anil, cybersecurity researcher, developer, AI builder, and Junior Cybersecurity Engineer at C3iHub IIT Kanpur.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0a192f",
+  "theme_color": "#0a192f",
+  "lang": "en",
+  "icons": [
+    {
+      "src": "/assets/favicon.svg",
+      "sizes": "64x64",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}

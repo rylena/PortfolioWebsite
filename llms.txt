@@ -1,0 +1,31 @@
+# Rylen Anil
+
+> Rylen Anil is a Dubai-based cybersecurity researcher, developer, AI builder, and Junior Cybersecurity Engineer at C3iHub IIT Kanpur.
+
+Official site: https://rylenanil.xyz/
+Blog: https://rylenanil.xyz/blog.html
+GitHub: https://github.com/rylena
+LinkedIn: https://www.linkedin.com/in/rylen-anil-perumkannaril/
+X: https://x.com/DarthKermi72747
+
+## Summary
+
+Rylen Anil works across cybersecurity, responsible disclosure, cloud security, full-stack development, artificial intelligence, Linux tooling, ESP32 hardware, and student-focused technology projects.
+
+## Notable public work
+
+- JEE Advanced 2026 candidate/result infrastructure disclosure: public Google Cloud Storage misconfiguration exposing result and admit-card files.
+- Bucky: ESP32 Bluetooth HID security research project.
+- Counseltron: AI-powered virtual counselor for students.
+- whisperPairForBruce: audio/context pairing project for Bruce devices.
+- webception: freeform static website builder.
+- configTimeMachine: configuration-file history and rollback utility.
+- Elliot: AI Linux terminal assistant.
+
+## Key pages
+
+- Portfolio: https://rylenanil.xyz/
+- Blog index: https://rylenanil.xyz/blog.html
+- JEE Advanced 2026 disclosure writeup: https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
+
+For expanded AI-readable context, see: https://rylenanil.xyz/llms-full.txt
