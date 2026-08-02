@@ -231,6 +231,71 @@ body {
     transform: translateX(5px);
 }
 
+.github-activity {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+.github-card {
+    width: 100%;
+    max-width: 1200px;
+    margin: 2rem auto;
+}
+
+.github-card-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    align-items: flex-start;
+    margin-bottom: 1.5rem;
+}
+
+.github-card-header .section-title {
+    margin-bottom: 0.75rem;
+}
+
+.github-card-header p {
+    color: #8892b0;
+    font-size: 1rem;
+}
+
+.github-profile-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    flex-shrink: 0;
+    color: #64ffda;
+    text-decoration: none;
+    border: 1px solid rgba(100, 255, 218, 0.28);
+    border-radius: 6px;
+    padding: 0.7rem 0.9rem;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.github-profile-link:hover {
+    background: rgba(100, 255, 218, 0.08);
+    border-color: rgba(100, 255, 218, 0.5);
+}
+
+.github-heatmap-link {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    padding: 1rem;
+    background: rgba(10, 25, 47, 0.52);
+    border: 1px solid rgba(100, 255, 218, 0.1);
+    border-radius: 8px;
+}
+
+.github-heatmap {
+    display: block;
+    width: 100%;
+    min-width: 760px;
+    height: auto;
+}
+
 @keyframes fadeInUp {
     0% {
         opacity: 0;
@@ -1831,6 +1896,18 @@ body {
         margin: 1rem;
         padding: 1rem;
         width: calc(100% - 2rem);
+    }
+
+    .github-card-header {
+        flex-direction: column;
+    }
+
+    .github-profile-link {
+        align-self: flex-start;
+    }
+
+    .github-heatmap-link {
+        padding: 0.75rem;
     }
 }
 
