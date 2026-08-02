@@ -29,4 +29,5 @@ Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM
 
 - Home: https://rylenanil.xyz/
 - Blog: https://rylenanil.xyz/blog.html
+- Resume: https://rylenanil.xyz/resume.pdf
 - JEE Advanced disclosure: https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
