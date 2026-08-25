@@ -17,7 +17,7 @@ The disclosure was covered by outlets including Hindustan Times, Deccan Herald, 
 - Bucky: Bluetooth Rubber Ducky-style ESP32 project that emulates a Bluetooth keyboard.
 - Counseltron: AI-powered virtual counselor intended to provide accessible support for students.
 - whisperPairForBruce: Whisper audio and contextual metadata pairing project for Bruce devices.
-- webception: freeform static website builder for sketching, styling, animating, and exporting sites.
+- SSH Desk: full interactive remote desktop delivered through one SSH session and displayed directly in the terminal.
 - configTimeMachine: configuration-file version history and rollback utility.
 - Elliot: AI Linux assistant that turns plain-English tasks into terminal commands and monitors command output.
 

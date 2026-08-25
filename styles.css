@@ -240,10 +240,10 @@ body {
 
 .github-card {
     width: 100%;
-    max-width: 980px;
+    max-width: 1200px;
     margin: 2rem auto 3rem;
     padding: 2rem;
-    border-radius: 18px;
+    border-radius: 8px;
 }
 
 .github-card-header {
@@ -294,9 +294,9 @@ body {
     width: 100%;
     overflow-x: auto;
     padding: 1.15rem;
-    background: #f6f8fa;
-    border: 1px solid rgba(100, 255, 218, 0.1);
-    border-radius: 16px;
+    background: rgba(10, 25, 47, 0.78);
+    border: 1px solid rgba(100, 255, 218, 0.14);
+    border-radius: 8px;
     line-height: 0;
 }
 
@@ -305,7 +305,7 @@ body {
     width: 100%;
     min-width: 720px;
     height: auto;
-    border-radius: 10px;
+    filter: invert(1);
 }
 
 @keyframes fadeInUp {
@@ -1117,6 +1117,11 @@ section {
     max-width: 220px;
     box-shadow: none;
     filter: none;
+}
+
+.sshdesk-logo {
+    max-width: 190px;
+    filter: drop-shadow(0 8px 18px rgba(100, 255, 218, 0.14));
 }
 
 .project-icon {

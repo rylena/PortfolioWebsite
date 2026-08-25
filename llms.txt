@@ -19,7 +19,7 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 - Bucky: ESP32 Bluetooth HID security research project.
 - Counseltron: AI-powered virtual counselor for students.
 - whisperPairForBruce: audio/context pairing project for Bruce devices.
-- webception: freeform static website builder.
+- SSH Desk: full interactive remote desktop delivered through one SSH session in the terminal.
 - configTimeMachine: configuration-file history and rollback utility.
 - Elliot: AI Linux terminal assistant.
 
