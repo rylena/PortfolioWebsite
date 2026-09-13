@@ -8,7 +8,7 @@ Rylen's work focuses on cybersecurity research, responsible disclosure, cloud se
 
 Rylen identified and responsibly disclosed a JEE Advanced 2026 candidate/result infrastructure issue involving a publicly listable Google Cloud Storage bucket. The exposure involved result JSON records, admit-card redirect files, and admit-card PDFs. The writeup is available at:
 
-https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
+https://rylenanil.com/posts/jee-advanced-2026-cloud-storage-disclosure.html
 
 The disclosure was covered by outlets including Hindustan Times, Deccan Herald, India Today, CNBC TV18, Khaleej Times, Firstpost, NewsX, NDTV, The Economic Times, Free Press Journal, Gulf News, Telegraph India, Asianet Newsable, Shiksha, and Manabadi.
 
@@ -27,7 +27,7 @@ Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM
 
 ## Canonical URLs
 
-- Home: https://rylenanil.xyz/
-- Blog: https://rylenanil.xyz/blog.html
-- Resume: https://rylenanil.xyz/resume.pdf
-- JEE Advanced disclosure: https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
+- Home: https://rylenanil.com/
+- Blog: https://rylenanil.com/blog.html
+- Resume: https://rylenanil.com/resume.pdf
+- JEE Advanced disclosure: https://rylenanil.com/posts/jee-advanced-2026-cloud-storage-disclosure.html

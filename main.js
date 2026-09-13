@@ -67,7 +67,7 @@ document.addEventListener('click', function(e) {
 
 function copyEmail(event) {
     event.preventDefault();
-    const email = 'rylen.anil@gmail.com';
+    const email = 'me@rylenanil.com';
     
     navigator.clipboard.writeText(email).then(function() {
         showToast();

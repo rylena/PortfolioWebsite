@@ -2,9 +2,9 @@
 
 > Rylen Anil is a Dubai-based cybersecurity researcher, developer, AI builder, and Junior Cybersecurity Engineer at C3iHub IIT Kanpur.
 
-Official site: https://rylenanil.xyz/
-Blog: https://rylenanil.xyz/blog.html
-Resume: https://rylenanil.xyz/resume.pdf
+Official site: https://rylenanil.com/
+Blog: https://rylenanil.com/blog.html
+Resume: https://rylenanil.com/resume.pdf
 GitHub: https://github.com/rylena
 LinkedIn: https://www.linkedin.com/in/rylen-anil-perumkannaril/
 X: https://x.com/DarthKermi72747
@@ -25,9 +25,9 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 
 ## Key pages
 
-- Portfolio: https://rylenanil.xyz/
-- Blog index: https://rylenanil.xyz/blog.html
-- Resume PDF: https://rylenanil.xyz/resume.pdf
-- JEE Advanced 2026 disclosure writeup: https://rylenanil.xyz/posts/jee-advanced-2026-cloud-storage-disclosure.html
+- Portfolio: https://rylenanil.com/
+- Blog index: https://rylenanil.com/blog.html
+- Resume PDF: https://rylenanil.com/resume.pdf
+- JEE Advanced 2026 disclosure writeup: https://rylenanil.com/posts/jee-advanced-2026-cloud-storage-disclosure.html
 
-For expanded AI-readable context, see: https://rylenanil.xyz/llms-full.txt
+For expanded AI-readable context, see: https://rylenanil.com/llms-full.txt
