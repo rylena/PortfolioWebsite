@@ -15,6 +15,7 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 
 ## Notable public work
 
+- GISEC registration platform disclosure: unauthenticated path traversal exposed configuration secrets and enabled SQL read access to live GISEC visitor and payment records; GISEC subsequently confirmed a fix.
 - JEE Advanced 2026 candidate/result infrastructure disclosure: public Google Cloud Storage misconfiguration exposing result and admit-card files.
 - Bucky: ESP32 Bluetooth HID security research project.
 - Counseltron: AI-powered virtual counselor for students.
@@ -25,6 +26,7 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 
 ## Key pages
 
+- GISEC disclosure writeup: https://rylenanil.com/posts/hacking-gisec-before-speaking.html
 - Portfolio: https://rylenanil.com/
 - Blog index: https://rylenanil.com/blog.html
 - Resume PDF: https://rylenanil.com/resume.pdf

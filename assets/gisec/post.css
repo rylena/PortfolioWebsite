@@ -1,0 +1,74 @@
+.gisec-post .post-recording video {
+    display: block;
+    width: 100%;
+    height: auto;
+    margin-bottom: 0.8rem;
+    border: 1px solid rgba(136, 146, 176, 0.18);
+    border-radius: 6px;
+    background: #1e1e1e;
+}
+
+.gisec-post .post-content code {
+    padding: 0.1em 0.3em;
+    border-radius: 3px;
+    background: rgba(136, 146, 176, 0.12);
+    font-size: 0.9em;
+    overflow-wrap: anywhere;
+}
+
+.gisec-post .gisec-chain {
+    list-style: none;
+    counter-reset: chain;
+    margin: 1.5rem 0 2rem;
+    padding: 0;
+}
+
+.gisec-post .gisec-chain li {
+    position: relative;
+    counter-increment: chain;
+    margin: 0;
+    padding: 0 0 1.4rem 3rem;
+}
+
+.gisec-post .gisec-chain li::before {
+    content: counter(chain, decimal-leading-zero);
+    position: absolute;
+    left: 0;
+    top: 0.1rem;
+    color: #64ffda;
+    font-family: monospace;
+    font-size: 1rem;
+}
+
+.gisec-post .gisec-chain li:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    left: 0.55rem;
+    top: 2rem;
+    bottom: 0.35rem;
+    border-left: 1px solid rgba(100, 255, 218, 0.3);
+}
+
+.gisec-post .gisec-chain strong,
+.gisec-post .gisec-chain span {
+    display: block;
+}
+
+.gisec-post .gisec-chain span {
+    color: #8892b0;
+    font-size: 0.95rem;
+    line-height: 1.7;
+}
+
+.gisec-post .gisec-post-end {
+    margin-top: 3rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(136, 146, 176, 0.18);
+    font-size: 0.95rem;
+}
+
+.gisec-post a:focus-visible,
+.gisec-post video:focus-visible {
+    outline: 2px solid #64ffda;
+    outline-offset: 4px;
+}

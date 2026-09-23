@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hacking GISEC Before Speaking at GISEC | Rylen Anil</title>
+    <meta name="description" content="Before speaking at GISEC, I found a file-download flaw that exposed configuration secrets and gave me SQL read access to visitor and payment records.">
+    <meta name="keywords" content="Rylen Anil, GISEC, security research, path traversal, CWE-22, responsible disclosure">
+    <meta name="author" content="Rylen Anil">
+    <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+    <meta name="theme-color" content="#0a192f">
+    <link rel="canonical" href="https://rylenanil.com/posts/hacking-gisec-before-speaking.html">
+    <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta property="og:type" content="article">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:site_name" content="Rylen Anil">
+    <meta property="og:title" content="Hacking GISEC Before Speaking at GISEC">
+    <meta property="og:description" content="I was preparing to speak at GISEC. Then a file-download endpoint on its registration platform handed over the production configuration.">
+    <meta property="og:url" content="https://rylenanil.com/posts/hacking-gisec-before-speaking.html">
+    <meta property="og:image" content="https://rylenanil.com/assets/gisec/database-poster.png">
+    <meta property="og:image:alt" content="Redacted recording of successful database authentication and GISEC record counts">
+    <meta property="article:published_time" content="2026-09-24">
+    <meta property="article:modified_time" content="2026-09-24">
+    <meta property="article:author" content="https://rylenanil.com/">
+    <meta property="article:tag" content="Security Research">
+    <meta property="article:tag" content="Responsible Disclosure">
+    <meta property="article:tag" content="Web Security">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@DarthKermi72747">
+    <meta name="twitter:creator" content="@DarthKermi72747">
+    <meta name="twitter:title" content="Hacking GISEC Before Speaking at GISEC">
+    <meta name="twitter:description" content="An unauthenticated file download exposed application secrets and gave me SQL read access to real visitor and payment records.">
+    <meta name="twitter:image" content="https://rylenanil.com/assets/gisec/database-poster.png">
+    <meta name="twitter:image:alt" content="Redacted recording of successful database authentication and GISEC record counts">
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "@id": "https://rylenanil.com/posts/hacking-gisec-before-speaking.html#blogposting",
+        "headline": "Hacking GISEC Before Speaking at GISEC",
+        "description": "Before speaking at GISEC, Rylen Anil found and reported a path traversal exposing application secrets and enabling SQL read access to visitor and payment records.",
+        "image": ["https://rylenanil.com/assets/gisec/database-poster.png"],
+        "datePublished": "2026-09-24",
+        "dateModified": "2026-09-24",
+        "author": {"@type": "Person", "name": "Rylen Anil", "url": "https://rylenanil.com/"},
+        "publisher": {"@type": "Person", "name": "Rylen Anil", "url": "https://rylenanil.com/"},
+        "mainEntityOfPage": {"@type": "WebPage", "@id": "https://rylenanil.com/posts/hacking-gisec-before-speaking.html"},
+        "keywords": ["GISEC", "path traversal", "CWE-22", "responsible disclosure", "security research"],
+        "inLanguage": "en"
+    }
+    </script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="stylesheet" href="../assets/gisec/post.css">
+</head>
+<body class="post-page minimal-post-page gisec-post">
+    <main class="minimal-shell post-shell">
+        <nav class="minimal-nav" aria-label="Post navigation">
+            <a href="../index.html">rylen</a>
+            <div>
+                <a href="../index.html#about">about</a>
+                <a href="../index.html#projects">projects</a>
+                <a href="../blog.html">blog</a>
+            </div>
+        </nav>
+
+        <header class="post-hero">
+            <a href="../blog.html" class="post-breadcrumb">← back to blog</a>
+            <div class="post-meta">
+                <span><time datetime="2026-09-24">Sep 24, 2026</time></span>
+                <span>6 min read</span>
+            </div>
+            <h1>Hacking GISEC Before Speaking at GISEC</h1>
+            <p class="post-dek">A week before my talk, I found a file-download flaw on GISEC’s registration platform. It exposed the application’s secrets and gave me read access to real visitor and payment records.</p>
+            <div class="post-tags">
+                <span>Security</span>
+                <span>Disclosure</span>
+                <span>Web</span>
+            </div>
+        </header>
+
+        <div class="post-layout">
+            <article class="post-content" aria-label="GISEC vulnerability disclosure story">
+                <p class="post-lede">I was due to speak at GISEC. About a week before my talk, I started poking around their website and ended up reading visitor and payment records from the database behind the registration platform.</p>
+
+                <p>The way in was a file-download endpoint. It returned the production <code>web.config</code> without a login, and that file contained the database credentials and the application’s integration secrets. The database credentials worked. I could run queries and read the results.</p>
+
+                <p>I reported it on August 31, 2026, with a proof of concept attached. GISEC later confirmed that they had fixed it.</p>
+
+                <aside class="post-callout" aria-label="Disclosure status">
+                    <p><strong>Reported August 31, 2026. Fix confirmed by GISEC.</strong> Both recordings below are from my original runs, with credentials and personal data redacted.</p>
+                </aside>
+
+                <h2>It started with an image upload</h2>
+                <p>I’d been looking through the registration frontend and the API calls it made. Several of the data endpoints returned 401 when called without a valid token. Following the frontend’s file-handling code led to an image-upload route that took a <code>folderName</code> parameter.</p>
+
+                <p>The upload handler rejected a text file with “Invalid file type.” A small PNG was accepted. There was also a download route, <code>/Upload/File</code>, which took <code>fileName</code> and <code>folderName</code> and returned the uploaded image’s bytes. That download worked without authentication.</p>
+
+                <p>So there was a route that would read a file from disk, and the request supplied both the file and its folder. I started checking how far that folder could reach.</p>
+
+                <h2>403, 404, then 29,887 bytes</h2>
+                <p>Several attempts came back with 403 or 404 responses. Changing the filename, trying different separators, and trying an encoded path did not return the configuration. The request that succeeded put the traversal in <code>folderName</code> and requested <code>web.config</code> as the file.</p>
+
+                <p>That one returned HTTP 200 and 29,887 bytes.</p>
+
+                <p>A 200 on its own doesn’t tell you much; it could still be an error page. I checked the body. It started with XML, followed by ASP.NET configuration sections, connection strings, and application settings. It was the actual configuration file.</p>
+
+                <p>The download handler was allowing <a href="https://cwe.mitre.org/data/definitions/22.html" target="_blank" rel="noopener noreferrer">path traversal (CWE-22)</a>: the supplied folder escaped the directory the endpoint should have been restricted to. No account or password guessing was needed to retrieve the file.</p>
+
+                <h2>What was sitting in that file</h2>
+                <p>The configuration contained the SQL Server address, database name, username, and password in a connection string. It also contained:</p>
+                <ul>
+                    <li>The JWT signing secret.</li>
+                    <li>Stripe and Tap payment integration keys.</li>
+                    <li>A DWTC payment API subscription key.</li>
+                    <li>SMTP credentials for registration email.</li>
+                    <li>Google and LinkedIn OAuth client secrets.</li>
+                </ul>
+
+                <p>These were the settings returned by the running registration application. I also checked the exposed API keys separately, and they worked. The Stripe and Tap keys in the saved configuration had test-mode prefixes, so those need to be described as test-environment credentials, even though they were exposed by the production site.</p>
+
+                <p>The configuration also had an older, commented-out database connection string. That login failed. The active SQL connection was the one that opened up the live data.</p>
+
+                <figure class="post-image-stack post-recording">
+                    <video controls playsinline preload="none" width="1900" height="1032" poster="../assets/gisec/configuration-poster.png" aria-label="Redacted configuration file recording" aria-describedby="configuration-caption">
+                        <source src="../assets/gisec/configuration-redacted.mp4" type="video/mp4">
+                        <a href="../assets/gisec/configuration-redacted.mp4">Download the redacted configuration recording.</a>
+                    </video>
+                    <figcaption id="configuration-caption">August 31, 2026 · 12 seconds · No audio. The terminal displays the returned configuration file; sensitive values are redacted. <a href="../assets/gisec/configuration-redacted.mp4">Open recording</a>.</figcaption>
+                </figure>
+
+                <h2>I had read access to the database</h2>
+                <p>The SQL Server was reachable over the internet. I connected using the credentials from the active connection string and got a successful login. The server identified itself as SQL Server 2022.</p>
+
+                <p>Then I started querying it. I could list tables, inspect their columns, and read rows. The GISEC database had tables for users, bookings, orders, payments, payment transactions, and exhibitor invitations.</p>
+
+                <p>An early query failed because I’d asked for a column called <code>Name</code>. The user table used <code>FirstName</code> and <code>LastName</code> instead. After checking the schema, the corrected query returned names, email addresses, phone numbers, companies, job titles, and countries.</p>
+
+                <p>I could also read the <code>Payments</code> table. The sample query returned people’s names and email addresses alongside transaction amounts and payment statuses. The exposure included actual registration and transaction data.</p>
+
+                <p>In the recorded run below, the table counts were:</p>
+                <ul>
+                    <li><strong>21,118</strong> user rows.</li>
+                    <li><strong>28,276</strong> order rows.</li>
+                    <li><strong>620</strong> payment rows.</li>
+                </ul>
+
+                <p>The proof of concept also returned a 100-record visitor sample. Those are the rows obscured in the lower part of the recording. The counts changed between runs as the database continued to receive registrations.</p>
+
+                <figure class="post-image-stack post-recording">
+                    <video controls playsinline preload="none" width="1900" height="1032" poster="../assets/gisec/database-poster.png" aria-label="Redacted database authentication recording" aria-describedby="database-caption">
+                        <source src="../assets/gisec/database-redacted.mp4" type="video/mp4">
+                        <a href="../assets/gisec/database-redacted.mp4">Download the redacted database recording.</a>
+                    </video>
+                    <figcaption id="database-caption">August 31, 2026 · 7 seconds · No audio. Successful authentication, database enumeration, and GISEC table counts. Credentials, database names, and visitor details are redacted. <a href="../assets/gisec/database-redacted.mp4">Open recording</a>.</figcaption>
+                </figure>
+
+                <h2>There were 93 databases on the server</h2>
+                <p>Listing the databases returned 93 names. They included databases associated with GISEC, GITEX, World Government Summit, ADSW, and other events across the DWTC/Evento infrastructure.</p>
+
+                <p>I’d reached that server through GISEC’s registration API, but the server was shared with a much larger event-platform estate. The 93 figure is the database inventory returned by the login; the actual row reads and samples described here are from the GISEC database.</p>
+
+                <p>Even that database’s name was misleading: it ended in <code>_dev</code>, but the queries were returning real registration and payment records. A development-looking name didn’t make the data behind it test data.</p>
+
+                <p>By this point, the chain was straightforward:</p>
+                <ol class="gisec-chain" aria-label="Verified vulnerability chain">
+                    <li><strong>Read a file without logging in</strong><span>The download route let the folder parameter reach outside its intended directory.</span></li>
+                    <li><strong>Recover the application’s secrets</strong><span>The returned configuration contained SQL credentials and integration keys.</span></li>
+                    <li><strong>Connect to SQL Server</strong><span>The active credentials authenticated over the internet.</span></li>
+                    <li><strong>Read visitor and payment rows</strong><span>SELECT queries returned personal information, transaction amounts, and payment statuses.</span></li>
+                </ol>
+
+                <h2>The email to GISEC</h2>
+                <p>On August 31, I emailed Marleen, my GISEC contact, and asked for the finding to reach the security team urgently. I described the unauthenticated file read, the exposed secrets, and the database access, and attached <code>poc.py</code> with instructions for running it.</p>
+
+                <p>The script let them check each part separately: retrieve the configuration, parse the database credentials, verify the SQL login, and read a visitor sample. It also had an option to list the exposed configuration entries. That gave the team a way to reproduce the issue and see which secrets needed attention.</p>
+
+                <p>I asked them to rotate the exposed credentials and keys immediately, fix the path handling and access controls on the file endpoint, restrict the SQL account’s permissions, and close off unnecessary internet access to the database port. Fixing the file read would stop another download; it wouldn’t invalidate credentials someone had already copied.</p>
+
+                <p>GISEC subsequently confirmed the fix.</p>
+
+                <p>This ended up being a very different kind of preparation for my talk. I was supposed to be going there to discuss security, and a week beforehand I was emailing them about their own registration database. The bug itself was a familiar one. What made it serious was what the application kept within reach of it.</p>
+
+                <p class="gisec-post-end">More research: <a href="jee-advanced-2026-cloud-storage-disclosure.html">How I Found a Critical JEE Advanced 2026 Data Exposure</a></p>
+            </article>
+        </div>
+    </main>
+
+    <footer class="minimal-footer">
+        <p>&copy; 2026 Rylen Anil</p>
+    </footer>
+</body>
+</html>
