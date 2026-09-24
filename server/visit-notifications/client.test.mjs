@@ -34,14 +34,16 @@ test('stays disabled until configured and ignores local previews', async () => {
     assert.equal(b.calls.length, 0);
 });
 
-test('sends only the path once per tab session', async () => {
+test('reports each page load, including navigation within the same tab, without query strings', async () => {
     const b = browser();
     runInNewContext(enabled, b.context);
     await settle();
+    b.context.location.pathname = '/posts/hacking-gisec-before-speaking.html';
     runInNewContext(enabled, b.context);
     await settle();
-    assert.equal(b.calls.length, 1);
+    assert.equal(b.calls.length, 2);
     assert.deepEqual(JSON.parse(b.calls[0].body), { path: '/blog.html' });
+    assert.deepEqual(JSON.parse(b.calls[1].body), { path: '/posts/hacking-gisec-before-speaking.html' });
     assert.equal(b.calls[0].credentials, 'omit');
     assert.equal(b.calls[0].referrerPolicy, 'no-referrer');
 });
@@ -57,7 +59,7 @@ test('waits until a hidden tab is visible', async () => {
     assert.equal(b.listeners.size, 0);
 });
 
-test('failed requests allow a later visit to retry', async () => {
+test('network failures are caught and do not affect the page', async () => {
     const b = browser({ fetch: async () => { throw new Error('offline'); } });
     runInNewContext(enabled, b.context);
     await settle();

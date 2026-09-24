@@ -3,12 +3,20 @@ main = "worker.mjs"
 compatibility_date = "2026-09-24"
 workers_dev = true
 
+[[durable_objects.bindings]]
+name = "VISIT_COUNTS"
+class_name = "VisitCounter"
+
+[[migrations]]
+tag = "v1-visit-counts"
+new_sqlite_classes = ["VisitCounter"]
+
 [[ratelimits]]
 name = "VISITOR_LIMIT"
 namespace_id = "9242601"
-simple = { limit = 2, period = 60 }
+simple = { limit = 10, period = 60 }
 
 [[ratelimits]]
 name = "CHANNEL_LIMIT"
 namespace_id = "9242602"
-simple = { limit = 10, period = 60 }
+simple = { limit = 30, period = 60 }

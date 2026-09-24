@@ -8,6 +8,34 @@ const pages = new Map([
 ]);
 const maxBodyBytes = 512;
 
+// Each IP gets one private Durable Object. A single SQL statement makes increments
+// atomic, including concurrent visits reaching different Cloudflare locations.
+export class VisitCounter {
+    constructor(ctx) {
+        this.sql = ctx.storage.sql;
+        this.sql.exec('CREATE TABLE IF NOT EXISTS visits (id INTEGER PRIMARY KEY CHECK (id = 1), count INTEGER NOT NULL)');
+    }
+
+    async fetch(request) {
+        if (request.method !== 'POST') return new Response(null, { status: 405 });
+        const { count } = this.sql.exec(`
+            INSERT INTO visits (id, count) VALUES (1, 1)
+            ON CONFLICT (id) DO UPDATE SET count = count + 1
+            RETURNING count
+        `).one();
+        return Response.json({ count });
+    }
+}
+
+function approximateLocation(cf = {}) {
+    let country = cf.country;
+    if (country && /^[A-Z]{2}$/.test(country)) {
+        try { country = new Intl.DisplayNames(['en'], { type: 'region' }).of(country); } catch { /* Use country code. */ }
+    }
+    return [...new Set([cf.city, cf.region, country].filter(value => typeof value === 'string' && value.trim()))]
+        .join(', ').slice(0, 250) || 'Unavailable';
+}
+
 async function readBody(request) {
     if (!request.body) throw new Error('Missing body');
     const reader = request.body.getReader();
@@ -63,7 +91,7 @@ export async function handleVisit(request, env, send = fetch) {
         if (webhook.protocol !== 'https:' || webhook.hostname !== 'discord.com' ||
             webhook.port || webhook.username || webhook.password ||
             !/^\/api\/webhooks\/\d+\/[\w-]+$/.test(webhook.pathname)) return reply(503);
-        if (!env.VISITOR_LIMIT || !env.CHANNEL_LIMIT) return reply(503);
+        if (!env.VISITOR_LIMIT || !env.CHANNEL_LIMIT || !env.VISIT_COUNTS) return reply(503);
         webhook.searchParams.set('wait', 'true');
     } catch { return reply(503); }
 
@@ -80,6 +108,13 @@ export async function handleVisit(request, env, send = fetch) {
         const channel = await env.CHANNEL_LIMIT.limit({ key: 'discord-channel' });
         if (!channel.success) return reply(429);
 
+        stage = 'visit counter';
+        const counter = env.VISIT_COUNTS.get(env.VISIT_COUNTS.idFromName(ip));
+        const counted = await counter.fetch('https://counter/increment', { method: 'POST' });
+        if (!counted.ok) throw new Error('Counter unavailable');
+        const { count } = await counted.json();
+        if (!Number.isSafeInteger(count) || count < 1) throw new Error('Invalid counter');
+
         stage = 'Discord delivery';
         const response = await send(webhook.toString(), {
             method: 'POST',
@@ -92,7 +127,14 @@ export async function handleVisit(request, env, send = fetch) {
                     title: 'New website visit',
                     description: pages.get(body.path),
                     url: `https://rylenanil.com${body.path}`,
-                    fields: [{ name: 'Visitor public IP', value: ip, inline: true }],
+                    fields: [
+                        { name: 'Page URL', value: `https://rylenanil.com${body.path}` },
+                        { name: 'Visitor public IP', value: ip, inline: true },
+                        { name: 'Approximate IP location', value: approximateLocation(request.cf), inline: true },
+                        { name: 'Previous recorded visits from this IP', value: String(count - 1), inline: true },
+                        { name: 'Visit number for this IP', value: String(count), inline: true },
+                    ],
+                    footer: { text: 'Counts start September 24, 2026. Shared IPs combine visitors; VPNs affect location.' },
                     color: 0x64ffda,
                     timestamp: new Date().toISOString(),
                 }],

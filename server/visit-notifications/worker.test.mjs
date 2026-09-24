@@ -13,16 +13,25 @@ function request(body = { path: '/blog.html' }, overrides = {}) {
 }
 function setup() {
     const sent = [];
+    const counts = new Map();
     const env = {
         DISCORD_WEBHOOK_URL: 'https://discord.com/api/webhooks/123456/test-secret',
         VISITOR_LIMIT: { limit: async () => ({ success: true }) },
         CHANNEL_LIMIT: { limit: async () => ({ success: true }) },
+        VISIT_COUNTS: {
+            idFromName: ip => ip,
+            get: ip => ({ fetch: async () => {
+                const count = (counts.get(ip) || 0) + 1;
+                counts.set(ip, count);
+                return Response.json({ count });
+            } }),
+        },
     };
     const send = async (url, options) => {
         sent.push({ url, ...options });
         return new Response('{}');
     };
-    return { env, send, sent };
+    return { env, send, sent, counts };
 }
 
 test('sends a fixed message with Cloudflare-observed IP, ignores client-supplied IP, and waits for Discord', async () => {
@@ -37,7 +46,12 @@ test('sends a fixed message with Cloudflare-observed IP, ignores client-supplied
     assert.equal(payload.embeds[0].url, `${origin}/blog.html`);
     assert.equal(payload.embeds[0].description, 'Blog');
     assert.ok(!sent[0].body.includes('@everyone'));
-    assert.deepEqual(payload.embeds[0].fields, [{ name: 'Visitor public IP', value: '192.0.2.1', inline: true }]);
+    const fields = Object.fromEntries(payload.embeds[0].fields.map(field => [field.name, field.value]));
+    assert.equal(fields['Visitor public IP'], '192.0.2.1');
+    assert.equal(fields['Page URL'], `${origin}/blog.html`);
+    assert.equal(fields['Approximate IP location'], 'Unavailable');
+    assert.equal(fields['Previous recorded visits from this IP'], '0');
+    assert.equal(fields['Visit number for this IP'], '1');
     assert.ok(!sent[0].body.includes('ignored'));
     assert.equal(await response.text(), '');
 });
@@ -63,7 +77,7 @@ test('rejects unknown paths, query strings, malformed and oversized input', asyn
 });
 
 test('fails closed without secret or rate limit bindings', async () => {
-    for (const missing of ['DISCORD_WEBHOOK_URL', 'VISITOR_LIMIT', 'CHANNEL_LIMIT']) {
+    for (const missing of ['DISCORD_WEBHOOK_URL', 'VISITOR_LIMIT', 'CHANNEL_LIMIT', 'VISIT_COUNTS']) {
         const { env, send, sent } = setup();
         delete env[missing];
         assert.equal((await handleVisit(request(), env, send)).status, 503);
@@ -75,6 +89,39 @@ test('fails closed without secret or rate limit bindings', async () => {
         assert.equal((await handleVisit(request(), env, send)).status, 503);
         assert.equal(sent.length, 0);
     }
+});
+
+test('uses trusted geolocation and maintains separate counts per IP across pages', async () => {
+    const { env, send, sent, counts } = setup();
+    const first = request({ path: '/blog.html', city: 'Untrusted city', count: 999 });
+    Object.defineProperty(first, 'cf', { value: { city: 'Dubai', region: 'Dubai', country: 'AE' } });
+    assert.equal((await handleVisit(first, env, send)).status, 204);
+    assert.equal((await handleVisit(request({ path: '/' }), env, send)).status, 204);
+    const other = request();
+    other.headers.set('CF-Connecting-IP', '2001:db8::1');
+    assert.equal((await handleVisit(other, env, send)).status, 204);
+    const fields = sent.map(message => Object.fromEntries(JSON.parse(message.body).embeds[0].fields.map(f => [f.name, f.value])));
+    assert.equal(fields[0]['Approximate IP location'], 'Dubai, United Arab Emirates');
+    assert.equal(fields[1]['Previous recorded visits from this IP'], '1');
+    assert.equal(fields[1]['Visit number for this IP'], '2');
+    assert.equal(fields[2]['Previous recorded visits from this IP'], '0');
+    assert.deepEqual([...counts.values()], [2, 1]);
+    assert.ok(!JSON.stringify(sent).includes('Untrusted city'));
+});
+
+test('invalid and rate-limited requests do not increment counts', async () => {
+    const { env, send, counts } = setup();
+    await handleVisit(request({ path: '/missing' }), env, send);
+    env.CHANNEL_LIMIT.limit = async () => ({ success: false });
+    await handleVisit(request(), env, send);
+    assert.equal(counts.size, 0);
+});
+
+test('counter failure does not send a made-up count', async () => {
+    const { env, send, sent } = setup();
+    env.VISIT_COUNTS.get = () => ({ fetch: async () => { throw new Error('storage unavailable'); } });
+    assert.equal((await handleVisit(request(), env, send)).status, 502);
+    assert.equal(sent.length, 0);
 });
 
 test('both rate limits block delivery', async () => {
