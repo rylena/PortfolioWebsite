@@ -90,7 +90,7 @@
 
                 <p>The way in was a file-download endpoint. It returned the production <code>web.config</code> without a login, and that file contained the database credentials and the application’s integration secrets. The database credentials worked. I could run queries and read the results.</p>
 
-                <p>I reported it on August 31, 2026, with a proof of concept attached. GISEC later confirmed that they had fixed it.</p>
+                <p>I reported it on August 31, 2026, with a proof of concept attached. The GISEC team was very thankful that I’d brought it to their attention and acted immediately to fix it. They subsequently confirmed that it was resolved.</p>
 
                 <aside class="post-callout" aria-label="Disclosure status">
                     <p><strong>Reported August 31, 2026. Fix confirmed by GISEC.</strong> Both recordings below are from my original runs, with credentials and personal data redacted.</p>
@@ -182,7 +182,7 @@
 
                 <p>I asked them to rotate the exposed credentials and keys immediately, fix the path handling and access controls on the file endpoint, restrict the SQL account’s permissions, and close off unnecessary internet access to the database port. Fixing the file read would stop another download; it wouldn’t invalidate credentials someone had already copied.</p>
 
-                <p>GISEC subsequently confirmed the fix.</p>
+                <p>I really appreciated how the GISEC team handled the report. They thanked me for flagging it, got straight to work on the fix, and confirmed when it was resolved.</p>
 
                 <p>This ended up being a very different kind of preparation for my talk. I was supposed to be going there to discuss security, and two weeks beforehand I was emailing them about their own registration database. The bug itself was a familiar one. What made it serious was what the application kept within reach of it.</p>
 
