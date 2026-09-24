@@ -1,0 +1,14 @@
+name = "portfolio-visit-notifications"
+main = "worker.mjs"
+compatibility_date = "2026-09-24"
+workers_dev = true
+
+[[ratelimits]]
+name = "VISITOR_LIMIT"
+namespace_id = "9242601"
+simple = { limit = 2, period = 60 }
+
+[[ratelimits]]
+name = "CHANNEL_LIMIT"
+namespace_id = "9242602"
+simple = { limit = 10, period = 60 }
