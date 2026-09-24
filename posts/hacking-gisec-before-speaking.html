@@ -74,7 +74,7 @@
                 <span>6 min read</span>
             </div>
             <h1>Hacking GISEC Before Speaking at GISEC</h1>
-            <p class="post-dek">A week before my talk, I found a file-download flaw on GISEC’s registration platform. It exposed the application’s secrets and gave me read access to real visitor and payment records.</p>
+            <p class="post-dek">Two weeks before my talk, I found a file-download flaw on GISEC’s registration platform. It exposed the application’s secrets and gave me read access to real visitor and payment records.</p>
             <div class="post-tags">
                 <span>Security</span>
                 <span>Disclosure</span>
@@ -84,7 +84,9 @@
 
         <div class="post-layout">
             <article class="post-content" aria-label="GISEC vulnerability disclosure story">
-                <p class="post-lede">I was due to speak at GISEC. About a week before my talk, I started poking around their website and ended up reading visitor and payment records from the database behind the registration platform.</p>
+                <p class="post-lede">I had a wonderful time speaking at GISEC and connecting with all of you there. But about two weeks before I took the stage, I found something on the event’s own website that I needed to report.</p>
+
+                <p>I’d been poking around the registration platform and ended up with read access to the database behind it, including real visitor and payment records.</p>
 
                 <p>The way in was a file-download endpoint. It returned the production <code>web.config</code> without a login, and that file contained the database credentials and the application’s integration secrets. The database credentials worked. I could run queries and read the results.</p>
 
@@ -182,7 +184,7 @@
 
                 <p>GISEC subsequently confirmed the fix.</p>
 
-                <p>This ended up being a very different kind of preparation for my talk. I was supposed to be going there to discuss security, and a week beforehand I was emailing them about their own registration database. The bug itself was a familiar one. What made it serious was what the application kept within reach of it.</p>
+                <p>This ended up being a very different kind of preparation for my talk. I was supposed to be going there to discuss security, and two weeks beforehand I was emailing them about their own registration database. The bug itself was a familiar one. What made it serious was what the application kept within reach of it.</p>
 
                 <p class="gisec-post-end">More research: <a href="jee-advanced-2026-cloud-storage-disclosure.html">How I Found a Critical JEE Advanced 2026 Data Exposure</a></p>
             </article>
