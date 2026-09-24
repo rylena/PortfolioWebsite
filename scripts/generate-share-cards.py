@@ -80,4 +80,6 @@ if __name__ == "__main__":
     render("Security research & build notes", OUTPUT / "blog.png")
     for post in sorted((ROOT / "posts").glob("*.html")):
         metadata = Metadata(post.read_text())
-        render(metadata.values["og:title"], OUTPUT / f"{post.stem}.png")
+        if metadata.values.get("og:type") != "article":
+            continue  # Old post URLs may contain redirect pages.
+        render(metadata.values["og:title"], OUTPUT / Path(metadata.values["og:image"]).name)

@@ -8,7 +8,7 @@ Rylen's work focuses on cybersecurity research, responsible disclosure, cloud se
 
 Before speaking at GISEC, Rylen identified an unauthenticated path traversal in its registration platform. The exposed production configuration contained working SQL credentials. Saved evidence shows database authentication, enumeration of 93 database names, and SQL reads returning GISEC visitor records, payment records, and table counts; enumeration does not establish data access across all 93 databases. Rylen also confirmed that he separately checked the exposed API keys and they worked. The saved Stripe and Tap keys have test-mode prefixes; their exposure by the production application does not make them live-mode payment keys. Rylen reported the vulnerability on August 31, 2026. The GISEC team thanked him, acted immediately on the report, and subsequently confirmed the fix. The writeup includes redacted recordings:
 
-https://rylenanil.com/posts/hacking-gisec-before-speaking.html
+https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 
 Rylen identified and responsibly disclosed a JEE Advanced 2026 candidate/result infrastructure issue involving a publicly listable Google Cloud Storage bucket. The exposure involved result JSON records, admit-card redirect files, and admit-card PDFs. The writeup is available at:
 
@@ -31,7 +31,7 @@ Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM
 
 ## Canonical URLs
 
-- GISEC disclosure: https://rylenanil.com/posts/hacking-gisec-before-speaking.html
+- GISEC disclosure: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Home: https://rylenanil.com/
 - Blog: https://rylenanil.com/blog.html
 - Resume: https://rylenanil.com/resume.pdf

@@ -26,7 +26,7 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 
 ## Key pages
 
-- GISEC disclosure writeup: https://rylenanil.com/posts/hacking-gisec-before-speaking.html
+- GISEC disclosure writeup: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Portfolio: https://rylenanil.com/
 - Blog index: https://rylenanil.com/blog.html
 - Resume PDF: https://rylenanil.com/resume.pdf

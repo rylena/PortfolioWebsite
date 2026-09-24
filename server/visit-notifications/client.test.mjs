@@ -38,12 +38,12 @@ test('reports each page load, including navigation within the same tab, without 
     const b = browser();
     runInNewContext(enabled, b.context);
     await settle();
-    b.context.location.pathname = '/posts/hacking-gisec-before-speaking.html';
+    b.context.location.pathname = '/posts/hacking-gisec-before-speaking-at-gisec.html';
     runInNewContext(enabled, b.context);
     await settle();
     assert.equal(b.calls.length, 2);
     assert.deepEqual(JSON.parse(b.calls[0].body), { path: '/blog.html' });
-    assert.deepEqual(JSON.parse(b.calls[1].body), { path: '/posts/hacking-gisec-before-speaking.html' });
+    assert.deepEqual(JSON.parse(b.calls[1].body), { path: '/posts/hacking-gisec-before-speaking-at-gisec.html' });
     assert.equal(b.calls[0].credentials, 'omit');
     assert.equal(b.calls[0].referrerPolicy, 'no-referrer');
 });

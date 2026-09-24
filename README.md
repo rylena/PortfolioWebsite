@@ -9,3 +9,5 @@ PNGs. The renderer uses the bundled, OFL-licensed Poppins fonts. For a new post,
 point its Open Graph, Twitter, and JSON-LD image metadata to
 `https://rylenanil.com/assets/share/<post-filename-without-html>.png`, using
 1200 × 630 dimensions, `image/png`, and the title and author as image alt text.
+The renderer writes to the filename in `og:image` and skips redirect pages, so
+existing card URLs can stay stable when a post URL changes.
