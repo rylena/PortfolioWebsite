@@ -176,7 +176,7 @@
                 </ol>
 
                 <h2>The email to GISEC</h2>
-                <p>On August 31, I emailed Marleen, my GISEC contact, and asked for the finding to reach the security team urgently. I described the unauthenticated file read, the exposed secrets, and the database access, and attached <code>poc.py</code> with instructions for running it.</p>
+                <p>On August 31, I emailed GISEC to report the vulnerability. I described the unauthenticated file read, the exposed secrets, and the database access, and attached <code>poc.py</code> with instructions for running it.</p>
 
                 <p>The script let them check each part separately: retrieve the configuration, parse the database credentials, verify the SQL login, and read a visitor sample. It also had an option to list the exposed configuration entries. That gave the team a way to reproduce the issue and see which secrets needed attention.</p>
 
