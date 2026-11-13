@@ -4,7 +4,7 @@ Creator: Rylen Anil
 Site: https://rylenanil.com/
 GitHub: https://github.com/rylena
 LinkedIn: https://www.linkedin.com/in/rylen-anil-perumkannaril/
-X: https://x.com/DarthKermi72747
+X: https://x.com/rylenanil
 Location: Dubai, UAE
 
 /* SITE */
