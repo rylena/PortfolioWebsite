@@ -98,7 +98,7 @@
             <a href="../blog.html" class="post-breadcrumb">← back to blog</a>
             <div class="post-meta">
                 <span><time datetime="2026-06-02">Jun 2, 2026</time></span>
-                <span>5 min read</span>
+                <span>9 min read</span>
             </div>
             <h1>How I Found a Critical JEE Advanced 2026 Data Exposure</h1>
             <p class="post-dek">
@@ -115,17 +115,44 @@
             <article class="post-content">
                 <p class="post-lede">On June 2, 2026, I was looking at how the JEE Advanced candidate and result portal served its files. A request for an object that did not exist returned an error containing a storage bucket name. I followed that clue.</p>
 
-                <p>Over roughly 35 minutes, between 17:40 and 18:15 GST, I found that the underlying storage allowed unauthenticated listing and reading of candidate files. The route into this issue was the storage layer behind the portal.</p>
+                <p>Over roughly 35 minutes, between 17:40 and 18:15 Dubai time (GST), I found that the underlying storage allowed unauthenticated listing and reading of candidate files. The route into this issue was the storage layer behind the portal.</p>
+
+                <h2>A quick map of the portal and its files</h2>
+                <p>The candidate portal was the website people used in their browser. The files behind it lived in <strong>Google Cloud Storage</strong>, a service for storing and serving files. The portal and the storage service had different jobs, and access to the files depended on the storage permissions too.</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/jee-system-map.svg" width="364" height="435" loading="lazy" decoding="async" alt="The candidate portal used a Cloud Storage bucket containing result JSON, redirect HTML, and admit-card PDFs. Direct storage requests could list objects and read verification samples without a candidate login.">
+                    <figcaption>The access I tested was at the storage endpoint. It did not depend on having a candidate's logged-in session in the portal.</figcaption>
+                </figure>
+
+                <h2>A few storage terms, in plain language</h2>
+                <h3>Bucket, object, and prefix</h3>
+                <p>A <strong>bucket</strong> is a named container. An <strong>object</strong> is one item stored in it, usually a file. A <strong>prefix</strong> is the beginning of an object's name, which can be used to group or list matching names.</p>
+
+                <p>For example, <code>results/example.json</code> could be an object name, and <code>results/</code> its prefix. Slashes can make object names look like folders. This naming example illustrates the terms; it is not a real candidate file path.</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/jee-storage-names.svg" width="357" height="311" loading="lazy" decoding="async" alt="An illustrative bucket contains an object named results/example.json. The results/ part is a prefix used to group matching object names, and the full name identifies one stored file.">
+                    <figcaption>Illustrative names only. The bucket is the container; the full object name identifies the file. Google explains these terms in its <a href="https://docs.cloud.google.com/storage/docs/objects" target="_blank" rel="noopener noreferrer">Cloud Storage object documentation</a>.</figcaption>
+                </figure>
+
+                <h3>Listing is the index; reading is opening a file</h3>
+                <p>A <strong>listing</strong> asks the storage service which objects exist. A <strong>read</strong> asks for the contents of one named object. Being allowed to see the index and being allowed to open a file are separate permissions.</p>
+
+                <p>That is why the investigation needed both checks. Finding a bucket name was a starting point. Listing would establish whether I could discover its filenames, and reading a small sample would establish whether I could retrieve candidate information.</p>
+
+                <h3>A website login and storage permissions are separate controls</h3>
+                <p>A portal may check that a person is logged in before showing a download link. If the storage service also accepts direct requests, it must enforce the intended access rules for those requests. Otherwise, someone can ask storage for the file without following the portal's login flow.</p>
+
+                <p>Here, <strong>unauthenticated</strong> means I made the storage request without supplying a candidate's login credentials or session.</p>
 
                 <h2>The error that gave me a starting point</h2>
                 <p>I started with the portal's static files and storage-backed paths. One request to a non-existent object returned an error that revealed the Google Cloud Storage bucket being used behind the application.</p>
 
-                <p>A bucket is a container for stored objects. In this case, those objects included files used by the candidate and result infrastructure.</p>
-
                 <p>Knowing a bucket's name does not establish a vulnerability. Plenty of applications use storage names that are easy to see. I still needed to check what an unauthenticated request was allowed to do with it.</p>
 
                 <h2>Could I list what was inside?</h2>
-                <p>I made a small, limited listing request. The storage endpoint returned object names under prefixes associated with results and admit cards.</p>
+                <p>I made a small, limited listing request. The storage endpoint, the address handling those requests, returned object names under prefixes associated with results and admit cards. The important part was that I was getting an index of stored files without a candidate login.</p>
 
                 <p>That changed the situation. I was no longer relying on a guessed filename or a URL the portal had given me for one candidate. I could discover filenames directly from the storage service, without a candidate session.</p>
 
@@ -133,25 +160,35 @@
 
                 <p>So the next step was to check a small sample of the listed objects.</p>
 
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/jee-list-and-read.svg" width="323" height="367" loading="lazy" decoding="async" alt="A listing request returns object names rather than file contents. A separate GET request uses one of those names to retrieve a result record or admit-card file.">
+                    <figcaption>The first response supplied names. The second check established that named files were readable. A listing alone would not have proved both permissions.</figcaption>
+                </figure>
+
                 <h2>The files were readable too</h2>
-                <p>The exposed paths included three kinds of files: result records stored as JSON, admit-card redirect pages stored as HTML, and the admit-card PDFs themselves.</p>
+                <p>The exposed paths included three kinds of files, with different roles:</p>
+                <ul>
+                    <li><strong>Result JSON:</strong> structured data written as field names and values, including scores and candidate details.</li>
+                    <li><strong>Redirect HTML:</strong> a small web page that sends the browser to another location, in this case an admit-card file.</li>
+                    <li><strong>Admit-card PDF:</strong> the document a candidate would open or download.</li>
+                </ul>
+                <p>Those are different objects used in the same candidate workflow. A redirect page and the PDF it leads to are two files, even when they relate to one person.</p>
 
                 <p>The sample result record contained candidate details alongside exam scores. I could see fields for the candidate's name, date of birth, mobile number, serial or roll identifiers, subject marks, total score, positive score, and rank-related values. Some rank fields in the sample were <code>null</code>.</p>
 
-                <p>Here are some of the field names visible in my original screenshot:</p>
+                <p>This shortened excerpt shows how those fields appear in JSON. Personal information and the score value are redacted:</p>
 
-                <pre tabindex="0" aria-label="Field names in the redacted result record"><code>SrNo
-Candidate_Name
-DOB
-Adv_Mobile_Number
-Mathematics
-Physics
-Chemistry
-Positive
-Total
-CRL_Rank</code></pre>
+                <pre tabindex="0" aria-label="Shortened redacted excerpt of the result JSON"><code>{
+  "Candidate_Name": "[redacted]",
+  "DOB": "[redacted]",
+  "Adv_Mobile_Number": "[redacted]",
+  "Total": "[redacted]",
+  "CRL_Rank": null
+}</code></pre>
 
-                <p>Those are field names, without candidate values. The redacted screenshot below shows the actual structure of the result record.</p>
+                <p>The name on the left identifies the field; the value on the right is its contents. <code>null</code> means no value is set in that field. It should not be read as a score of zero or used by itself to infer a candidate's result.</p>
+
+                <p>The screenshot below shows the original record with candidate details redacted.</p>
 
                 <figure class="post-image-stack">
                     <img src="../assets/jee-x-evidence-1.jpg" alt="Redacted screenshot from Rylen Anil's X post showing exposed JEE Advanced admit-card PDF entries">
@@ -179,7 +216,7 @@ CRL_Rank</code></pre>
 
                 <p>Even a long or unpredictable filename offers little protection when an unauthenticated request can ask the storage service for the names. Once those names are available, public read access provides the next step.</p>
 
-                <p>The concern here was confidentiality. I demonstrated file reads; IIT Roorkee stated that the storage was read-only and records could not be altered.</p>
+                <p>The concern here was <strong>confidentiality</strong>: who could see the information. Read access is enough to expose private information, even if the reader cannot change it. I demonstrated file reads; IIT Roorkee stated that the storage was read-only and records could not be altered.</p>
 
                 <h2>Reporting the issue</h2>
                 <p>I reported the issue to the IIT officials, who fixed it quickly.</p>
@@ -194,6 +231,11 @@ CRL_Rank</code></pre>
                 <p>On June 5, I clarified that I had seen no evidence of a large-scale leak. Accessible files do not establish that someone else downloaded them all. I also confirmed that I had deleted my verification samples.</p>
 
                 <p>That distinction was part of my <a href="https://x.com/rylenanil/status/2062760208422846699" target="_blank" rel="noopener noreferrer">public clarification</a> and <a href="https://x.com/rylenanil/status/2062760212009030058" target="_blank" rel="noopener noreferrer">follow-up</a>, also covered by <a href="https://www.ndtv.com/education/not-large-scale-leak-16-year-old-student-issues-clarification-on-jee-advanced-2026-data-leak-11594687" target="_blank" rel="noopener noreferrer">NDTV</a>.</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/jee-scope.svg" width="361" height="415" loading="lazy" decoding="async" alt="Object listings measured the exposed inventory, while a small verification sample confirmed file read access. This established a public access vulnerability, but I had no evidence that someone copied all those files.">
+                    <figcaption>Inventory size, verification downloads, and evidence of wider copying are three different things. The reported object counts describe the inventory.</figcaption>
+                </figure>
 
                 <h2>What I took away from it</h2>
                 <p>This started with an ordinary storage error. The useful part was following it carefully: identify the backend, check listing, verify read access with a small sample, and report what the evidence showed.</p>

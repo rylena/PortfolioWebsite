@@ -1,0 +1,12 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
+  input [label="Download request\nfileName = web.config\nfolderName = ../.."];
+  parent [label="../.. moves up\nthrough parent directories"];
+  escape [label="Read outside the\napproved upload directory", color="#64ffda"];
+  config [label="web.config\nApplication settings exposed"];
+  input -> parent;
+  parent -> escape;
+  escape -> config;
+}

@@ -23,6 +23,9 @@ the console's native background. Source references for artwork and logos are in
 `assets/sources.json`.
 
 Blog share previews use title cards in `assets/share/`, with no article photos.
+Blog diagrams have editable Graphviz sources in `assets/diagrams/source/`.
+After editing those `.dot` files, run `python3 scripts/build-article-diagrams.py`
+(requires Graphviz) and commit the rendered SVGs alongside their sources.
 After changing a post's `og:title` or adding a post, run
 `python3 scripts/generate-share-cards.py` (requires Pillow) and commit the generated
 PNGs. The renderer uses the bundled, OFL-licensed Poppins fonts. For a new post,

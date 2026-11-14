@@ -1,0 +1,14 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
+  browser [label="My browser\nNo registration login"];
+  api [label="Registration API\nReceives a file request"];
+  files [label="Server files\nweb.config returned"];
+  client [label="My SQL client\nUses the exposed credentials"];
+  db [label="SQL Server\nStores visitor and payment rows", shape=cylinder];
+  browser -> api [label="HTTP request"];
+  api -> files [label="File read"];
+  files -> client [label="Returns credentials"];
+  client -> db [label="Separate SQL login"];
+}

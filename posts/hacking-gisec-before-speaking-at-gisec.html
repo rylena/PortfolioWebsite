@@ -79,7 +79,7 @@
             <a href="../blog.html" class="post-breadcrumb">← back to blog</a>
             <div class="post-meta">
                 <span><time datetime="2026-09-24">Sep 24, 2026</time></span>
-                <span>7 min read</span>
+                <span>11 min read</span>
             </div>
             <h1>Hacking GISEC Before Speaking at GISEC</h1>
             <p class="post-dek">An image-upload feature, a file-download endpoint, and a configuration file full of secrets. How I reached GISEC’s registration database two weeks before speaking at the event.</p>
@@ -100,22 +100,55 @@
                     <p><strong>Reported August 31, 2026. Fix confirmed by GISEC.</strong> The recordings in this post are from my original runs, with credentials and personal data redacted.</p>
                 </aside>
 
-                <h2>Following the registration frontend</h2>
-                <p>I began by looking through the frontend and the API calls it made. Several data endpoints returned <code>401</code> without a valid token. Following the file-handling code took me to an image-upload route with a parameter called <code>folderName</code>.</p>
+                <h2>A quick map of what I was looking at</h2>
+                <p>There were several pieces involved, and each had a different job. The registration page was what a visitor saw in their browser. An <strong>API</strong> was the server-side service that the page sent requests to, such as uploading an image or downloading a file. The server's files held application settings, while a separate database held registration records.</p>
 
-                <p>I tried uploading a text file first. The handler rejected it with “Invalid file type.” A small PNG went through, so the upload feature was checking the file type.</p>
+                <p>The investigation moved through those pieces in this order:</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/gisec-system-map.svg" width="322" height="521" loading="lazy" decoding="async" alt="An unauthenticated browser request reached the file-download API, which returned web.config from server files. I then used its exposed credentials in a separate SQL client connection to the database.">
+                    <figcaption>The file download and the database login were two separate requests. The first supplied the credentials used in the second.</figcaption>
+                </figure>
+
+                <h2>The concepts that explain the chain</h2>
+                <h3>A file path tells the server where to look</h3>
+                <p>A filename identifies a file, and a folder tells the server where to find it. A download feature should limit that search to an approved directory, such as its image-upload folder.</p>
+
+                <p>The special path segment <code>../</code> means “go up one parent directory.” If an application accepts that instruction from a visitor and lets it reach outside the approved folder, the visitor may be able to request other files the application can read. That is <a href="https://owasp.org/www-community/attacks/Path_Traversal" target="_blank" rel="noopener noreferrer">path traversal</a>.</p>
+
+                <h3>A configuration file can hold the application's credentials</h3>
+                <p><code>web.config</code> is a configuration file used by applications in the ASP.NET/IIS web stack. Here it contained settings for connecting to other services, including a <strong>database connection string</strong>: the server address, database name, username, and password needed to attempt a database connection.</p>
+
+                <p>Reading that string and using it successfully are separate findings. An exposed password could be old, incorrect, or valid only on an unreachable server. I needed to test the next step before describing the impact.</p>
+
+                <h3>A database login and a data read are different checks</h3>
+                <p><strong>SQL Server</strong> is Microsoft's database software. A database stores information in tables; a table has columns, such as an email field, and rows, such as one person's registration record.</p>
+
+                <p>A successful login establishes that the credentials work. A query then asks the database to do something. A <code>SELECT</code> query asks for information, and the account's permissions determine what it can read. Getting actual rows back is what establishes access to the data.</p>
+
+                <h2>Following the registration frontend</h2>
+                <p>I began by looking through the frontend and the API calls it made. Several API routes returned <code>401</code>, meaning a valid login was required. A token is the credential an application sends to identify an authenticated session. Following the file-handling code took me to an image-upload route with a parameter called <code>folderName</code>.</p>
+
+                <p>I tried uploading a text file first. The handler rejected it with “Invalid file type.” A small PNG image went through, so the upload feature was checking the file type. That check controlled what could be uploaded. I still needed to look separately at what the download feature could return.</p>
 
                 <p>The more interesting part was how the application retrieved that image. There was a separate route, <code>/Upload/File</code>, which accepted both <code>fileName</code> and <code>folderName</code>. Give it the uploaded image's name and folder, and it returned the image bytes. That request worked without authentication.</p>
 
                 <p>Now I had a file-reading endpoint where the client supplied the folder as well as the filename. I started checking whether the folder was actually restricted to the upload directory.</p>
 
                 <h2>Getting outside the upload folder</h2>
-                <p>My first attempts did not return anything useful. Different filenames, path separators, and an encoded path produced <code>403</code> or <code>404</code> responses.</p>
+                <p>My first attempts did not return anything useful. Different filenames, path separators, and an encoded path produced <code>403</code> or <code>404</code> responses. Those codes mean access was refused or the requested resource was not found; neither response established a file read.</p>
 
                 <p>The request that worked kept the filename simple and put the traversal in the folder parameter:</p>
 
                 <pre tabindex="0" aria-label="File request from the original disclosure"><code>GET /Upload/File?fileName=web.config&amp;folderName=../.. HTTP/1.1
 Host: gisecapi.gisec.ae</code></pre>
+
+                <p>Here, <code>GET</code> is the request to retrieve a resource, and <code>Host</code> identifies the API server. <code>fileName=web.config</code> chooses the file. <code>folderName=../..</code> asks the server to move up two parent directories before looking for it.</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/gisec-path-traversal.svg" width="292" height="369" loading="lazy" decoding="async" alt="The request chose web.config as the filename and ../.. as the folder. The parent-directory segments allowed the read to leave the approved upload area and return the configuration file.">
+                    <figcaption>The flaw was in where the download request could reach. Checking uploaded file types had not confined the download path.</figcaption>
+                </figure>
 
                 <p>That returned <strong>HTTP 200 and 29,887 bytes</strong>.</p>
 
@@ -123,14 +156,20 @@ Host: gisecapi.gisec.ae</code></pre>
 
                 <p>The file was the production <code>web.config</code>.</p>
 
-                <p>This was <a href="https://cwe.mitre.org/data/definitions/22.html" target="_blank" rel="noopener noreferrer">path traversal</a>. The <code>../</code> segments move up through parent directories. The download route was allowing the supplied folder to escape the directory it should have been limited to, and the application could read the configuration file at the destination.</p>
+                <p>This confirmed the <a href="https://cwe.mitre.org/data/definitions/22.html" target="_blank" rel="noopener noreferrer">path traversal</a>: the supplied folder had taken the read outside the upload area, and the application had returned the configuration file from that location.</p>
 
                 <p>I had not needed a login to make the request. The authentication checks on other API routes had not protected this one.</p>
 
                 <h2>The configuration had the next step in it</h2>
                 <p>A configuration file can contain everything an application needs to connect to its other services. In this case, that included the SQL Server address, database name, username, and password.</p>
 
-                <p>It also contained the JWT signing secret, Stripe and Tap integration keys, a DWTC payment API subscription key, SMTP credentials, and Google and LinkedIn OAuth client secrets.</p>
+                <p>The other exposed settings showed which services the registration application connected to:</p>
+                <ul>
+                    <li><strong>JWT signing secret:</strong> a secret used to sign the application's authentication tokens.</li>
+                    <li><strong>Stripe, Tap, and DWTC payment keys:</strong> credentials for payment-service integrations.</li>
+                    <li><strong>SMTP credentials:</strong> the account details used to send registration email.</li>
+                    <li><strong>Google and LinkedIn OAuth client secrets:</strong> credentials identifying the application in those sign-in integrations.</li>
+                </ul>
 
                 <p>So the file read had exposed more than application settings. It had exposed credentials the application used elsewhere. I needed to establish which of those credentials actually worked.</p>
 
@@ -151,11 +190,16 @@ Host: gisecapi.gisec.ae</code></pre>
 
                 <p>At this point, I had crossed from the registration API into its database backend. There was no password guessing involved. The application had supplied the credentials through the file-download bug.</p>
 
-                <p>I started by inspecting the schema: the tables, their columns, and what I could query. The GISEC database had tables covering users, bookings, orders, payments, payment transactions, and exhibitor invitations.</p>
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/gisec-credentials.svg" width="355" height="486" loading="lazy" decoding="async" alt="The exposed connection string specified a server and database plus a username and password. Those credentials authenticated, and a SELECT query returned real visitor and payment rows.">
+                    <figcaption>The address explained where to connect, the credentials established an identity, and the returned rows proved that identity could read data.</figcaption>
+                </figure>
+
+                <p>I started by inspecting the <strong>schema</strong>, the database's structure: which tables existed, which columns they contained, and what I could query. The GISEC database had tables covering users, bookings, orders, payments, payment transactions, and exhibitor invitations.</p>
 
                 <p>One of my early queries failed because I had asked for a column called <code>Name</code>. The user table actually had <code>FirstName</code> and <code>LastName</code>. After checking the columns and correcting the query, I got rows back.</p>
 
-                <p>Those rows contained names, email addresses, phone numbers, companies, job titles, and countries. A query against the <code>Payments</code> table also returned names and email addresses alongside transaction amounts and payment statuses.</p>
+                <p>Those rows contained names, email addresses, phone numbers, companies, job titles, and countries. A query against the <code>Payments</code> table also returned names and email addresses alongside transaction amounts and payment statuses. These were records of transactions, not evidence that I could make or change a payment.</p>
 
                 <p>These were real registration and transaction records. The database name ended in <code>_dev</code>, but the contents were not dummy data.</p>
 
@@ -183,16 +227,15 @@ Payments rows      620</code></pre>
 
                 <p>The distinction in the evidence is that I enumerated 93 database names; the row reads and samples shown here are from GISEC. The inventory alone does not establish that I read records from all 93 databases.</p>
 
-                <p>The chain I could demonstrate was:</p>
-                <ol class="gisec-chain" aria-label="Verified vulnerability chain">
-                    <li><strong>Unauthenticated file read</strong><span>The folder parameter reached outside the upload directory.</span></li>
-                    <li><strong>Configuration secrets exposed</strong><span>The returned file contained database credentials and integration keys.</span></li>
-                    <li><strong>Successful SQL authentication</strong><span>The active credentials worked against the internet-reachable server.</span></li>
-                    <li><strong>Visitor and payment data readable</strong><span>Queries returned real records from the GISEC database.</span></li>
-                </ol>
+                <p>It helps to separate those two kinds of database query. An inventory says which databases are visible to the login. Reading rows shows what information the login can actually retrieve from a particular database.</p>
+
+                <figure class="post-diagram">
+                    <img src="../assets/diagrams/gisec-evidence.svg" width="375" height="409" loading="lazy" decoding="async" alt="A successful SQL login allowed a database-name inventory that returned 93 names. A separate query against GISEC returned visitor and payment rows. The inventory and the row reads establish different kinds of access.">
+                    <figcaption>The 93-database inventory described the wider server. The demonstrated row reads established the impact on GISEC.</figcaption>
+                </figure>
 
                 <h2>Putting the report together</h2>
-                <p>I packaged the steps into <code>poc.py</code> so the team could reproduce the chain without piecing together my individual requests.</p>
+                <p>I packaged the steps into <code>poc.py</code>. A <strong>proof of concept</strong> is a small demonstration of an issue; this one let the team reproduce the chain without piecing together my individual requests.</p>
 
                 <p>The script had separate options for retrieving the configuration, parsing the database credentials, checking the SQL login, reading a visitor sample, and listing the exposed configuration entries. The instructions in my original report included:</p>
 
@@ -215,7 +258,7 @@ python3 poc.py --keys</code></pre>
 
                 <p>My recommendations covered the whole chain: rotate the exposed passwords and keys, fix the path handling and access controls on the file endpoint, limit the SQL account's permissions, and restrict internet access to the database port.</p>
 
-                <p>That last part of the report mattered because closing the file-download route would not invalidate credentials that had already been exposed. The secrets needed attention too.</p>
+                <p>That last part of the report mattered because closing the file-download route would not invalidate credentials that had already been exposed. The secrets needed attention too. Rotating a secret means replacing it and invalidating the exposed value, so a copied password or key can no longer be used.</p>
 
                 <p>The GISEC team was very thankful that I brought the issue to their attention. They acted immediately and subsequently confirmed that it was fixed. I really appreciated the response.</p>
 

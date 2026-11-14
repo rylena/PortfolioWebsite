@@ -1,0 +1,15 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
+  login [label="SQL login succeeds"];
+  inventory [label="List database names\n93 names returned"];
+  query [label="Query the GISEC database\nVisitor and payment rows returned", color="#64ffda"];
+  inventory_note [label="Proves the inventory is visible", shape=plaintext, style="", fontsize=14];
+  query_note [label="Proves data read access to GISEC", shape=plaintext, style="", fontsize=14];
+  login -> inventory [label="List names"];
+  inventory -> inventory_note [arrowhead=none, style=dashed];
+  inventory_note -> query [style=invis];
+  login -> query [label="Query rows"];
+  query -> query_note [arrowhead=none, style=dashed];
+}

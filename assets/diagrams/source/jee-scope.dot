@@ -1,0 +1,12 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
+  inventory [label="Object listings\nMeasure the exposed inventory"];
+  sample [label="A small verification sample\nConfirms files can be read"];
+  finding [label="Established finding\nPublic access to candidate files", color="#64ffda"];
+  limit [label="A different question\nDid someone copy all those files?\nI had no evidence of that.", style="rounded,dashed", color="#889ab8"];
+  inventory -> sample [label="Check contents separately"];
+  sample -> finding;
+  finding -> limit [style=dashed, arrowhead=none, label="Exposure does not\nestablish copying"];
+}

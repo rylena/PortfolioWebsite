@@ -28,3 +28,28 @@
     outline: 2px solid #64ffda;
     outline-offset: 4px;
 }
+
+.minimal-post-page .post-content h3 {
+    margin: 1.7rem 0 0.65rem;
+    color: #e1e8fa;
+    font-size: 1.1rem;
+    line-height: 1.45;
+}
+
+.minimal-post-page .post-diagram {
+    margin: 2rem 0 2.5rem;
+}
+
+.minimal-post-page .post-diagram img {
+    display: block;
+    width: 100%;
+    max-width: 430px;
+    height: auto;
+    margin: 0 auto 1rem;
+}
+
+.minimal-post-page .post-diagram figcaption {
+    color: #a5b4d4;
+    font-size: 0.9rem;
+    line-height: 1.7;
+}

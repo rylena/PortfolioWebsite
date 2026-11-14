@@ -1,0 +1,69 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="322pt" height="521pt" viewBox="0.00 0.00 321.60 521.35" role="img" aria-labelledby="diagram-title">
+<title id="diagram-title">GISEC system map</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 510.55)">
+<title>G</title>
+
+<g id="node1" class="node">
+<title>browser</title>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M237,-499.75C237,-499.75 63,-499.75 63,-499.75 57,-499.75 51,-493.75 51,-487.75 51,-487.75 51,-453.75 51,-453.75 51,-447.75 57,-441.75 63,-441.75 63,-441.75 237,-441.75 237,-441.75 243,-441.75 249,-447.75 249,-453.75 249,-453.75 249,-487.75 249,-487.75 249,-493.75 243,-499.75 237,-499.75" />
+<text text-anchor="middle" x="150" y="-476.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">My browser</text>
+<text text-anchor="middle" x="150" y="-457.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">No registration login</text>
+</g>
+
+<g id="node2" class="node">
+<title>api</title>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M247,-394.75C247,-394.75 53,-394.75 53,-394.75 47,-394.75 41,-388.75 41,-382.75 41,-382.75 41,-348.75 41,-348.75 41,-342.75 47,-336.75 53,-336.75 53,-336.75 247,-336.75 247,-336.75 253,-336.75 259,-342.75 259,-348.75 259,-348.75 259,-382.75 259,-382.75 259,-388.75 253,-394.75 247,-394.75" />
+<text text-anchor="middle" x="150" y="-371.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Registration API</text>
+<text text-anchor="middle" x="150" y="-352.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Receives a file request</text>
+</g>
+
+<g id="edge1" class="edge">
+<title>browser-&gt;api</title>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150,-441.6C150,-429.34 150,-414.84 150,-401.88" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.45,-401.86 150,-394.86 147.55,-401.86 152.45,-401.86" />
+<text text-anchor="middle" x="196.5" y="-414.55" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">HTTP request</text>
+</g>
+
+<g id="node3" class="node">
+<title>files</title>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M236,-289.75C236,-289.75 64,-289.75 64,-289.75 58,-289.75 52,-283.75 52,-277.75 52,-277.75 52,-243.75 52,-243.75 52,-237.75 58,-231.75 64,-231.75 64,-231.75 236,-231.75 236,-231.75 242,-231.75 248,-237.75 248,-243.75 248,-243.75 248,-277.75 248,-277.75 248,-283.75 242,-289.75 236,-289.75" />
+<text text-anchor="middle" x="150" y="-266.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Server files</text>
+<text text-anchor="middle" x="150" y="-247.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">web.config returned</text>
+</g>
+
+<g id="edge2" class="edge">
+<title>api-&gt;files</title>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150,-336.6C150,-324.34 150,-309.84 150,-296.88" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.45,-296.86 150,-289.86 147.55,-296.86 152.45,-296.86" />
+<text text-anchor="middle" x="179" y="-309.55" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">File read</text>
+</g>
+
+<g id="node4" class="node">
+<title>client</title>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M276,-184.75C276,-184.75 24,-184.75 24,-184.75 18,-184.75 12,-178.75 12,-172.75 12,-172.75 12,-138.75 12,-138.75 12,-132.75 18,-126.75 24,-126.75 24,-126.75 276,-126.75 276,-126.75 282,-126.75 288,-132.75 288,-138.75 288,-138.75 288,-172.75 288,-172.75 288,-178.75 282,-184.75 276,-184.75" />
+<text text-anchor="middle" x="150" y="-161.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">My SQL client</text>
+<text text-anchor="middle" x="150" y="-142.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Uses the exposed credentials</text>
+</g>
+
+<g id="edge3" class="edge">
+<title>files-&gt;client</title>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150,-231.6C150,-219.34 150,-204.84 150,-191.88" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.45,-191.86 150,-184.86 147.55,-191.86 152.45,-191.86" />
+<text text-anchor="middle" x="217" y="-204.55" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Returns credentials</text>
+</g>
+
+<g id="node5" class="node">
+<title>db</title>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M300,-72.4C300,-76.39 232.77,-79.63 150,-79.63 67.23,-79.63 0,-76.39 0,-72.4 0,-72.4 0,-7.35 0,-7.35 0,-3.36 67.23,-0.12 150,-0.12 232.77,-0.12 300,-3.36 300,-7.35 300,-7.35 300,-72.4 300,-72.4" />
+<path fill="none" stroke="#445b79" stroke-width="1.1" d="M300,-72.4C300,-68.41 232.77,-65.17 150,-65.17 67.23,-65.17 0,-68.41 0,-72.4" />
+<text text-anchor="middle" x="150" y="-45.27" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">SQL Server</text>
+<text text-anchor="middle" x="150" y="-26.27" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Stores visitor and payment rows</text>
+</g>
+
+<g id="edge4" class="edge">
+<title>client-&gt;db</title>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150,-126.6C150,-114.71 150,-100.54 150,-87.19" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.45,-86.87 150,-79.87 147.55,-86.87 152.45,-86.87" />
+<text text-anchor="middle" x="216.5" y="-99.55" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Separate SQL login</text>
+</g>
+</g>
+</svg>
