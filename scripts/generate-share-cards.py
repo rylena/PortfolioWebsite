@@ -52,7 +52,7 @@ def fit_title(title):
     raise ValueError(f"Title is too long for the share card: {title}")
 
 
-def render(title, output):
+def render(title, output, section="blog"):
     canvas = Image.new("RGB", (1200 * SCALE, 630 * SCALE), BACKGROUND)
     draw = ImageDraw.Draw(canvas)
 
@@ -70,7 +70,7 @@ def render(title, output):
     draw.line((80 * SCALE, 486 * SCALE, 1120 * SCALE, 486 * SCALE),
               fill="#334663", width=2 * SCALE)
     text(80, 525, "Rylen Anil", font(28, bold=True))
-    text(1120, 528, "rylenanil.com / blog", font(24), MUTED, anchor="rt")
+    text(1120, 528, f"rylenanil.com / {section}", font(24), MUTED, anchor="rt")
     canvas.resize((1200, 630), Image.Resampling.LANCZOS).save(output, optimize=True)
     print(output.relative_to(ROOT))
 
@@ -78,6 +78,7 @@ def render(title, output):
 if __name__ == "__main__":
     OUTPUT.mkdir(parents=True, exist_ok=True)
     render("Security research & build notes", OUTPUT / "blog.png")
+    render("In the media", OUTPUT / "media.png", section="media")
     for post in sorted((ROOT / "posts").glob("*.html")):
         metadata = Metadata(post.read_text())
         if metadata.values.get("og:type") != "article":

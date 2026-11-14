@@ -3,6 +3,7 @@ const pages = new Map([
     ['/', 'Portfolio'],
     ['/index.html', 'Portfolio'],
     ['/blog.html', 'Blog'],
+    ['/media.html', 'Media'],
     ['/posts/hacking-gisec-before-speaking.html', 'Hacking GISEC Before Speaking at GISEC'],
     ['/posts/hacking-gisec-before-speaking-at-gisec.html', 'Hacking GISEC Before Speaking at GISEC'],
     ['/posts/jee-advanced-2026-cloud-storage-disclosure.html', 'JEE Advanced disclosure'],

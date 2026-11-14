@@ -1,0 +1,23 @@
+{
+  "retrievedOn": "2026-11-15",
+  "sources": {
+    "assets/ghidra.svg": "https://www.kali.org/tools/ghidra/images/ghidra-logo.svg",
+    "assets/sqlmap.svg": "https://www.kali.org/tools/sqlmap/images/sqlmap-logo.svg",
+    "assets/hashcat.svg": "https://www.kali.org/tools/hashcat/images/hashcat-logo.svg",
+    "assets/john.svg": "https://www.kali.org/tools/john/images/john-logo.svg",
+    "assets/press/cnbc.svg": "https://www.cnbctv18.com/static/images/cnbc-new-logo/cnbc_livetv.svg?v=1.1",
+    "assets/press/india-today.png": "https://ni5arga.com/press/logos/indiatoday.png",
+    "assets/press/ndtv.svg": "https://ni5arga.com/press/logos/ndtv.svg",
+    "assets/press/hindustan-times.svg": "https://ni5arga.com/press/logos/ht.svg",
+    "assets/press/times-of-india.svg": "https://static.toiimg.com/photo/92222747.cms",
+    "assets/press/economic-times.png": "https://img.etimg.com/photo/msid-76920425,quality-100/et-logo.jpg",
+    "assets/press/khaleej-times.svg": "https://images.assettype.com/khaleejtimes-english/2026-03-06/ac2101vo/logo.svg",
+    "assets/press/gulf-news.svg": "https://images.assettype.com/gulfnews/2026-09-18/l3x0ukro/gn-logo-sonic-dark-blue.svg",
+    "assets/console/fsociety-ascii.txt": "https://github.com/syntax-samurai/fsociety/blob/master/fsociety.ascii"
+  },
+  "notes": {
+    "toolLogos": "Tool-specific artwork distributed by the official Kali tool catalog.",
+    "publisherLogos": "Publisher-owned marks from mastheads and the public reference logo collection. Page source and styles from the reference were not copied.",
+    "consoleAscii": "ASCII mask adapted from the credited reference, with its frame and wordmark removed. Individual characters are positioned in a transparent SVG to preserve spacing in DevTools. The native console background shows through."
+  }
+}

@@ -2,6 +2,26 @@ https://rylenanil.com/
 
 Official portfolio and blog for Rylen Anil.
 
+The Media page is generated from `data/media.json`. Add or edit coverage there,
+then run `python3 scripts/build-media-page.py` and commit both the data and
+`media.html`. The static HTML lists the coverage without categories or filters.
+Keep dates at the precision the publisher confirms
+(year, month, or day), and record verification notes in the data. Research scope
+and source limitations are recorded in `research/media-discovery.md`.
+
+`publisherOrder` in the media data controls the requested publication order,
+starting with CNBC TV18. Stories within an outlet appear newest first.
+
+The desktop GitHub calendar uses the public [GitHub Contributions API](https://github.com/grubersjoe/github-contributions-api)
+and renders rounded SVG cells locally. It falls back to a GitHub profile link
+when the service is unavailable. The entire section is hidden on screens up to
+768px, and the browser does not request contribution data at those widths.
+
+`site.js` prints the compact fsociety ASCII Easter egg, contact email, and resume
+link in the developer console. Its ASCII file lives in `assets/console/` and uses
+the console's native background. Source references for artwork and logos are in
+`assets/sources.json`.
+
 Blog share previews use title cards in `assets/share/`, with no article photos.
 After changing a post's `og:title` or adding a post, run
 `python3 scripts/generate-share-cards.py` (requires Pillow) and commit the generated

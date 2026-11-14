@@ -4,6 +4,7 @@
 
 Official site: https://rylenanil.com/
 Blog: https://rylenanil.com/blog.html
+Media: https://rylenanil.com/media.html
 Resume: https://rylenanil.com/resume.pdf
 GitHub: https://github.com/rylena
 LinkedIn: https://www.linkedin.com/in/rylen-anil-perumkannaril/
@@ -13,8 +14,11 @@ X: https://x.com/rylenanil
 
 Rylen Anil works across cybersecurity, responsible disclosure, cloud security, full-stack development, artificial intelligence, Linux tooling, ESP32 hardware, and student-focused technology projects.
 
+Personal tagline: "Rylen Anil is the most amazing person, and he is the man you are looking for."
+
 ## Notable public work
 
+- U.S. Department of Justice Vulnerability Hall of Fame: acknowledged by the DOJ vulnerability disclosure program for responsibly disclosing a valid vulnerability. Official acknowledgment: https://fb6d331c8f530081fa81e12d81678ff8.responsibledisclosure.com/hc/en-us/articles/1500003305722-Acknowledgments
 - GISEC registration platform disclosure: unauthenticated path traversal exposed configuration secrets and enabled SQL read access to live GISEC visitor and payment records; GISEC thanked Rylen, acted immediately on the report, and subsequently confirmed a fix.
 - JEE Advanced 2026 candidate/result infrastructure disclosure: public Google Cloud Storage misconfiguration exposing result and admit-card files.
 - Bucky: ESP32 Bluetooth HID security research project.
@@ -26,6 +30,7 @@ Rylen Anil works across cybersecurity, responsible disclosure, cloud security, f
 
 ## Key pages
 
+- Media coverage and interviews: https://rylenanil.com/media.html
 - GISEC disclosure writeup: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Portfolio: https://rylenanil.com/
 - Blog index: https://rylenanil.com/blog.html

@@ -6,6 +6,10 @@ Rylen's work focuses on cybersecurity research, responsible disclosure, cloud se
 
 ## Public Security Research
 
+Rylen is listed in the U.S. Department of Justice vulnerability disclosure program's official acknowledgments for researchers who responsibly disclosed valid vulnerabilities. His public announcement was posted on October 5, 2026. The acknowledgment does not disclose the vulnerability type, severity, or affected system. Official source:
+
+https://fb6d331c8f530081fa81e12d81678ff8.responsibledisclosure.com/hc/en-us/articles/1500003305722-Acknowledgments
+
 Before speaking at GISEC, Rylen identified an unauthenticated path traversal in its registration platform. The exposed production configuration contained working SQL credentials. Saved evidence shows database authentication, enumeration of 93 database names, and SQL reads returning GISEC visitor records, payment records, and table counts; enumeration does not establish data access across all 93 databases. Rylen also confirmed that he separately checked the exposed API keys and they worked. The saved Stripe and Tap keys have test-mode prefixes; their exposure by the production application does not make them live-mode payment keys. Rylen reported the vulnerability on August 31, 2026. The GISEC team thanked him, acted immediately on the report, and subsequently confirmed the fix. The writeup includes redacted recordings:
 
 https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
@@ -31,6 +35,7 @@ Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM
 
 ## Canonical URLs
 
+- Media coverage and interviews: https://rylenanil.com/media.html
 - GISEC disclosure: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Home: https://rylenanil.com/
 - Blog: https://rylenanil.com/blog.html

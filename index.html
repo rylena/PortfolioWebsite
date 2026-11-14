@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Rylen Anil | Cybersecurity Researcher, Developer & AI Builder</title>
-    <meta name="description" content="Official portfolio of Rylen Anil, a Dubai-based cybersecurity researcher, developer, Junior Cybersecurity Engineer at C3iHub IIT Kanpur, and builder of AI, hardware, and software projects.">
+    <meta name="description" content="Meet Rylen Anil, a 16-year-old student, developer, and Junior Cybersecurity Engineer at C3iHub, IIT Kanpur, based in Dubai.">
     <meta name="keywords" content="Rylen Anil, Rylen, rylena, cybersecurity researcher, ethical hacker, Junior Cybersecurity Engineer, C3iHub IIT Kanpur, Dubai developer, JEE Advanced disclosure, NEET security, AI builder, full-stack developer, ESP32, Bucky, Counseltron, whisperPairForBruce, SSH Desk, configTimeMachine, Elliot">
     <meta name="author" content="Rylen Anil">
     <meta name="creator" content="Rylen Anil">
@@ -13,7 +13,7 @@
     <meta name="googlebot" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
     <meta name="theme-color" content="#0a192f">
     <link rel="canonical" href="https://rylenanil.com/">
-    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=20261115b">
     <link rel="manifest" href="/site.webmanifest">
     <link rel="me" href="https://github.com/rylena">
     <link rel="me" href="https://www.linkedin.com/in/rylen-anil-perumkannaril/">
@@ -22,7 +22,7 @@
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Rylen Anil">
     <meta property="og:title" content="Rylen Anil | Cybersecurity Researcher, Developer & AI Builder">
-    <meta property="og:description" content="Portfolio of Rylen Anil: cybersecurity researcher, Junior Cybersecurity Engineer at C3iHub IIT Kanpur, and builder of AI, hardware, and software projects.">
+    <meta property="og:description" content="Student, developer, and Junior Cybersecurity Engineer at C3iHub, IIT Kanpur. Based in Dubai. Explore my projects and security research.">
     <meta property="og:url" content="https://rylenanil.com/">
     <meta property="og:image" content="https://rylenanil.com/assets/og-image.svg">
     <meta property="profile:first_name" content="Rylen">
@@ -31,7 +31,7 @@
     <meta name="twitter:site" content="@rylenanil">
     <meta name="twitter:creator" content="@rylenanil">
     <meta name="twitter:title" content="Rylen Anil | Cybersecurity Researcher & Developer">
-    <meta name="twitter:description" content="Dubai-based cybersecurity researcher and developer building security, AI, hardware, and full-stack software projects.">
+    <meta name="twitter:description" content="Student, developer, and Junior Cybersecurity Engineer at C3iHub, IIT Kanpur. Based in Dubai.">
     <meta name="twitter:image" content="https://rylenanil.com/assets/og-image.svg">
     <script type="application/ld+json">
     {
@@ -91,20 +91,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
-    <link rel="stylesheet" href="styles.css?v=20260825-dark-github">
+    <link rel="stylesheet" href="styles.css?v=20261115-media-doj">
+    <link rel="stylesheet" href="assets/media.css?v=20261115">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/hover.css/2.3.1/css/hover-min.css">
     <script src="/visit-notifications.js" defer></script>
+    <script src="/site.js" defer></script>
+    <script src="github-activity.js" defer></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="menu-toggle">
-            <i class="fas fa-bars"></i>
-        </div>
-        <ul class="nav-links">
+    <nav class="navbar" aria-label="Main navigation">
+        <button class="menu-toggle" type="button" aria-label="Toggle navigation" aria-expanded="false" aria-controls="main-navigation">
+            <i class="fas fa-bars" aria-hidden="true"></i>
+        </button>
+        <ul class="nav-links" id="main-navigation">
             <li><a href="#home" class="hvr-underline-from-center">Home</a></li>
             <li><a href="#about" class="hvr-underline-from-center">About</a></li>
             <li><a href="blog.html" class="hvr-underline-from-center">Blog</a></li>
+            <li><a href="media.html" class="hvr-underline-from-center">Media</a></li>
             <li><a href="#projects" class="hvr-underline-from-center">Projects</a></li>
         </ul>
     </nav>
@@ -113,7 +117,7 @@
         <div class="hero-content" data-aos="flip-left" data-aos-duration="1000">
             <h1>Hi, I'm <span class="gradient-text">Rylen Anil</span></h1>
             <p class="hero-subtitle">Part-time High School Student</p>
-            <p class="hero-subtitle second-line">Full-time Developer & Junior Cybersecurity Engineer @ C3iHub, IIT Kanpur</p>
+            <p class="hero-subtitle second-line">Developer &amp; Junior Cybersecurity Engineer @ <a class="hero-work-link" href="https://c3ihub.org/" target="_blank" rel="noopener noreferrer">C3iHub, IIT Kanpur</a></p>
             <p class="location">
                 <i class="fas fa-map-marker-alt"></i>
                 Based in <a href="https://en.wikipedia.org/wiki/Dubai" target="_blank" rel="noopener noreferrer" style="color: inherit; text-decoration: none;">UAE, Dubai</a>
@@ -142,14 +146,17 @@
         <div class="card about-card" data-aos="flip-right" data-aos-duration="1000">
             <h2 class="section-title">About Me</h2>
             <p>
-                I'm a 16-year-old high school student, ethical hacker, and Junior Cybersecurity Engineer at C3iHub, IIT Kanpur. You may know me from my <a href="https://www.cnbctv18.com/education/meet-rylen-anil-the-teen-ethical-hacker-who-smelt-a-rat-in-neet-jee-portals-ws-l-19920405.htm" target="_blank" rel="noopener noreferrer" style="color: #64ffda;">JEE and NEET hacks</a> — I identified and responsibly disclosed a cloud misconfiguration in India's national entrance exam portals that left lakhs of student records exposed, work that ended up covered by CNBC TV18, India Today, Khaleej Times, Firstpost, and NewsX.
+                I'm Rylen Anil. I'm 16, based in Dubai, and currently in Grade 12 at JSS Private School. I work as a Junior Cybersecurity Engineer at <a href="https://c3ihub.org/" target="_blank" rel="noopener noreferrer">C3iHub, IIT Kanpur</a>, alongside school.
             </p>
             <p>
-                When I'm not in class, I'm playing Capture The Flag with the globally ranked team g4mra, or building — full-stack apps, AI tools, and hardware exploits on the ESP32. I wrote my first Python script at age seven and slipped into ethical hacking around Class 8; I've been breaking things and putting them back together ever since.
+                I like figuring out how things work, building things, and finding the parts that break. I wrote my first Python script at seven and got into ethical hacking around Class 8. You might know me from finding security flaws in the <a href="https://www.indiatoday.in/education-today/news/story/he-is-sixteen-he-broke-into-neet-jee-to-fix-it-2921609-2026-06-04" target="_blank" rel="noopener noreferrer">NEET</a> and <a href="posts/jee-advanced-2026-cloud-storage-disclosure.html">JEE Advanced</a> exam portals. These days, I spend a lot of time on security research, full-stack projects, and Capture The Flag with g4mra. Along the way, I was added to the <a href="https://fb6d331c8f530081fa81e12d81678ff8.responsibledisclosure.com/hc/en-us/articles/1500003305722-Acknowledgments" target="_blank" rel="noopener noreferrer">U.S. Department of Justice Vulnerability Hall of Fame</a> for finding and responsibly reporting a vulnerability.
+            </p>
+            <p>
+                Away from the keyboard, I'm a big movie person. The Matrix and Terminator helped spark my interest in technology, and Mr. Robot is another favorite. I also like gaming and working on little side projects whenever I get the chance.
             </p>
         </div>
         <div class="card technologies-card" data-aos="flip-left" data-aos-duration="1000">
-            <h2 class="section-title">Technologies</h2>
+            <h2 class="section-title">Technologies &amp; tools</h2>
             <div class="tech-grid">
                 <div class="tech-item">
                     <img src="assets/py.svg" alt="Python">
@@ -214,6 +221,51 @@
                         Open-source electronics platform for building interactive hardware prototypes.
                     </div>
                 </div>
+                <div class="tech-item">
+                    <img src="assets/burpsuite.svg" alt="Burp Suite" loading="lazy">
+                    <span>Burp Suite</span>
+                    <div class="tech-description">Web application security testing and HTTP traffic inspection.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/wireshark.svg" alt="Wireshark" loading="lazy">
+                    <span>Wireshark</span>
+                    <div class="tech-description">Packet capture and network protocol analysis.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/metasploit.svg" alt="Metasploit" loading="lazy">
+                    <span>Metasploit</span>
+                    <div class="tech-description">Security assessment and exploit validation.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/bash.svg" alt="Bash" loading="lazy">
+                    <span>Bash</span>
+                    <div class="tech-description">Shell scripting, automation, and Linux tooling.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/postgresql.svg" alt="PostgreSQL" loading="lazy">
+                    <span>PostgreSQL</span>
+                    <div class="tech-description">Relational databases, SQL, and application data.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/ghidra.svg" alt="Ghidra" loading="lazy">
+                    <span>Ghidra</span>
+                    <div class="tech-description">Binary analysis and reverse engineering.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/sqlmap.svg" alt="sqlmap" loading="lazy">
+                    <span>sqlmap</span>
+                    <div class="tech-description">Automated SQL injection testing and database security assessment.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/hashcat.svg" alt="Hashcat" loading="lazy">
+                    <span>Hashcat</span>
+                    <div class="tech-description">Password recovery and hash auditing.</div>
+                </div>
+                <div class="tech-item">
+                    <img src="assets/john.svg" alt="John the Ripper" loading="lazy">
+                    <span>John the Ripper</span>
+                    <div class="tech-description">Password strength testing and offline hash auditing.</div>
+                </div>
             </div>
         </div>
     </section>
@@ -223,7 +275,7 @@
             <div class="github-card-header">
                 <div>
                     <h2>GitHub Activity</h2>
-                    <p>Public contribution heatmap for <span>@rylena</span>.</p>
+                    <p id="github-contribution-summary">A year of building and experimenting on GitHub.</p>
                 </div>
                 <a href="https://github.com/rylena" target="_blank" rel="noopener noreferrer" class="github-profile-link">
                     <i class="fab fa-github"></i>
@@ -231,8 +283,11 @@
                 </a>
             </div>
             <a href="https://github.com/rylena" target="_blank" rel="noopener noreferrer" class="github-heatmap-link" aria-label="View Rylen Anil's GitHub profile">
-                <img src="https://ghchart.rshah.org/9b0025/rylena" alt="GitHub contribution heatmap for Rylen Anil, username rylena" class="github-heatmap" loading="lazy">
+                <div id="github-calendar" class="github-calendar" role="img" aria-label="Rylen Anil's GitHub contribution calendar">
+                    <p class="github-calendar-status">View my contribution activity on GitHub.</p>
+                </div>
             </a>
+            <div class="github-calendar-footer" aria-hidden="true" hidden><span>Less</span><span class="github-level" data-level="0"></span><span class="github-level" data-level="1"></span><span class="github-level" data-level="2"></span><span class="github-level" data-level="3"></span><span class="github-level" data-level="4"></span><span>More</span></div>
         </div>
     </section>
 
@@ -243,7 +298,7 @@
                 <div class="project-card" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="100" onclick="window.open('https://github.com/rylena/Bucky', '_blank')">
                     <img src="assets/Bucky.png" alt="Bucky Logo" class="project-logo">
                     <h3>Bucky</h3>
-                    <p>A Bluetooth Rubber Ducky built on the ESP32. Bucky emulates a Bluetooth keyboard to remotely execute keystrokes on Windows, Linux, and macOS — my most-starred project on GitHub.</p>
+                    <p>A Bluetooth Rubber Ducky built on the ESP32. Bucky emulates a Bluetooth keyboard to remotely execute keystrokes on Windows, Linux, and macOS. My most-starred project on GitHub.</p>
                     <a href="https://github.com/rylena/Bucky" target="_blank" class="project-link">
                         View Project
                     </a>
@@ -251,7 +306,7 @@
                 <div class="project-card" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="200" onclick="window.open('https://github.com/rylena/sshdesk', '_blank')">
                     <img src="assets/sshdesk-logo.png" alt="SSH Desk Logo" class="project-logo sshdesk-logo">
                     <h3>SSH Desk</h3>
-                    <p>A full interactive remote desktop delivered through one SSH session and displayed directly in your terminal — no browser, custom client, or extra network port.</p>
+                    <p>A full interactive remote desktop delivered through one SSH session and displayed directly in your terminal. No browser, custom client, or extra network port.</p>
                     <a href="https://github.com/rylena/sshdesk" target="_blank" class="project-link">
                         View Project
                     </a>
@@ -267,7 +322,7 @@
                 <div class="project-card" data-aos="flip-left" data-aos-duration="1000" data-aos-delay="400" onclick="window.open('https://github.com/rylena/whisperPairForBruce', '_blank')">
                     <img src="assets/whisperpairforbruce.png" alt="whisperPairForBruce Logo" class="project-logo whisperpair-logo">
                     <h3>whisperPairForBruce</h3>
-                    <p>The WhisperPair exploit designed for the Bruce platform — pairs Whisper audio with contextual metadata for processing on Bruce devices.</p>
+                    <p>The WhisperPair exploit designed for the Bruce platform. It pairs Whisper audio with contextual metadata for processing on Bruce devices.</p>
                     <a href="https://github.com/rylena/whisperPairForBruce" target="_blank" class="project-link">
                         View Project
                     </a>
@@ -275,7 +330,7 @@
                 <div class="project-card" data-aos="flip-right" data-aos-duration="1000" data-aos-delay="500" onclick="window.open('https://github.com/rylena/configTimeMachine', '_blank')">
                     <i class="fas fa-clock-rotate-left project-icon"></i>
                     <h3>configTimeMachine</h3>
-                    <p>Version control for your configuration files — track changes, compare edits, and roll back bad updates before they break things.</p>
+                    <p>Version control for your configuration files. Track changes, compare edits, and roll back bad updates before they break things.</p>
                     <a href="https://github.com/rylena/configTimeMachine" target="_blank" class="project-link">
                         View Project
                     </a>
