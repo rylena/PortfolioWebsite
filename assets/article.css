@@ -1,0 +1,30 @@
+.minimal-post-page .post-content pre {
+    max-width: 100%;
+    margin: 1.4rem 0;
+    padding: 1rem 1.15rem;
+    overflow-x: auto;
+    border: 1px solid #334663;
+    border-radius: 8px;
+    background: #10213b;
+    color: #ccd6f6;
+    font-family: monospace;
+    font-size: 0.82rem;
+    line-height: 1.75;
+    white-space: pre;
+    tab-size: 4;
+    scrollbar-color: #334663 #10213b;
+    scrollbar-width: thin;
+}
+
+.minimal-post-page .post-content pre code {
+    padding: 0;
+    border-radius: 0;
+    background: transparent;
+    font: inherit;
+    overflow-wrap: normal;
+}
+
+.minimal-post-page .post-content pre:focus-visible {
+    outline: 2px solid #64ffda;
+    outline-offset: 4px;
+}

@@ -27,7 +27,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="How I Found a Critical JEE Advanced 2026 Data Exposure | Rylen Anil">
     <meta property="article:published_time" content="2026-06-02T15:05:38+00:00">
-    <meta property="article:modified_time" content="2026-08-02T00:00:00+00:00">
+    <meta property="article:modified_time" content="2026-11-15T00:00:00+00:00">
     <meta property="article:author" content="https://rylenanil.com/">
     <meta property="article:tag" content="Cybersecurity">
     <meta property="article:tag" content="Responsible Disclosure">
@@ -48,7 +48,7 @@
         "description": "Rylen Anil's writeup on finding and responsibly disclosing a JEE Advanced 2026 cloud storage misconfiguration that exposed candidate result and admit-card files.",
         "image": ["https://rylenanil.com/assets/share/jee-advanced-2026-cloud-storage-disclosure.png"],
         "datePublished": "2026-06-02",
-        "dateModified": "2026-08-02",
+        "dateModified": "2026-11-15",
         "author": {
             "@type": "Person",
             "name": "Rylen Anil",
@@ -78,6 +78,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../assets/media.css?v=20261115">
+    <link rel="stylesheet" href="../assets/article.css">
     <script src="/visit-notifications.js" defer></script>
     <script src="/site.js" defer></script>
 </head>
@@ -96,12 +97,12 @@
         <section class="post-hero">
             <a href="../blog.html" class="post-breadcrumb">← back to blog</a>
             <div class="post-meta">
-                <span>Jun 2, 2026</span>
-                <span>7 min read</span>
+                <span><time datetime="2026-06-02">Jun 2, 2026</time></span>
+                <span>5 min read</span>
             </div>
             <h1>How I Found a Critical JEE Advanced 2026 Data Exposure</h1>
             <p class="post-dek">
-                A small storage error led to a publicly listable Google Cloud Storage bucket containing candidate result and admit-card files.
+                An error message revealed a bucket name. A limited listing request led to candidate files. How I followed the storage trail, verified the exposure, and reported it.
             </p>
             <div class="post-tags">
                 <span>Security</span>
@@ -112,33 +113,45 @@
 
         <section class="post-layout">
             <article class="post-content">
-                <p class="post-lede">
-                    On June 2, 2026, between about 17:40 and 18:15 GST (13:40-14:15 UTC), I found a critical vulnerability affecting the JEE Advanced 2026 candidate and result infrastructure. The issue was not a login bypass or an application exploit. It was a cloud storage access-control mistake with very real consequences.
-                </p>
+                <p class="post-lede">On June 2, 2026, I was looking at how the JEE Advanced candidate and result portal served its files. A request for an object that did not exist returned an error containing a storage bucket name. I followed that clue.</p>
 
-                <h2>Where The Thread Started</h2>
-                <p>
-                    I was looking at how the candidate/result portal handled static files and storage-backed paths. One harmless request to a non-existent object returned an error message that revealed the backend storage bucket name. That was the first important clue: the application was exposing implementation detail from the storage layer.
-                </p>
+                <p>Over roughly 35 minutes, between 17:40 and 18:15 GST, I found that the underlying storage allowed unauthenticated listing and reading of candidate files. The route into this issue was the storage layer behind the portal.</p>
 
-                <p>
-                    From there, I checked whether the bucket was only leaking its name or whether access controls were also misconfigured. A small, limited listing request showed that unauthenticated users could enumerate objects under result and admit-card prefixes.
-                </p>
+                <h2>The error that gave me a starting point</h2>
+                <p>I started with the portal's static files and storage-backed paths. One request to a non-existent object returned an error that revealed the Google Cloud Storage bucket being used behind the application.</p>
 
-                <h2>What Was Exposed</h2>
-                <p>
-                    The exposed storage paths included result JSON records, admit-card redirect HTML files, and admit-card PDFs. A result record contained fields such as candidate name, date of birth, mobile number, serial or roll identifiers, subject marks, total score, positive score, and rank-related fields.
-                </p>
+                <p>A bucket is a container for stored objects. In this case, those objects included files used by the candidate and result infrastructure.</p>
 
-                <p>
-                    My impact count at the time of reporting was:
-                </p>
+                <p>Knowing a bucket's name does not establish a vulnerability. Plenty of applications use storage names that are easy to see. I still needed to check what an unauthenticated request was allowed to do with it.</p>
 
-                <ul>
-                    <li>179,694 result JSON records exposed</li>
-                    <li>187,389 admit-card redirect HTML files exposed</li>
-                    <li>187,390 admit-card PDFs exposed</li>
-                </ul>
+                <h2>Could I list what was inside?</h2>
+                <p>I made a small, limited listing request. The storage endpoint returned object names under prefixes associated with results and admit cards.</p>
+
+                <p>That changed the situation. I was no longer relying on a guessed filename or a URL the portal had given me for one candidate. I could discover filenames directly from the storage service, without a candidate session.</p>
+
+                <p>There are two separate permissions to think about here: listing objects and reading their contents. Google documents them as <a href="https://docs.cloud.google.com/storage/docs/access-control/iam-permissions#object_permissions" target="_blank" rel="noopener noreferrer"><code>storage.objects.list</code> and <code>storage.objects.get</code></a>. A successful listing does not, on its own, prove that the files can be downloaded.</p>
+
+                <p>So the next step was to check a small sample of the listed objects.</p>
+
+                <h2>The files were readable too</h2>
+                <p>The exposed paths included three kinds of files: result records stored as JSON, admit-card redirect pages stored as HTML, and the admit-card PDFs themselves.</p>
+
+                <p>The sample result record contained candidate details alongside exam scores. I could see fields for the candidate's name, date of birth, mobile number, serial or roll identifiers, subject marks, total score, positive score, and rank-related values. Some rank fields in the sample were <code>null</code>.</p>
+
+                <p>Here are some of the field names visible in my original screenshot:</p>
+
+                <pre tabindex="0" aria-label="Field names in the redacted result record"><code>SrNo
+Candidate_Name
+DOB
+Adv_Mobile_Number
+Mathematics
+Physics
+Chemistry
+Positive
+Total
+CRL_Rank</code></pre>
+
+                <p>Those are field names, without candidate values. The redacted screenshot below shows the actual structure of the result record.</p>
 
                 <figure class="post-image-stack">
                     <img src="../assets/jee-x-evidence-1.jpg" alt="Redacted screenshot from Rylen Anil's X post showing exposed JEE Advanced admit-card PDF entries">
@@ -146,28 +159,50 @@
                     <figcaption>Screenshots from my original X post, with candidate details redacted.</figcaption>
                 </figure>
 
-                <h2>Why It Was Critical</h2>
-                <p>
-                    The issue did not require credentials, cookies, a valid candidate session, or access to the portal UI. Any unauthenticated internet user who knew how to query the storage endpoint could list and download sensitive candidate files in bulk.
-                </p>
+                <p>I did not need credentials, cookies, or a valid candidate session to retrieve the verification samples. The storage endpoint was serving them directly.</p>
 
-                <p>
-                    That combination matters: public listing plus public read access turns a storage bucket from an internal backend dependency into a data exposure surface. In this case, the data included personal information and exam-related records for a large number of students.
-                </p>
+                <h2>How large was the exposed inventory?</h2>
+                <p>The object counts I recorded at the time of reporting were:</p>
 
-                <h2>The Main Lesson</h2>
-                <p>
-                    Cloud storage bugs often look boring until you measure the blast radius. A single leaked bucket name is not automatically a breach, but it is a signal worth following. If the bucket is listable, readable, and contains sensitive records, the impact becomes immediate.
-                </p>
+                <ul>
+                    <li><strong>179,694</strong> result JSON records.</li>
+                    <li><strong>187,389</strong> admit-card redirect HTML files.</li>
+                    <li><strong>187,390</strong> admit-card PDFs.</li>
+                </ul>
 
-                <p>
-                    The best version of this kind of work is quiet and precise: confirm the minimum evidence needed, avoid collecting unnecessary data, report quickly, and give the team a clear path to fix it.
-                </p>
+                <p>These are counts of different types of objects. They should not be added together and described as that many separate students, and they are not a count of files I downloaded.</p>
 
-                <h2>Coverage</h2>
-                <p>
-                    The disclosure and follow-up discussion were covered across national and regional outlets:
-                </p>
+                <p>I downloaded only a small number of files to verify the issue and deleted them afterwards. The inventory established the potential scope; the samples established that candidate data was readable.</p>
+
+                <h2>Why the combination mattered</h2>
+                <p>The bucket name was a clue. Listing exposed the filenames. Reading exposed the contents. Taken together, those permissions removed the need to go through the candidate portal to retrieve the files.</p>
+
+                <p>Even a long or unpredictable filename offers little protection when an unauthenticated request can ask the storage service for the names. Once those names are available, public read access provides the next step.</p>
+
+                <p>The concern here was confidentiality. I demonstrated file reads; IIT Roorkee stated that the storage was read-only and records could not be altered.</p>
+
+                <h2>Reporting the issue</h2>
+                <p>I reported the issue to the IIT officials, who fixed it quickly.</p>
+
+                <p>In its <a href="https://x.com/iitroorkee/status/2061861006478041547" target="_blank" rel="noopener noreferrer">June 2 response</a>, IIT Roorkee acknowledged the configuration issue and thanked me for reporting it responsibly. I appreciated the team's prompt response.</p>
+
+                <p>For this kind of issue, both permissions need checking. Disabling listing alone can leave files readable to someone who already knows their names. The storage access policy needs to match which users should be able to retrieve each file.</p>
+
+                <h2>The clarification after the headlines</h2>
+                <p>The disclosure received a lot of attention, and some claims went beyond what I had established.</p>
+
+                <p>On June 5, I clarified that I had seen no evidence of a large-scale leak. Accessible files do not establish that someone else downloaded them all. I also confirmed that I had deleted my verification samples.</p>
+
+                <p>That distinction was part of my <a href="https://x.com/rylenanil/status/2062760208422846699" target="_blank" rel="noopener noreferrer">public clarification</a> and <a href="https://x.com/rylenanil/status/2062760212009030058" target="_blank" rel="noopener noreferrer">follow-up</a>, also covered by <a href="https://www.ndtv.com/education/not-large-scale-leak-16-year-old-student-issues-clarification-on-jee-advanced-2026-data-leak-11594687" target="_blank" rel="noopener noreferrer">NDTV</a>.</p>
+
+                <h2>What I took away from it</h2>
+                <p>This started with an ordinary storage error. The useful part was following it carefully: identify the backend, check listing, verify read access with a small sample, and report what the evidence showed.</p>
+
+                <p>For me, a successful outcome was getting the issue fixed while keeping unnecessary copies of candidate data out of the process. Describing the scope accurately afterwards mattered just as much.</p>
+
+                <h2>Coverage and original post</h2>
+                <p>The disclosure and the follow-up were covered by national and regional publications:</p>
+
                 <ul class="coverage-list">
                     <li><a href="https://www.hindustantimes.com/india-news/16-year-old-rylen-anil-flags-data-issues-on-jee-advanced-results-site-iit-roorkee-says-thank-you-takes-corrective-action-101780453586849-amp.html" target="_blank" rel="noopener noreferrer">Hindustan Times</a></li>
                     <li><a href="https://www.deccanherald.com/amp/story/india/iit-roorkee-admits-flaws-in-cloud-storage-linked-to-jee-advanced-results-portal-after-teens-discovery-4026466" target="_blank" rel="noopener noreferrer">Deccan Herald</a></li>
@@ -186,9 +221,9 @@
                     <li><a href="https://www.manabadi.co.in/entrance-exams/jee-advanced-2026-data-leak/" target="_blank" rel="noopener noreferrer">Manabadi</a></li>
                 </ul>
 
-                <p>
-                    Original X post: <a href="https://x.com/rylenanil/status/2061826579525984295?s=20" target="_blank" rel="noopener noreferrer">x.com/rylenanil/status/2061826579525984295</a>
-                </p>
+                <p>My original disclosure: <a href="https://x.com/rylenanil/status/2061826579525984295" target="_blank" rel="noopener noreferrer">June 2, 2026 on X</a>.</p>
+
+                <p>More research: <a href="hacking-gisec-before-speaking-at-gisec.html">Hacking GISEC Before Speaking at GISEC</a>.</p>
             </article>
 
         </section>
