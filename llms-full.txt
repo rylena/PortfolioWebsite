@@ -6,6 +6,11 @@ Rylen's work focuses on cybersecurity research, responsible disclosure, cloud se
 
 ## Public Security Research
 
+Rylen reported vulnerabilities in C-DAC e-Sushrut HMIS to CERT-In on September 1, 2026. CERT-In relayed the organization's fix confirmation on September 18. Three public records were published November 17: CVE-2026-124643 covers insufficient dashboard authentication/session validation; CVE-2026-124644 covers hospital operational counters in anonymous login HTML; CVE-2026-124645 describes a static/predictable value in client-side password hashing. The technical writeup traces the original request/response evidence and decodes all 15 counter fields using the original JavaScript. September 1 captures show active SHA-512 at Bokaro and active SHA-1 at AIIMS Patna. They also contain more than one Bokaro token value, so the writeup does not assert a globally invariant token, independently measured token entropy, a proven freshness policy, successful replay, or account takeover. Public token visibility alone is not treated as a vulnerability, and nonce freshness is not claimed to prevent offline guessing after a complete login tuple is captured. Dashboard and statistics observations are scoped to Bokaro; Patna confirmed the object-string hashing construction. CIVN-2026-0557 credits Rylen for the three CVEs and separately credits Sriharan Mahendran for CVE-2026-124646. Sources and writeup:
+
+https://www.cert-in.org.in/s2cMainServlet?pageid=PUBVLNOTES01&VLCODE=CIVN-2026-0557
+https://rylenanil.com/posts/cdac-esushrut-session-token.html
+
 Rylen is listed in the U.S. Department of Justice vulnerability disclosure program's official acknowledgments for researchers who responsibly disclosed valid vulnerabilities. His public announcement was posted on October 5, 2026. The acknowledgment does not disclose the vulnerability type, severity, or affected system. Official source:
 
 https://fb6d331c8f530081fa81e12d81678ff8.responsibledisclosure.com/hc/en-us/articles/1500003305722-Acknowledgments
@@ -35,6 +40,7 @@ Python, C++, JavaScript, HTML5, CSS3, Linux, Docker, Git, Arduino, ESP32, AI/LLM
 
 ## Canonical URLs
 
+- e-Sushrut disclosure: https://rylenanil.com/posts/cdac-esushrut-session-token.html
 - Media coverage and interviews: https://rylenanil.com/media.html
 - GISEC disclosure: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Home: https://rylenanil.com/

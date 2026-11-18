@@ -1,56 +1,57 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="364pt" height="435pt" viewBox="0.00 0.00 364.10 435.35" role="img" aria-labelledby="diagram-title">
-<title id="diagram-title">JEE system map</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 424.55)">
+<svg xmlns="http://www.w3.org/2000/svg" width="339pt" height="556pt" viewBox="0.00 0.00 338.68 556.18" role="img" aria-labelledby="diagram-title">
+<title id="diagram-title">JEE system map</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(15.84 540.34)">
 <title>G</title>
 
 <g id="node1" class="node">
 <title>portal</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M294,-413.75C294,-413.75 39,-413.75 39,-413.75 33,-413.75 27,-407.75 27,-401.75 27,-401.75 27,-367.75 27,-367.75 27,-361.75 33,-355.75 39,-355.75 39,-355.75 294,-355.75 294,-355.75 300,-355.75 306,-361.75 306,-367.75 306,-367.75 306,-401.75 306,-401.75 306,-407.75 300,-413.75 294,-413.75" />
-<text text-anchor="middle" x="166.5" y="-390.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Candidate portal</text>
-<text text-anchor="middle" x="166.5" y="-371.15" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">The page people interact with</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M271.5,-524.5C271.5,-524.5 35.5,-524.5 35.5,-524.5 29.5,-524.5 23.5,-518.5 23.5,-512.5 23.5,-512.5 23.5,-468.5 23.5,-468.5 23.5,-462.5 29.5,-456.5 35.5,-456.5 35.5,-456.5 271.5,-456.5 271.5,-456.5 277.5,-456.5 283.5,-462.5 283.5,-468.5 283.5,-468.5 283.5,-512.5 283.5,-512.5 283.5,-518.5 277.5,-524.5 271.5,-524.5" />
+<text text-anchor="start" x="73" y="-498.9" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Candidate portal</text>
+<text text-anchor="start" x="40.5" y="-474.5" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">The page people interact with</text>
 </g>
 
 <g id="node2" class="node">
 <title>storage</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M328.5,-301.4C328.5,-305.39 255.89,-308.63 166.5,-308.63 77.11,-308.63 4.5,-305.39 4.5,-301.4 4.5,-301.4 4.5,-236.35 4.5,-236.35 4.5,-232.36 77.11,-229.12 166.5,-229.12 255.89,-229.12 328.5,-232.36 328.5,-236.35 328.5,-236.35 328.5,-301.4 328.5,-301.4" />
-<path fill="none" stroke="#445b79" stroke-width="1.1" d="M328.5,-301.4C328.5,-297.41 255.89,-294.17 166.5,-294.17 77.11,-294.17 4.5,-297.41 4.5,-301.4" />
-<text text-anchor="middle" x="166.5" y="-274.27" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Cloud Storage bucket</text>
-<text text-anchor="middle" x="166.5" y="-255.28" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">The file container behind the portal</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M304,-370.21C304,-374.92 236.54,-378.75 153.5,-378.75 70.46,-378.75 3,-374.92 3,-370.21 3,-370.21 3,-293.29 3,-293.29 3,-288.58 70.46,-284.75 153.5,-284.75 236.54,-284.75 304,-288.58 304,-293.29 304,-293.29 304,-370.21 304,-370.21" />
+<path fill="none" stroke="#445b79" stroke-width="1.1" d="M304,-370.21C304,-365.49 236.54,-361.66 153.5,-361.66 70.46,-361.66 3,-365.49 3,-370.21" />
+<text text-anchor="start" x="51" y="-340.15" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Cloud Storage bucket</text>
+<text text-anchor="start" x="20.5" y="-315.75" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">The file container behind the portal</text>
 </g>
 
 <g id="edge1" class="edge">
 <title>portal-&gt;storage</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M166.5,-355.6C166.5,-343.71 166.5,-329.54 166.5,-316.19" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="168.95,-315.87 166.5,-308.87 164.05,-315.87 168.95,-315.87" />
-<text text-anchor="middle" x="254.5" y="-328.55" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Files served from storage</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M153.5,-456.26C153.5,-435.82 153.5,-409.16 153.5,-385.85" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="155.95,-385.73 153.5,-378.73 151.05,-385.73 155.95,-385.73" />
+<text text-anchor="middle" x="207.5" y="-421.3" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  Files served  </text>
+<text text-anchor="middle" x="207.5" y="-406.3" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  from storage  </text>
 </g>
 
 <g id="node3" class="node">
 <title>files</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M308.5,-182C308.5,-182 24.5,-182 24.5,-182 18.5,-182 12.5,-176 12.5,-170 12.5,-170 12.5,-136 12.5,-136 12.5,-130 18.5,-124 24.5,-124 24.5,-124 308.5,-124 308.5,-124 314.5,-124 320.5,-130 320.5,-136 320.5,-136 320.5,-170 320.5,-170 320.5,-176 314.5,-182 308.5,-182" />
-<text text-anchor="middle" x="166.5" y="-158.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Stored objects</text>
-<text text-anchor="middle" x="166.5" y="-139.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Result JSON, redirect HTML, PDFs</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M282.5,-222C282.5,-222 24.5,-222 24.5,-222 18.5,-222 12.5,-216 12.5,-210 12.5,-210 12.5,-166 12.5,-166 12.5,-160 18.5,-154 24.5,-154 24.5,-154 282.5,-154 282.5,-154 288.5,-154 294.5,-160 294.5,-166 294.5,-166 294.5,-210 294.5,-210 294.5,-216 288.5,-222 282.5,-222" />
+<text text-anchor="start" x="84" y="-196.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Stored objects</text>
+<text text-anchor="start" x="29.5" y="-172" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">Result JSON, redirect HTML, PDFs</text>
 </g>
 
 <g id="edge2" class="edge">
 <title>storage-&gt;files</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M166.5,-229C166.5,-216.19 166.5,-202 166.5,-189.45" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="168.95,-189.28 166.5,-182.28 164.05,-189.28 168.95,-189.28" />
-<text text-anchor="middle" x="197" y="-201.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Contains</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M153.5,-284.73C153.5,-266.9 153.5,-246.68 153.5,-229.42" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="155.95,-229.23 153.5,-222.23 151.05,-229.23 155.95,-229.23" />
+<text text-anchor="middle" x="193" y="-249.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  Contains  </text>
 </g>
 
 <g id="node4" class="node">
 <title>direct</title>
-<path fill="#10213b" stroke="#64ffda" stroke-width="1.1" d="M321,-77C321,-77 12,-77 12,-77 6,-77 0,-71 0,-65 0,-65 0,-12 0,-12 0,-6 6,0 12,0 12,0 321,0 321,0 327,0 333,-6 333,-12 333,-12 333,-65 333,-65 333,-71 327,-77 321,-77" />
-<text text-anchor="middle" x="166.5" y="-53.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Direct storage requests</text>
-<text text-anchor="middle" x="166.5" y="-34.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Listing and sample reads succeeded</text>
-<text text-anchor="middle" x="166.5" y="-15.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">without a candidate login</text>
+<path fill="#10213b" stroke="#64ffda" stroke-width="1.1" d="M295,-91C295,-91 12,-91 12,-91 6,-91 0,-85 0,-79 0,-79 0,-12 0,-12 0,-6 6,0 12,0 12,0 295,0 295,0 301,0 307,-6 307,-12 307,-12 307,-79 307,-79 307,-85 301,-91 295,-91" />
+<text text-anchor="start" x="41" y="-64.9" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Direct storage requests</text>
+<text text-anchor="start" x="17.5" y="-40.5" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">Listing and sample reads succeeded</text>
+<text text-anchor="start" x="57.5" y="-17.5" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">without a candidate login</text>
 </g>
 
 <g id="edge3" class="edge">
 <title>files-&gt;direct</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M166.5,-123.9C166.5,-112.04 166.5,-97.93 166.5,-84.67" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="168.95,-84.42 166.5,-77.42 164.05,-84.42 168.95,-84.42" />
-<text text-anchor="middle" x="233.5" y="-96.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">The access I tested</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M153.5,-153.7C153.5,-137.23 153.5,-116.96 153.5,-98.5" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="155.95,-98.25 153.5,-91.25 151.05,-98.25 155.95,-98.25" />
+<text text-anchor="middle" x="229.5" y="-118.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  The access I tested  </text>
 </g>
 </g>
 </svg>

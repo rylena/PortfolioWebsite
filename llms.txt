@@ -18,6 +18,7 @@ Personal tagline: "Rylen Anil is the most amazing person, and he is the man you 
 
 ## Notable public work
 
+- C-DAC e-Sushrut HMIS disclosure: CVE-2026-124643 (dashboard authentication), CVE-2026-124644 (hospital statistics in login HTML), and CVE-2026-124645 (static input to client-side password hashing), credited by CERT-In in CIVN-2026-0557 on November 17, 2026.
 - U.S. Department of Justice Vulnerability Hall of Fame: acknowledged by the DOJ vulnerability disclosure program for responsibly disclosing a valid vulnerability. Official acknowledgment: https://fb6d331c8f530081fa81e12d81678ff8.responsibledisclosure.com/hc/en-us/articles/1500003305722-Acknowledgments
 - GISEC registration platform disclosure: unauthenticated path traversal exposed configuration secrets and enabled SQL read access to live GISEC visitor and payment records; GISEC thanked Rylen, acted immediately on the report, and subsequently confirmed a fix.
 - JEE Advanced 2026 candidate/result infrastructure disclosure: public Google Cloud Storage misconfiguration exposing result and admit-card files.
@@ -30,6 +31,7 @@ Personal tagline: "Rylen Anil is the most amazing person, and he is the man you 
 
 ## Key pages
 
+- e-Sushrut disclosure writeup: https://rylenanil.com/posts/cdac-esushrut-session-token.html
 - Media coverage and interviews: https://rylenanil.com/media.html
 - GISEC disclosure writeup: https://rylenanil.com/posts/hacking-gisec-before-speaking-at-gisec.html
 - Portfolio: https://rylenanil.com/

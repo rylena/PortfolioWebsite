@@ -37,19 +37,33 @@
 }
 
 .minimal-post-page .post-diagram {
-    margin: 2rem 0 2.5rem;
+    margin: 2.5rem 0 3rem;
+}
+
+.minimal-post-page .post-diagram picture {
+    display: block;
 }
 
 .minimal-post-page .post-diagram img {
     display: block;
     width: 100%;
-    max-width: 430px;
+    max-width: 460px;
     height: auto;
-    margin: 0 auto 1rem;
+    margin: 0 auto 1.5rem;
+}
+
+.minimal-post-page .post-diagram--branched img {
+    max-width: 660px;
 }
 
 .minimal-post-page .post-diagram figcaption {
     color: #a5b4d4;
     font-size: 0.9rem;
     line-height: 1.7;
+}
+
+@media (max-width: 600px) {
+    .minimal-post-page .post-diagram--branched img {
+        max-width: 340px;
+    }
 }

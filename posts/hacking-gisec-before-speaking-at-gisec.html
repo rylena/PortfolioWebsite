@@ -106,7 +106,7 @@
                 <p>The investigation moved through those pieces in this order:</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/gisec-system-map.svg" width="322" height="521" loading="lazy" decoding="async" alt="An unauthenticated browser request reached the file-download API, which returned web.config from server files. I then used its exposed credentials in a separate SQL client connection to the database.">
+                    <img src="../assets/diagrams/gisec-system-map.svg" width="322" height="649" loading="lazy" decoding="async" alt="An unauthenticated browser request reached the file-download API, which returned web.config from server files. I then used its exposed credentials in a separate SQL client connection to the database.">
                     <figcaption>The file download and the database login were two separate requests. The first supplied the credentials used in the second.</figcaption>
                 </figure>
 
@@ -146,7 +146,7 @@ Host: gisecapi.gisec.ae</code></pre>
                 <p>Here, <code>GET</code> is the request to retrieve a resource, and <code>Host</code> identifies the API server. <code>fileName=web.config</code> chooses the file. <code>folderName=../..</code> asks the server to move up two parent directories before looking for it.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/gisec-path-traversal.svg" width="292" height="369" loading="lazy" decoding="async" alt="The request chose web.config as the filename and ../.. as the folder. The parent-directory segments allowed the read to leave the approved upload area and return the configuration file.">
+                    <img src="../assets/diagrams/gisec-path-traversal.svg" width="284" height="468" loading="lazy" decoding="async" alt="The request chose web.config as the filename and ../.. as the folder. The parent-directory segments allowed the read to leave the approved upload area and return the configuration file.">
                     <figcaption>The flaw was in where the download request could reach. Checking uploaded file types had not confined the download path.</figcaption>
                 </figure>
 
@@ -191,7 +191,7 @@ Host: gisecapi.gisec.ae</code></pre>
                 <p>At this point, I had crossed from the registration API into its database backend. There was no password guessing involved. The application had supplied the credentials through the file-download bug.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/gisec-credentials.svg" width="355" height="486" loading="lazy" decoding="async" alt="The exposed connection string specified a server and database plus a username and password. Those credentials authenticated, and a SELECT query returned real visitor and payment rows.">
+                    <img src="../assets/diagrams/gisec-credentials.svg" width="328" height="640" loading="lazy" decoding="async" alt="The exposed connection string specified a server and database plus a username and password. Those credentials authenticated, and a SELECT query returned real visitor and payment rows.">
                     <figcaption>The address explained where to connect, the credentials established an identity, and the returned rows proved that identity could read data.</figcaption>
                 </figure>
 
@@ -229,8 +229,11 @@ Payments rows      620</code></pre>
 
                 <p>It helps to separate those two kinds of database query. An inventory says which databases are visible to the login. Reading rows shows what information the login can actually retrieve from a particular database.</p>
 
-                <figure class="post-diagram">
-                    <img src="../assets/diagrams/gisec-evidence.svg" width="375" height="409" loading="lazy" decoding="async" alt="A successful SQL login allowed a database-name inventory that returned 93 names. A separate query against GISEC returned visitor and payment rows. The inventory and the row reads establish different kinds of access.">
+                <figure class="post-diagram post-diagram--branched">
+                    <picture>
+                        <source media="(max-width: 600px)" srcset="../assets/diagrams/gisec-evidence-narrow.svg" width="290" height="548">
+                        <img src="../assets/diagrams/gisec-evidence.svg" width="444" height="321" loading="lazy" decoding="async" alt="A successful SQL login allowed a database-name inventory that returned 93 names. A separate query against GISEC returned visitor and payment rows. The inventory and the row reads establish different kinds of access.">
+                    </picture>
                     <figcaption>The 93-database inventory described the wider server. The demonstrated row reads established the impact on GISEC.</figcaption>
                 </figure>
 

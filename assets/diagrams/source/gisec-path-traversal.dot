@@ -1,11 +1,11 @@
 digraph G {
-  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
-  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.55", ranksep="0.65", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.20,0.14", penwidth=1.1];
   edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
-  input [label="Download request\nfileName = web.config\nfolderName = ../.."];
-  parent [label="../.. moves up\nthrough parent directories"];
-  escape [label="Read outside the\napproved upload directory", color="#64ffda"];
-  config [label="web.config\nApplication settings exposed"];
+  input [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Download request</B></TD></TR><TR><TD><FONT POINT-SIZE="15">fileName = web.config</FONT></TD></TR><TR><TD><FONT POINT-SIZE="15">folderName = ../..</FONT></TD></TR></TABLE>>];
+  parent [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>../.. moves up</B></TD></TR><TR><TD><FONT POINT-SIZE="15">through parent directories</FONT></TD></TR></TABLE>>];
+  escape [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Read outside the</B></TD></TR><TR><TD><FONT POINT-SIZE="15">approved upload directory</FONT></TD></TR></TABLE>>, color="#64ffda"];
+  config [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>web.config</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Application settings exposed</FONT></TD></TR></TABLE>>];
   input -> parent;
   parent -> escape;
   escape -> config;

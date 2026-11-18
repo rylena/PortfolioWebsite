@@ -121,7 +121,7 @@
                 <p>The candidate portal was the website people used in their browser. The files behind it lived in <strong>Google Cloud Storage</strong>, a service for storing and serving files. The portal and the storage service had different jobs, and access to the files depended on the storage permissions too.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/jee-system-map.svg" width="364" height="435" loading="lazy" decoding="async" alt="The candidate portal used a Cloud Storage bucket containing result JSON, redirect HTML, and admit-card PDFs. Direct storage requests could list objects and read verification samples without a candidate login.">
+                    <img src="../assets/diagrams/jee-system-map.svg" width="339" height="556" loading="lazy" decoding="async" alt="The candidate portal used a Cloud Storage bucket containing result JSON, redirect HTML, and admit-card PDFs. Direct storage requests could list objects and read verification samples without a candidate login.">
                     <figcaption>The access I tested was at the storage endpoint. It did not depend on having a candidate's logged-in session in the portal.</figcaption>
                 </figure>
 
@@ -132,7 +132,7 @@
                 <p>For example, <code>results/example.json</code> could be an object name, and <code>results/</code> its prefix. Slashes can make object names look like folders. This naming example illustrates the terms; it is not a real candidate file path.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/jee-storage-names.svg" width="357" height="311" loading="lazy" decoding="async" alt="An illustrative bucket contains an object named results/example.json. The results/ part is a prefix used to group matching object names, and the full name identifies one stored file.">
+                    <img src="../assets/diagrams/jee-storage-names.svg" width="315" height="432" loading="lazy" decoding="async" alt="An illustrative bucket contains an object named results/example.json. The results/ part is a prefix used to group matching object names, and the full name identifies one stored file.">
                     <figcaption>Illustrative names only. The bucket is the container; the full object name identifies the file. Google explains these terms in its <a href="https://docs.cloud.google.com/storage/docs/objects" target="_blank" rel="noopener noreferrer">Cloud Storage object documentation</a>.</figcaption>
                 </figure>
 
@@ -161,7 +161,7 @@
                 <p>So the next step was to check a small sample of the listed objects.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/jee-list-and-read.svg" width="323" height="367" loading="lazy" decoding="async" alt="A listing request returns object names rather than file contents. A separate GET request uses one of those names to retrieve a result record or admit-card file.">
+                    <img src="../assets/diagrams/jee-list-and-read.svg" width="336" height="465" loading="lazy" decoding="async" alt="A listing request returns object names rather than file contents. A separate GET request uses one of those names to retrieve a result record or admit-card file.">
                     <figcaption>The first response supplied names. The second check established that named files were readable. A listing alone would not have proved both permissions.</figcaption>
                 </figure>
 
@@ -233,7 +233,7 @@
                 <p>That distinction was part of my <a href="https://x.com/rylenanil/status/2062760208422846699" target="_blank" rel="noopener noreferrer">public clarification</a> and <a href="https://x.com/rylenanil/status/2062760212009030058" target="_blank" rel="noopener noreferrer">follow-up</a>, also covered by <a href="https://www.ndtv.com/education/not-large-scale-leak-16-year-old-student-issues-clarification-on-jee-advanced-2026-data-leak-11594687" target="_blank" rel="noopener noreferrer">NDTV</a>.</p>
 
                 <figure class="post-diagram">
-                    <img src="../assets/diagrams/jee-scope.svg" width="361" height="415" loading="lazy" decoding="async" alt="Object listings measured the exposed inventory, while a small verification sample confirmed file read access. This established a public access vulnerability, but I had no evidence that someone copied all those files.">
+                    <img src="../assets/diagrams/jee-scope.svg" width="327" height="532" loading="lazy" decoding="async" alt="Object listings measured the exposed inventory, while a small verification sample confirmed file read access. This established a public access vulnerability, but I had no evidence that someone copied all those files.">
                     <figcaption>Inventory size, verification downloads, and evidence of wider copying are three different things. The reported object counts describe the inventory.</figcaption>
                 </figure>
 

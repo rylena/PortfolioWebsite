@@ -1,0 +1,23 @@
+digraph G {
+  graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.55", ranksep="0.65", splines=ortho];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.20,0.14", penwidth=1.1];
+  edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
+  login [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>SQL login succeeds</B></TD></TR></TABLE>>];
+  inventory [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>List database<BR/>names</B></TD></TR><TR><TD><FONT POINT-SIZE="15">93 names returned</FONT></TD></TR></TABLE>>];
+  query [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Query the GISEC<BR/>database</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Visitor and payment<BR/>rows returned</FONT></TD></TR></TABLE>>, color="#64ffda"];
+  inventory_note [label="Proves the inventory\nis visible", shape=plaintext, style="", fontsize=14];
+  query_note [label="Proves data read access\nto GISEC", shape=plaintext, style="", fontsize=14];
+  // Route the second branch through an outer rail, clear of every label.
+  rail_top [shape=point, width=0.01, height=0.01, label="", style=invis, group=rail];
+  rail_bottom [shape=point, width=0.01, height=0.01, label="", style=invis, group=rail];
+  { rank=same; rail_top; login; }
+  { rank=same; rail_bottom; query; }
+  rail_top -> login [style=invis];
+  login:w -> rail_top:e [arrowhead=none, constraint=false];
+  rail_top:s -> rail_bottom:n [arrowhead=none];
+  rail_bottom:e -> query:w;
+  login -> inventory;
+  inventory -> inventory_note [arrowhead=none, style=dashed];
+  inventory_note -> query [style=invis];
+  query -> query_note [arrowhead=none, style=dashed];
+}

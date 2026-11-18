@@ -1,52 +1,52 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="323pt" height="367pt" viewBox="0.00 0.00 322.60 366.60" role="img" aria-labelledby="diagram-title">
-<title id="diagram-title">JEE list and read</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 355.8)">
+<svg xmlns="http://www.w3.org/2000/svg" width="336pt" height="465pt" viewBox="0.00 0.00 335.68 464.68" role="img" aria-labelledby="diagram-title">
+<title id="diagram-title">JEE list and read</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(15.84 448.84)">
 <title>G</title>
 
 <g id="node1" class="node">
 <title>list_request</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M250,-345C250,-345 51,-345 51,-345 45,-345 39,-339 39,-333 39,-333 39,-299 39,-299 39,-293 45,-287 51,-287 51,-287 250,-287 250,-287 256,-287 262,-293 262,-299 262,-299 262,-333 262,-333 262,-339 256,-345 250,-345" />
-<text text-anchor="middle" x="150.5" y="-321.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">LIST request</text>
-<text text-anchor="middle" x="150.5" y="-302.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Ask which objects exist</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M231.5,-433C231.5,-433 46.5,-433 46.5,-433 40.5,-433 34.5,-427 34.5,-421 34.5,-421 34.5,-377 34.5,-377 34.5,-371 40.5,-365 46.5,-365 46.5,-365 231.5,-365 231.5,-365 237.5,-365 243.5,-371 243.5,-377 243.5,-377 243.5,-421 243.5,-421 243.5,-427 237.5,-433 231.5,-433" />
+<text text-anchor="start" x="80" y="-407.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">LIST request</text>
+<text text-anchor="start" x="52" y="-383" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">Ask which objects exist</text>
 </g>
 
 <g id="node2" class="node">
 <title>names</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M283.5,-254C283.5,-254 17.5,-254 17.5,-254 11.5,-254 5.5,-248 5.5,-242 5.5,-242 5.5,-208 5.5,-208 5.5,-202 11.5,-196 17.5,-196 17.5,-196 283.5,-196 283.5,-196 289.5,-196 295.5,-202 295.5,-208 295.5,-208 295.5,-242 295.5,-242 295.5,-248 289.5,-254 283.5,-254" />
-<text text-anchor="middle" x="150.5" y="-230.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Response: object names</text>
-<text text-anchor="middle" x="150.5" y="-211.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">The index, not the file contents</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M261.5,-316C261.5,-316 16.5,-316 16.5,-316 10.5,-316 4.5,-310 4.5,-304 4.5,-304 4.5,-260 4.5,-260 4.5,-254 10.5,-248 16.5,-248 16.5,-248 261.5,-248 261.5,-248 267.5,-248 273.5,-254 273.5,-260 273.5,-260 273.5,-304 273.5,-304 273.5,-310 267.5,-316 261.5,-316" />
+<text text-anchor="start" x="23.5" y="-290.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Response: object names</text>
+<text text-anchor="start" x="22" y="-266" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">The index, not the file contents</text>
 </g>
 
 <g id="edge1" class="edge">
 <title>list_request-&gt;names</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150.5,-286.84C150.5,-278.8 150.5,-269.94 150.5,-261.53" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.95,-261.28 150.5,-254.28 148.05,-261.28 152.95,-261.28" />
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M139,-364.74C139,-351.86 139,-337.01 139,-323.52" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="141.45,-323.19 139,-316.19 136.55,-323.19 141.45,-323.19" />
 </g>
 
 <g id="node3" class="node">
 <title>read_request</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M260,-149C260,-149 41,-149 41,-149 35,-149 29,-143 29,-137 29,-137 29,-103 29,-103 29,-97 35,-91 41,-91 41,-91 260,-91 260,-91 266,-91 272,-97 272,-103 272,-103 272,-137 272,-137 272,-143 266,-149 260,-149" />
-<text text-anchor="middle" x="150.5" y="-125.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">GET request</text>
-<text text-anchor="middle" x="150.5" y="-106.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Ask for one named object</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M240,-185C240,-185 38,-185 38,-185 32,-185 26,-179 26,-173 26,-173 26,-129 26,-129 26,-123 32,-117 38,-117 38,-117 240,-117 240,-117 246,-117 252,-123 252,-129 252,-129 252,-173 252,-173 252,-179 246,-185 240,-185" />
+<text text-anchor="start" x="81" y="-159.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">GET request</text>
+<text text-anchor="start" x="43" y="-135" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">Ask for one named object</text>
 </g>
 
 <g id="edge2" class="edge">
 <title>names-&gt;read_request</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150.5,-195.85C150.5,-183.59 150.5,-169.09 150.5,-156.13" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.95,-156.11 150.5,-149.11 148.05,-156.11 152.95,-156.11" />
-<text text-anchor="middle" x="224" y="-168.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Use a returned name</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M139,-247.78C139,-230.93 139,-210.31 139,-192.54" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="141.45,-192.11 139,-185.11 136.55,-192.11 141.45,-192.11" />
+<text text-anchor="middle" x="221.5" y="-212.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  Use a returned name  </text>
 </g>
 
 <g id="node4" class="node">
 <title>contents</title>
-<path fill="#10213b" stroke="#64ffda" stroke-width="1.1" d="M289,-58C289,-58 12,-58 12,-58 6,-58 0,-52 0,-46 0,-46 0,-12 0,-12 0,-6 6,0 12,0 12,0 289,0 289,0 295,0 301,-6 301,-12 301,-12 301,-46 301,-46 301,-52 295,-58 289,-58" />
-<text text-anchor="middle" x="150.5" y="-34.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Response: file contents</text>
-<text text-anchor="middle" x="150.5" y="-15.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">A result record or admit-card file</text>
+<path fill="#10213b" stroke="#64ffda" stroke-width="1.1" d="M266,-68C266,-68 12,-68 12,-68 6,-68 0,-62 0,-56 0,-56 0,-12 0,-12 0,-6 6,0 12,0 12,0 266,0 266,0 272,0 278,-6 278,-12 278,-12 278,-56 278,-56 278,-62 272,-68 266,-68" />
+<text text-anchor="start" x="27.5" y="-42.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Response: file contents</text>
+<text text-anchor="start" x="17" y="-18" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">A result record or admit-card file</text>
 </g>
 
 <g id="edge3" class="edge">
 <title>read_request-&gt;contents</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M150.5,-90.84C150.5,-82.8 150.5,-73.94 150.5,-65.53" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="152.95,-65.28 150.5,-58.28 148.05,-65.28 152.95,-65.28" />
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M139,-116.74C139,-103.86 139,-89.01 139,-75.52" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="141.45,-75.19 139,-68.19 136.55,-75.19 141.45,-75.19" />
 </g>
 </g>
 </svg>

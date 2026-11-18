@@ -1,12 +1,12 @@
 digraph G {
-  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
-  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.55", ranksep="0.65", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.20,0.14", penwidth=1.1];
   edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
-  inventory [label="Object listings\nMeasure the exposed inventory"];
-  sample [label="A small verification sample\nConfirms files can be read"];
-  finding [label="Established finding\nPublic access to candidate files", color="#64ffda"];
-  limit [label="A different question\nDid someone copy all those files?\nI had no evidence of that.", style="rounded,dashed", color="#889ab8"];
-  inventory -> sample [label="Check contents separately"];
+  inventory [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Object listings</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Measure the exposed inventory</FONT></TD></TR></TABLE>>];
+  sample [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>A small verification sample</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Confirms files can be read</FONT></TD></TR></TABLE>>];
+  finding [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Established finding</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Public access to candidate files</FONT></TD></TR></TABLE>>, color="#64ffda"];
+  limit [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>A different question</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Did someone copy all those files?</FONT></TD></TR><TR><TD><FONT POINT-SIZE="15">I had no evidence of that.</FONT></TD></TR></TABLE>>, style="rounded,dashed", color="#889ab8"];
+  inventory -> sample [label="  Check contents  \n  separately  "];
   sample -> finding;
-  finding -> limit [style=dashed, arrowhead=none, label="Exposure does not\nestablish copying"];
+  finding -> limit [style=dashed, arrowhead=none, label="  Exposure does not  \n  establish copying  "];
 }

@@ -1,12 +1,12 @@
 digraph G {
-  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
-  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.55", ranksep="0.65", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.20,0.14", penwidth=1.1];
   edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
-  list_request [label="LIST request\nAsk which objects exist"];
-  names [label="Response: object names\nThe index, not the file contents"];
-  read_request [label="GET request\nAsk for one named object"];
-  contents [label="Response: file contents\nA result record or admit-card file", color="#64ffda"];
+  list_request [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>LIST request</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Ask which objects exist</FONT></TD></TR></TABLE>>];
+  names [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Response: object names</B></TD></TR><TR><TD><FONT POINT-SIZE="15">The index, not the file contents</FONT></TD></TR></TABLE>>];
+  read_request [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>GET request</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Ask for one named object</FONT></TD></TR></TABLE>>];
+  contents [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Response: file contents</B></TD></TR><TR><TD><FONT POINT-SIZE="15">A result record or admit-card file</FONT></TD></TR></TABLE>>, color="#64ffda"];
   list_request -> names;
-  names -> read_request [label="Use a returned name"];
+  names -> read_request [label="  Use a returned name  "];
   read_request -> contents;
 }

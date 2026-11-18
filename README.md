@@ -24,8 +24,15 @@ the console's native background. Source references for artwork and logos are in
 
 Blog share previews use title cards in `assets/share/`, with no article photos.
 Blog diagrams have editable Graphviz sources in `assets/diagrams/source/`.
+The e-Sushrut post uses responsive HTML figures and a local Web Crypto hash demo
+in `assets/esushrut/`; its evidence boundaries and photo attribution are recorded
+in `research/esushrut-sources.md`.
+Keep this post off `blog.html` until requested; it is available at its direct URL.
 After editing those `.dot` files, run `python3 scripts/build-article-diagrams.py`
 (requires Graphviz) and commit the rendered SVGs alongside their sources.
+The renderer also updates diagram image dimensions in the posts to reserve the
+correct aspect ratio. The GISEC evidence diagram uses a parallel layout on desktop
+and `gisec-evidence-narrow.dot` below 600px; keep their labels and relationships in sync.
 After changing a post's `og:title` or adding a post, run
 `python3 scripts/generate-share-cards.py` (requires Pillow) and commit the generated
 PNGs. The renderer uses the bundled, OFL-licensed Poppins fonts. For a new post,

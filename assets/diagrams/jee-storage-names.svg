@@ -1,41 +1,44 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="357pt" height="311pt" viewBox="0.00 0.00 356.60 311.35" role="img" aria-labelledby="diagram-title">
-<title id="diagram-title">JEE storage names</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(10.8 300.55)">
+<svg xmlns="http://www.w3.org/2000/svg" width="315pt" height="432pt" viewBox="0.00 0.00 314.68 432.18" role="img" aria-labelledby="diagram-title">
+<title id="diagram-title">JEE storage names</title><g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(15.84 416.34)">
 <title>G</title>
 
 <g id="node1" class="node">
 <title>bucket</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M279.5,-282.4C279.5,-286.39 222.35,-289.63 152,-289.63 81.65,-289.63 24.5,-286.39 24.5,-282.4 24.5,-282.4 24.5,-217.35 24.5,-217.35 24.5,-213.36 81.65,-210.12 152,-210.12 222.35,-210.12 279.5,-213.36 279.5,-217.35 279.5,-217.35 279.5,-282.4 279.5,-282.4" />
-<path fill="none" stroke="#445b79" stroke-width="1.1" d="M279.5,-282.4C279.5,-278.41 222.35,-275.17 152,-275.17 81.65,-275.17 24.5,-278.41 24.5,-282.4" />
-<text text-anchor="middle" x="152" y="-255.28" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Bucket</text>
-<text text-anchor="middle" x="152" y="-236.28" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">A named container for files</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M260,-392.21C260,-396.92 206.89,-400.75 141.5,-400.75 76.11,-400.75 23,-396.92 23,-392.21 23,-392.21 23,-315.29 23,-315.29 23,-310.58 76.11,-306.75 141.5,-306.75 206.89,-306.75 260,-310.58 260,-315.29 260,-315.29 260,-392.21 260,-392.21" />
+<path fill="none" stroke="#445b79" stroke-width="1.1" d="M260,-392.21C260,-387.49 206.89,-383.66 141.5,-383.66 76.11,-383.66 23,-387.49 23,-392.21" />
+<text text-anchor="start" x="109.5" y="-362.15" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Bucket</text>
+<text text-anchor="start" x="40.5" y="-337.75" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">A named container for files</text>
 </g>
 
 <g id="node2" class="node">
 <title>prefix</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M292,-163C292,-163 12,-163 12,-163 6,-163 0,-157 0,-151 0,-151 0,-117 0,-117 0,-111 6,-105 12,-105 12,-105 292,-105 292,-105 298,-105 304,-111 304,-117 304,-117 304,-151 304,-151 304,-157 298,-163 292,-163" />
-<text text-anchor="middle" x="152" y="-139.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Prefix: results/</text>
-<text text-anchor="middle" x="152" y="-120.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">The beginning of an object name</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M271,-229C271,-229 12,-229 12,-229 6,-229 0,-223 0,-217 0,-217 0,-173 0,-173 0,-167 6,-161 12,-161 12,-161 271,-161 271,-161 277,-161 283,-167 283,-173 283,-173 283,-217 283,-217 283,-223 277,-229 271,-229" />
+<text text-anchor="start" x="71.5" y="-203.4" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Prefix: results/</text>
+<text text-anchor="start" x="17.5" y="-179" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">The beginning of an object name</text>
 </g>
 
 <g id="edge1" class="edge">
 <title>bucket-&gt;prefix</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M152,-210C152,-197.19 152,-183 152,-170.45" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="154.45,-170.28 152,-163.28 149.55,-170.28 154.45,-170.28" />
-<text text-anchor="middle" x="233.5" y="-182.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Group matching names</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M141.5,-306.99C141.5,-284.58 141.5,-257.85 141.5,-236.23" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="143.95,-236.11 141.5,-229.11 139.05,-236.11 143.95,-236.11" />
+<text text-anchor="middle" x="206.5" y="-271.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  Group matching  </text>
+<text text-anchor="middle" x="206.5" y="-256.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  names  </text>
 </g>
 
 <g id="node3" class="node">
 <title>object</title>
-<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M274,-58C274,-58 30,-58 30,-58 24,-58 18,-52 18,-46 18,-46 18,-12 18,-12 18,-6 24,0 30,0 30,0 274,0 274,0 280,0 286,-6 286,-12 286,-12 286,-46 286,-46 286,-52 280,-58 274,-58" />
-<text text-anchor="middle" x="152" y="-34.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">Object: results/example.json</text>
-<text text-anchor="middle" x="152" y="-15.4" font-family="DejaVu Sans" font-size="17.00" fill="#e1e8fa">One stored file</text>
+<path fill="#10213b" stroke="#445b79" stroke-width="1.1" d="M246,-83C246,-83 37,-83 37,-83 31,-83 25,-77 25,-71 25,-71 25,-12 25,-12 25,-6 31,0 37,0 37,0 246,0 246,0 252,0 258,-6 258,-12 258,-12 258,-71 258,-71 258,-77 252,-83 246,-83" />
+<text text-anchor="start" x="107.5" y="-56.9" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">Object:</text>
+<text text-anchor="start" x="42.5" y="-39.9" font-family="DejaVu Sans" font-weight="bold" font-size="17.00" fill="#e1e8fa">results/example.json</text>
+<text text-anchor="start" x="86.5" y="-17.5" font-family="DejaVu Sans" font-size="15.00" fill="#e1e8fa">One stored file</text>
 </g>
 
 <g id="edge2" class="edge">
 <title>prefix-&gt;object</title>
-<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M152,-104.85C152,-92.59 152,-78.09 152,-65.13" />
-<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="154.45,-65.11 152,-58.11 149.55,-65.11 154.45,-65.11" />
-<text text-anchor="middle" x="243.5" y="-77.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">Name identifies the object</text>
+<path fill="none" stroke="#64ffda" stroke-width="1.3" d="M141.5,-160.75C141.5,-140.16 141.5,-113.37 141.5,-90.5" />
+<polygon fill="#64ffda" stroke="#64ffda" stroke-width="1.3" points="143.95,-90.23 141.5,-83.23 139.05,-90.23 143.95,-90.23" />
+<text text-anchor="middle" x="205" y="-125.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  Name identifies  </text>
+<text text-anchor="middle" x="205" y="-110.8" font-family="DejaVu Sans" font-size="14.00" fill="#bdcbe4">  the object  </text>
 </g>
 </g>
 </svg>

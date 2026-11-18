@@ -1,12 +1,12 @@
 digraph G {
-  graph [rankdir=TB, bgcolor="transparent", pad="0.15", nodesep="0.32", ranksep="0.45", splines=polyline];
-  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.18,0.14", penwidth=1.1];
+  graph [rankdir=TB, bgcolor="transparent", pad="0.22", nodesep="0.55", ranksep="0.65", splines=polyline];
+  node [shape=box, style="rounded,filled", fillcolor="#10213b", color="#445b79", fontcolor="#e1e8fa", fontname="DejaVu Sans", fontsize=17, margin="0.20,0.14", penwidth=1.1];
   edge [color="#64ffda", fontcolor="#bdcbe4", fontname="DejaVu Sans", fontsize=14, arrowsize=0.7, penwidth=1.3];
-  portal [label="Candidate portal\nThe page people interact with"];
-  storage [label="Cloud Storage bucket\nThe file container behind the portal", shape=cylinder];
-  files [label="Stored objects\nResult JSON, redirect HTML, PDFs"];
-  direct [label="Direct storage requests\nListing and sample reads succeeded\nwithout a candidate login", color="#64ffda"];
-  portal -> storage [label="Files served from storage"];
-  storage -> files [label="Contains"];
-  files -> direct [label="The access I tested"];
+  portal [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Candidate portal</B></TD></TR><TR><TD><FONT POINT-SIZE="15">The page people interact with</FONT></TD></TR></TABLE>>];
+  storage [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Cloud Storage bucket</B></TD></TR><TR><TD><FONT POINT-SIZE="15">The file container behind the portal</FONT></TD></TR></TABLE>>, shape=cylinder];
+  files [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Stored objects</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Result JSON, redirect HTML, PDFs</FONT></TD></TR></TABLE>>];
+  direct [label=<<TABLE BORDER="0" CELLBORDER="0" CELLSPACING="0" CELLPADDING="3"><TR><TD><B>Direct storage requests</B></TD></TR><TR><TD><FONT POINT-SIZE="15">Listing and sample reads succeeded</FONT></TD></TR><TR><TD><FONT POINT-SIZE="15">without a candidate login</FONT></TD></TR></TABLE>>, color="#64ffda"];
+  portal -> storage [label="  Files served  \n  from storage  "];
+  storage -> files [label="  Contains  "];
+  files -> direct [label="  The access I tested  "];
 }
