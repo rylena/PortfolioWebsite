@@ -151,3 +151,44 @@ Failed widget requests, unsuccessful probes, the non-CVE parameter-wrapper
 section and the closing advisory/version boilerplate were removed from the
 article. The evidence boundaries above remain part of the source audit.
 Private originals and review artifacts remain outside this website repository.
+
+## Researcher confirmation and reaction images (November 18)
+
+Rylen confirmed in the current editing conversation that he tested all three
+vulnerabilities against AIIMS Patna and that all three worked there. The article
+now reflects his firsthand account of reproducing all three at both hospitals.
+This confirmation expands the coverage documented in the saved extracts above.
+Those earlier extracts remain described as captured; no Patna-specific dashboard
+request, counter values, timestamps or screenshots were invented to fill gaps.
+The displayed dashboard and counter examples remain the redacted Bokaro captures.
+
+At the user's request, the three technical-section memes and their visible
+template credits were removed. A thumbs-up reaction after the disclosure timeline is captioned
+“thank you CERT-In”. The source image is
+unchanged; the caption is HTML. Source provenance remains in assets/sources.json.
+The image contains no hospital data.
+
+Pacing references reviewed at the user's request:
+- https://blog.orange.tw/posts/2026-10-the-last-proof-of-human-craft-browser-full-chain/
+- https://sylvie.fyi/posts/react2shell/
+
+The references informed placement of reactions between technical explanations;
+their prose, screenshots, private messages and custom images were not copied.
+
+## Token meme approved (November 18)
+
+The researcher approved a Pawn Stars-style reaction for the token section.
+The built-in image_gen tool generated the preview, which was copied unchanged
+to assets/esushrut/memes/random-bytes-pawn.png. Prompt: create a classic
+Pawn Stars “best I can do” reaction with Rick Harrison at a pawn-shop counter;
+caption it “Can I get the random bytes?” and “Best I can do is [B@…”; no
+additional text, template labels, watermarks or hospital information.
+The accompanying paragraph explains the inferred object-to-text mistake.
+
+## Final published media
+
+The article includes the approved token meme and the CERT-In thank-you image.
+The private-dashboard video, poster, captions, playback styles and source entries
+were removed at the user's request before publication. Draft media and review
+artifacts remain outside the website repository. The post remains excluded from
+the blog listing.

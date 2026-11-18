@@ -76,7 +76,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../assets/media.css?v=20261115">
     <link rel="stylesheet" href="../assets/article.css">
-    <link rel="stylesheet" href="../assets/esushrut/post.css">
+    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261118-final-memes">
     <script src="../assets/esushrut/hash-demo.js?v=20261118-redacted" defer></script>
     <script src="/visit-notifications.js" defer></script>
     <script src="/site.js" defer></script>
@@ -96,7 +96,7 @@
         <header class="post-hero">
             <div class="post-meta">
                 <span><time datetime="2026-11-17">Nov 17, 2026</time></span>
-                <span>13 min read</span>
+                <span>14 min read</span>
             </div>
             <h1>Hacking 4000 healthcare facilities</h1>
             <p class="post-dek">How I found three bugs in hospital software used across India, what the code did, and what the results showed.</p>
@@ -106,7 +106,7 @@
             <article class="post-content" aria-label="C-DAC e-Sushrut vulnerability disclosure">
 
 <p class="post-lede">I’ve been credited with three CVEs in a hospital management system used across 4,000+ healthcare facilities in India.</p>
-<p>The software is called e-Sushrut. C-DAC builds it to manage patient records, registration and other hospital work. An <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2156603&amp;lang=2&amp;reg=48">August 2025 government announcement</a> said it was used at more than 4,000 health facilities, including 17 AIIMS. I looked at two installations: Bokaro General Hospital and AIIMS Patna.</p>
+<p>The software is called e-Sushrut. C-DAC builds it to manage patient records, registration and other hospital work. An <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2156603&amp;lang=2&amp;reg=48">August 2025 government announcement</a> said it was used at more than 4,000 health facilities, including 17 AIIMS. I tested two installations: Bokaro General Hospital and AIIMS Patna. All three vulnerabilities worked on both.</p>
 <p>Bokaro’s login page had a link to its hospital dashboard. I opened it without signing in. The server sent back the dashboard page and its report information. The login HTML also exposed daily and total counts for outpatient visits, admissions, lab tests, prescriptions and pharmacy activity. And the password code used an odd-looking Java object string.</p>
 <nav aria-label="Technical sections" class="es-contents"><a href="#dashboard">Dashboard access · 124643</a><a href="#statistics">Exposed counters · 124644</a><a href="#hashing">Password hashing · 124645</a></nav>
 <p>Captured hospital names, hostnames, identifiers, activity figures and token suffixes are redacted in the examples. The code and field order are preserved.</p>
@@ -138,6 +138,7 @@ server: Abhijaiya
 &lt;input type="hidden" name="linkTab" id='linkTab_REDACTED' value='OPD Count' /&gt;</code></pre></div><figcaption>Selected headers and HTML lines from the response. The full body was 274,427 bytes. Cookie values are left out.</figcaption></figure>
 <p>I read the response body to check what had loaded. It had the dashboard title, report names and report IDs. The reports covered outpatient visits, emergencies, prescriptions and lab work. An ID such as <code>RPTDISPLAYNAME_REDACTED</code> linked a report name to a specific part of the dashboard.</p>
 <p>I repeated the request without a saved login. The server again returned HTTP <code>200</code> and a 274,427-byte page. Another request with <code>Cookie: none</code> gave the same result. The response set a new <code>TID</code> cookie, but I had not signed in.</p>
+
 <h3>Checking where the report data came from</h3>
 <p>The page loaded <code>/HISUtilities/dashboard/js/dashboard.js</code>. I read it to find how the reports got their data. Each report widget had a key with three parts: dashboard ID, section ID and report ID. The code used those IDs to send another request to the same server address:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Following a report widget into dashboard.js</span><span>Code excerpt</span></div><pre aria-label="Following a report widget into dashboard.js" tabindex="0"><code>var key = getKeyValue(id);
@@ -169,6 +170,7 @@ document.getElementById('OPDTotal').innerHTML = b[8];
 document.getElementById('IPDTotal').innerHTML = b[10];
 document.getElementById('LabTestTotal').innerHTML = b[11];</code></pre></div><figcaption>Selected lines from <code>sso_main_login.js</code>. You can read the <a href="../assets/esushrut/source/hospital-counter-mapping.js">captured mapping function</a>. Comments were added; other assignments are left out.</figcaption></figure>
 <p>The field names gave me the labels. Position 0 was the hospital code. Positions 1–7 were the “Today” counts. Positions 8–14 were the matching “Total” counts. OPD means outpatient visits. IPD refers to inpatient care. Rx means prescriptions.</p>
+
 <div aria-label="Hospital activity fields with captured figures redacted" class="es-table-wrap" role="region" tabindex="0"><table class="es-stats-table"><caption>Daily and total activity exposed in the response. Captured figures are redacted; labels come from the JavaScript.</caption><thead><tr><th>Client metric</th><th>Today</th><th>Total</th></tr></thead><tbody>
 <tr><td>OPD</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Emergency</td><td>Redacted</td><td>Redacted</td></tr><tr><td>IPD</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Lab tests</td><td>Redacted</td><td>Redacted</td></tr><tr><td>ABHA</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Prescriptions (Rx)</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Pharmacy</td><td>Redacted</td><td>Redacted</td></tr>
 </tbody></table></div>
@@ -209,6 +211,11 @@ const _GET_MAIN_LOGIN = {
 <figcaption>The token format in Bokaro’s first saved login page. The object-hash suffix is redacted.</figcaption>
 </figure>
 <p>The <code>[B@</code> prefix comes from Java. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()"><code>Object.toString()</code></a> prints this kind of string for a byte array. <code>[B</code> means “byte array.” The <code>@</code> is followed by the object’s hash code in hex. It does not print the bytes stored in the array.</p>
+
+<p>The likely mistake was converting the byte-array object to text instead of encoding the random bytes inside it. The page received the object’s label as the login token. It wasn’t just an unwanted prefix; the token did not contain the array’s contents.</p>
+<figure class="es-figure es-token-meme">
+<img src="../assets/esushrut/memes/random-bytes-pawn.png" alt="Pawn-shop meme: Can I get the random bytes? Best I can do is [B@…" width="1254" height="1254" loading="lazy" decoding="async"/>
+</figure>
 <h3>How the value reached the password hash</h3><p>A hash turns some input into a fixed-length result. The same input gives the same result.</p>
 <p>The page loaded <code>ssoLogin.js</code>. In its login routine, <code>validate()</code> called <code>securePassword()</code>. That function read the password and username, hashed them, then hashed the result with <code>sessionToken</code>. It put the final hash back into the password field. The code also set <code>window.name = sessionToken</code>.</p>
 <p>Bokaro’s active function used SHA-512. An older SHA-1 version was still in the file, inside a comment. The active function was:</p>
@@ -298,6 +305,8 @@ Same inputs + same token = same submitted hash.</code></pre></noscript>
 <p>Suppose an attacker captures a user’s submitted hash, username and token. They can try a password guess on their own machine. They run the same two hash steps and compare the result with the captured hash. They do not need to send each guess to the hospital. This is offline password guessing.</p>
 <p>A fresh token does not stop those guesses once the attacker has captured it too. It changes the hash for that attempt, but it does not make each guess slow. Both SHA-1 and SHA-512 are fast in this two-round setup.</p>
 <p>The server should issue a fresh challenge, tie it to a login attempt, and check its expiry and reuse rules. Stored passwords also need a dedicated password-hashing function that makes guesses slow. Adding another fast hash in the browser does not replace these steps.</p>
+<h2 id="both-hospitals">AIIMS Patna had the same three issues</h2>
+<p>I reproduced the dashboard access, exposed activity counts and password-hashing issue at AIIMS Patna as well as Bokaro. The requests and counter-mapping examples above use the saved Bokaro responses. The password-code excerpts show both installations.</p>
 <figure class="es-figure es-photo">
 <img alt="The outpatient department building at AIIMS Patna, with its name above the entrance." decoding="async" height="452" loading="lazy" src="../assets/esushrut/aiims-patna-opd.webp" width="944"/>
 <figcaption>AIIMS Patna’s outpatient department. Context photograph from 2018, not an incident capture. Photo: AIIMS Patna, via <a href="https://commons.wikimedia.org/wiki/File:Aiimspatnaopd.png">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Converted to WebP.</figcaption>
@@ -314,6 +323,10 @@ Same inputs + same token = same submitted hash.</code></pre></noscript>
 <li><time datetime="2026-10-27">Oct 27, 2026</time><span>I followed up on the CVE requests.</span></li>
 <li><time datetime="2026-11-17">Nov 17, 2026</time><span>CERT-In published <a href="https://www.cert-in.org.in/s2cMainServlet?pageid=PUBVLNOTES01&amp;VLCODE=CIVN-2026-0557">the vulnerability note</a> and three CVE records.</span></li>
 </ol>
+<figure class="es-figure es-cert-thanks">
+<img src="../assets/esushrut/memes/thank-you-cert-in.png" alt="A smiling man giving a thumbs-up." width="1920" height="1080" loading="lazy" decoding="async"/>
+<figcaption>thank you CERT-In</figcaption>
+</figure>
 <div aria-label="Assigned CVEs and CERT-In CVSS 4.0 scores" class="es-cves">
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a>

@@ -1,5 +1,5 @@
 {
-  "retrievedOn": "2026-11-17",
+  "retrievedOn": "2026-11-18",
   "sources": {
     "assets/ghidra.svg": "https://www.kali.org/tools/ghidra/images/ghidra-logo.svg",
     "assets/sqlmap.svg": "https://www.kali.org/tools/sqlmap/images/sqlmap-logo.svg",
@@ -14,12 +14,15 @@
     "assets/press/khaleej-times.svg": "https://images.assettype.com/khaleejtimes-english/2026-03-06/ac2101vo/logo.svg",
     "assets/press/gulf-news.svg": "https://images.assettype.com/gulfnews/2026-09-18/l3x0ukro/gn-logo-sonic-dark-blue.svg",
     "assets/console/fsociety-ascii.txt": "https://github.com/syntax-samurai/fsociety/blob/master/fsociety.ascii",
-    "assets/esushrut/aiims-patna-opd.webp": "https://commons.wikimedia.org/wiki/File:Aiimspatnaopd.png"
+    "assets/esushrut/aiims-patna-opd.webp": "https://commons.wikimedia.org/wiki/File:Aiimspatnaopd.png",
+    "assets/esushrut/memes/thank-you-cert-in.png": "https://dm0qx8t0i9gc9.cloudfront.net/thumbnails/video/rZJIMvhmliwmde8a6/videoblocks-cute-smiling-man-showing-thumb-up-gesture-handsome-indian-man-in-blue-shirt-looking-at-camera-on-green-screen-background_s6gilpulhs_thumbnail-1080_01.png"
   },
   "notes": {
     "toolLogos": "Tool-specific artwork distributed by the official Kali tool catalog.",
     "publisherLogos": "Publisher-owned marks from mastheads and the public reference logo collection. Page source and styles from the reference were not copied.",
     "consoleAscii": "ASCII mask adapted from the credited reference, with its frame and wordmark removed. Individual characters are positioned in a transparent SVG to preserve spacing in DevTools. The native console background shows through.",
-    "esushrutPhoto": "AIIMS Patna OPD photograph (2018), credited to AIIMS Patna on Wikimedia Commons, CC BY-SA 4.0. Original: https://upload.wikimedia.org/wikipedia/commons/5/58/Aiimspatnaopd.png . Converted to WebP without cropping or other visual changes. Attribution and license are linked in the article caption."
+    "esushrutPhoto": "AIIMS Patna OPD photograph (2018), credited to AIIMS Patna on Wikimedia Commons, CC BY-SA 4.0. Original: https://upload.wikimedia.org/wikipedia/commons/5/58/Aiimspatnaopd.png . Converted to WebP without cropping or other visual changes. Attribution and license are linked in the article caption.",
+    "esushrutMemes": "One locally hosted thumbs-up reaction image with the HTML caption “thank you CERT-In”. Source: Storyblocks public thumbnail, https://www.storyblocks.com/video/stock/cute-smiling-man-showing-thumb-up-gesture-handsome-indian-man-in-blue-shirt-looking-at-camera-on-green-screen-background-s6z6vvuebbjzrbplqu . Original image is unchanged. Source provenance is retained here without template labels in the article. It is a reaction image, not hospital evidence.",
+    "esushrutTokenMeme": "AI-generated Pawn Stars-style reaction image, created with the built-in image_gen tool on November 18, 2026 and approved by the user. Captions: “Can I get the random bytes?” / “Best I can do is [B@…”. It illustrates the byte-array serialization mistake and contains no hospital values. Original output copied unchanged into assets/esushrut/memes/random-bytes-pawn.png."
   }
 }
