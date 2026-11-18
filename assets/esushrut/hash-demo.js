@@ -24,7 +24,7 @@
         if (reset) { attempts = 1; previousHash = ''; }
         const fresh = lab.querySelector('input:checked').value === 'fresh';
         const algorithm = algorithmInput.value;
-        const fixedToken = algorithm === 'SHA-512' ? '[B@71b8cc82' : '[B@16dba15a';
+        const fixedToken = algorithm === 'SHA-512' ? '[B@1234abcd' : '[B@5678ef90';
         const bytes = crypto.getRandomValues(new Uint8Array(24));
         const token = fresh ? btoa(String.fromCharCode(...bytes)) : fixedToken;
         try {

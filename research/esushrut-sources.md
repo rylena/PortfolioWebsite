@@ -15,20 +15,19 @@ summaries and disclosure drafts where they disagree. In particular:
 - The original Bokaro `ssoLogin.js` output contains an active SHA-512
   `securePassword()` and a commented-out SHA-1 implementation. It does not
   support claiming that Bokaro first received SHA-512 in September 18's changes.
-- Bokaro captures include `[B@71b8cc82` and `[B@3e0d430` in different responses.
+- Bokaro captures include `[B@REDACTED-A` and `[B@REDACTED-B` in different responses.
   They do not establish a globally invariant token, a lifetime guarantee, or a
-  complete per-attempt freshness policy. Patna's capture contains `[B@16dba15a`.
+  complete per-attempt freshness policy. Patna's capture contains `[B@REDACTED-C`.
 - A Java array's object-string representation does not itself prove a replay
   attack, token entropy, or every server-side generation/validation step.
 - Token visibility in public HTML is not independently a vulnerability. Fresh
   public nonces do not prevent offline guessing after capture of the submitted
-  hash, username and nonce. The article distinguishes the published CVE's
-  static/predictable characterization from what this evidence independently
-  establishes.
+  hash, username and nonce. The article describes the browser construction and the prerequisites for
+  offline guessing; it does not claim a successful login replay.
 - Widget requests in the history redirected or failed. They were reconstructed
   requests, not proof that every correctly constructed data request was denied.
   In particular, some probes used `dashboardId=1` while the displayed report key
-  was `21_1_231`. The article does not claim exhaustive coverage of widget guards.
+  was `[REDACTED]`. The article does not claim exhaustive coverage of widget guards.
 - Matching response lengths after hospital-code changes do not prove a
   cross-hospital IDOR or matching response contents.
 
@@ -46,11 +45,11 @@ part database and private intermediate extracts remain outside this repository.
 | Base64 selectors and echoed hidden fields | Parts 85, 223 | `NQ==` decodes to `5`; `SE1JUw==` decodes to `HMIS`. Client-supplied fields do not authenticate identity. |
 | Widget code and request construction | Parts 163, 174, 195, 212, 215, 218, 231 | `callDataForSpecificWidget`, `preparejsonForAjax`, `GET_WIDGET_DATA`, controller URL. |
 | Widget request redirects | Parts 235, 239, 287 | Reconstructed probes returned 302 / Exception.jsp; not an exhaustive endpoint or patient-data access claim. |
-| Alternate hospital-code response lengths | Part 141 | 10001 and 99999 also return 200 / 274427; not proof of other hospitals' data. |
-| Full `HOSPITALS` value | Parts 120, 620, 640 | Original 15-position sequence, hospital code 20101, no individual patient rows. |
+| Alternate hospital-code response lengths | Part 141 | Alternate hospital-code probes also return 200 / 274427; not proof of other hospitals' data. |
+| Full `HOSPITALS` value | Parts 120, 620, 640 | Original 15-position sequence, hospital code redacted, no individual patient rows. |
 | Counter decoding and DOM labels | Part 115, full original `sso_main_login.js` output | Active original mapping, not an inference from counter magnitudes or later code. |
 | Bokaro token declarations | Parts 126, 636, 640 | Standalone `sessionToken` and bootstrap `SESSION_TOKEN` property. |
-| Other Bokaro object-string value | Parts 121, 636 | Fresh/alternate responses contain `[B@3e0d430`; no global constant claim. |
+| Other Bokaro object-string value | Parts 121, 636 | Fresh/alternate responses contain `[B@REDACTED-B`; no global constant claim. |
 | Bokaro active SHA-512 routine | Part 110, full original `ssoLogin.js` output | SHA-1 version is commented. The article describes the supplied routine, not universal execution by every alternate login handler. |
 | Patna token and active SHA-1 routine | Parts 772, 776 | Original HTML locations and partial active function output. |
 | Patna dashboard response is an error | Parts 764, 768, 780 | HTTP 200 with a 1,011-byte error page, not dashboard data access. |
@@ -133,7 +132,22 @@ was reviewed without copying its prose, diagrams, images or implementation.
 ## Plain-language edit
 
 The November 18 copy edit shortened sentences and replaced formal wording.
-The original code blocks, numeric evidence and evidence links were retained.
+The original code blocks and evidence links were retained at that stage.
 Repeated caveats were cut while keeping the limits on token freshness, replay,
 patient-data access and the two-site comparison. The requested headline stays
 unchanged.
+
+## Public-data redaction and impact edit
+
+On November 18, the article was edited to emphasize confirmed exposure of daily
+and total outpatient, emergency, inpatient, lab, prescription, pharmacy and ABHA
+activity. These are operational counts, not individual patient-record contents.
+Captured hospital names within payloads, hostnames, site and report identifiers,
+activity figures and token suffixes are replaced with explicit placeholders.
+The interactive demo uses invented token suffixes and credentials. Public
+institution names remain as investigation context and photo attribution.
+
+Failed widget requests, unsuccessful probes, the non-CVE parameter-wrapper
+section and the closing advisory/version boilerplate were removed from the
+article. The evidence boundaries above remain part of the source audit.
+Private originals and review artifacts remain outside this website repository.
