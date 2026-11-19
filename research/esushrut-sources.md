@@ -207,3 +207,14 @@ No live hospital endpoints or patient records were accessed for this edit.
 
 The final title, with the requested grammar edit, is “Hacking 4,000 Hospitals.” The named
 test scope and patient-record evidence boundaries remain explicit in the body.
+
+
+## Severity labels restored (November 19)
+
+At the researcher’s request, the local draft again shows severity in the section
+navigation, introductory CVE references, technical section labels and final CVE
+summary. The CERT-In CNA records were retrieved again from the CVE Services API:
+CVE-2026-124643 is High / 8.7, CVE-2026-124644 is Medium / 6.9, and
+CVE-2026-124645 is High / 8.7. These are CVSS 4.0 base scores, not independently
+calculated ratings or product deployment metrics. The revision was previewed
+locally at mobile and desktop widths before the researcher approved publication.

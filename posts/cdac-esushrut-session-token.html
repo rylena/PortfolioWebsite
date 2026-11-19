@@ -76,7 +76,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../assets/media.css?v=20261115">
     <link rel="stylesheet" href="../assets/article.css">
-    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261119-code-explanations">
+    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261119-severity">
     <script src="../assets/esushrut/hash-demo.js?v=20261118-redacted" defer></script>
     <script src="/visit-notifications.js" defer></script>
     <script src="/site.js" defer></script>
@@ -109,15 +109,20 @@
 <p>The software is e-Sushrut, a Hospital Management Information System (HMIS) developed and deployed by C-DAC. It manages patient information, hospital workflows and administrative processes in healthcare organizations.</p>
 <p>I tested the installations at Bokaro General Hospital and AIIMS Patna. I reproduced the dashboard access, exposed activity counts and password-hashing issue at both. The findings led to three CVEs.</p>
 <p>Bokaro’s login page had a link to its hospital dashboard. I opened it without signing in. The server sent back the dashboard page and its report information. The login HTML also exposed daily and total counts for outpatient visits, admissions, lab tests, prescriptions and pharmacy activity. And the password code used an odd-looking Java object string.</p>
-<nav aria-label="Article sections" class="es-contents"><a href="#impact">Patient privacy</a><a href="#dashboard">Dashboard access · 124643</a><a href="#statistics">Exposed counters · 124644</a><a href="#hashing">Password hashing · 124645</a></nav>
+<nav aria-label="Article sections" class="es-contents">
+<a href="#impact">Patient privacy</a>
+<a href="#dashboard"><span>Dashboard access · 124643</span><span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span></a>
+<a href="#statistics"><span>Exposed counters · 124644</span><span class="es-severity es-severity-medium">Medium · CVSS 4.0: 6.9</span></a>
+<a href="#hashing"><span>Password hashing · 124645</span><span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span></a>
+</nav>
 <p>Captured hospital names, hostnames, identifiers, activity figures and token suffixes are redacted in the examples. The code and field order are preserved.</p>
-<p>These requests and files are from September 1, 2026. I reported the issues to CERT-In. They later passed on the organization’s fix confirmation. The assigned IDs are <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a>.</p>
+<p>These requests and files are from September 1, 2026. I reported the issues to CERT-In. They later passed on the organization’s fix confirmation. The assigned IDs are <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a> <span class="es-severity es-severity-high">(High · 8.7)</span>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a> <span class="es-severity es-severity-medium">(Medium · 6.9)</span> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a> <span class="es-severity es-severity-high">(High · 8.7)</span>.</p>
 <h2 id="impact">Patient privacy was the bigger concern</h2>
 <p>An HMIS sits at the center of hospital care. It handles patient information alongside registration, clinical workflows and administration. A failure in its access controls puts more than a dashboard at stake: it threatens the boundary around confidential personal and medical information.</p>
 <p>The dashboard flaw let me reach report information without signing in. The login page disclosed hospital activity, and the password-hashing design allowed offline guessing if an attacker first captured a submitted hash, username and token. In a patient-data workflow, an unchecked report action could expose sensitive patient information. A compromised staff account could also expose the records that account is allowed to read.</p>
 <p>Those are potential paths to patient-data exposure. The evidence shown here establishes dashboard access and operational-data disclosure; it does not establish that I retrieved individual patient records. The concern is what failures like these can mean in a system that handles them.</p>
 <h2 id="dashboard">I could open the dashboard without signing in</h2>
-<p class="es-section-ref">CVE-2026-124643 · improper authentication</p>
+<p class="es-section-ref">CVE-2026-124643 · <span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span><br>improper authentication</p>
 <p>Bokaro’s login page used the <code>/AHIMSG5/hissso/</code> path. I checked its forms, JavaScript files and links. One link pointed to the dashboard:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>The dashboard link in the landing HTML</span><span>Code excerpt</span></div><pre aria-label="The dashboard link in the landing HTML" tabindex="0"><code>&lt;a href="/HISUtilities/dashboard/dashBoardACTION.cnt?groupId=NQ==&amp;amp;dashboardFor=SE1JUw==&amp;amp;hospitalCode=REDACTED&amp;amp;seatId=REDACTED&amp;amp;isGlobal=1&amp;amp;isPreview=0"&gt;…&lt;/a&gt;</code></pre></div><figcaption>The link from the public page. Link text is left out. The <code>&amp;amp;</code> spelling comes from the HTML.</figcaption></figure>
 <p>The page gave me the full address and its URL parameters. I used that address in a separate request. I sent no username, password or saved login cookie.</p>
@@ -164,7 +169,7 @@ data = initSecurityParameterFromajaxjson(data);
 </dl></div><figcaption>From <code>callDataForSpecificWidget()</code>. The three parts of the key become <code>dashboardId</code>, <code>sectionId</code> and <code>rptId</code>. Code that only changed the page’s appearance is left out.</figcaption></figure>
 <p>The finding was that a visitor could get the dashboard page and its report information without signing in. CERT-In recorded this as weak authentication and session checks. The fix needs to cover the dashboard page and each action it calls. The server should check the user’s login, hospital and role. It should get that identity from the login session, rather than trust an ID supplied in the URL.</p>
 <h2 id="statistics">The login page included hospital activity counts</h2>
-<p class="es-section-ref">CVE-2026-124644 · sensitive information disclosure</p>
+<p class="es-section-ref">CVE-2026-124644 · <span class="es-severity es-severity-medium">Medium · CVSS 4.0: 6.9</span><br>sensitive information disclosure</p>
 <p>The login HTML also had a JavaScript object named <code>_GET_MAIN_LOGIN</code>. Its <code>HOSPITALS</code> field held the hospital name and a long string of numbers:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Embedded in the unauthenticated login response</span><span>Code excerpt</span></div><pre aria-label="Embedded in the unauthenticated login response" tabindex="0"><code>const _GET_MAIN_LOGIN = {
     // Other fields omitted.
@@ -210,7 +215,7 @@ print(fields[8])  # REDACTED: OPDTotal</code></pre></div><figcaption>Redaction p
 <p><strong>This exposed real patient activity data without authentication.</strong></p>
 <p>The page had a <code>no-store</code> header. That tells a browser or cache not to save the response. It does not stop a visitor from reading it. Hiding the statistics on screen would not fix this either. The server needs to leave internal counts out of the public login response and require a login before sending them.</p>
 <h2 id="hashing">The password code used a Java object string</h2>
-<p class="es-section-ref">CVE-2026-124645 · static/predictable value in client-side password hashing</p>
+<p class="es-section-ref">CVE-2026-124645 · <span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span><br>static/predictable value in client-side password hashing</p>
 <p>The same JavaScript object had a field named <code>SESSION_TOKEN</code>. I searched for where it was used. Bokaro’s login HTML set the value in two places:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Bokaro’s server-rendered token declarations</span><span>Code excerpt</span></div><pre aria-label="Bokaro’s server-rendered token declarations" tabindex="0"><code>const sessionToken = "[B@REDACTED";
 const _GET_MAIN_LOGIN = {
@@ -357,17 +362,21 @@ Same inputs + same token = same submitted hash.</code></pre></noscript>
 <img src="../assets/esushrut/memes/thank-you-cert-in.png" alt="A smiling man giving a thumbs-up." width="1920" height="1080" loading="lazy" decoding="async"/>
 <figcaption>thank you CERT-In</figcaption>
 </figure>
-<div aria-label="Assigned CVEs" class="es-cves">
+<p class="es-section-ref">Severity ratings are CERT-In’s CVSS 4.0 base scores, published in the linked CVE records.</p>
+<div aria-label="Assigned CVEs and CVSS 4.0 severity ratings" class="es-cves">
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a>
+<span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span>
 <div class="es-cve-description">Dashboard authentication and session validation<small>Improper authentication</small></div>
 </div>
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a>
+<span class="es-severity es-severity-medium">Medium · CVSS 4.0: 6.9</span>
 <div class="es-cve-description">Hospital operational data in the login response<small>Sensitive information disclosure</small></div>
 </div>
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a>
+<span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span>
 <div class="es-cve-description">Static value in client-side password hashing<small>Published as a hardcoded cryptographic key vulnerability</small></div>
 </div>
 </div>
