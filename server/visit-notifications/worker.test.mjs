@@ -67,6 +67,17 @@ test('preflight requires a production origin and never sends a message', async (
     assert.equal(sent.length, 0);
 });
 
+test('accepts the e-Sushrut post and sends its title and canonical URL', async () => {
+    const { env, send, sent } = setup();
+    const path = '/posts/cdac-esushrut-session-token.html';
+    assert.equal((await handleVisit(request({ path }), env, send)).status, 204);
+    assert.equal(sent.length, 1);
+    const { embeds: [embed] } = JSON.parse(sent[0].body);
+    assert.equal(embed.description, 'Hacking 4,000 Hospitals');
+    assert.equal(embed.url, `${origin}${path}`);
+    assert.equal(embed.fields.find(field => field.name === 'Page URL').value, `${origin}${path}`);
+});
+
 test('rejects unknown paths, query strings, malformed and oversized input', async () => {
     const { env, send, sent } = setup();
     for (const body of [null, {}, { path: '/missing' }, { path: '/?token=private' }, { path: 'https://example.com' }, { path: '/blog.html', large: 'x'.repeat(600) }]) {

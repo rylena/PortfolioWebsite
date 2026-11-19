@@ -27,7 +27,7 @@ Blog diagrams have editable Graphviz sources in `assets/diagrams/source/`.
 The e-Sushrut post uses responsive HTML figures and a local Web Crypto hash demo
 in `assets/esushrut/`; its evidence boundaries and photo attribution are recorded
 in `research/esushrut-sources.md`.
-Keep this post off `blog.html` until requested; it is available at its direct URL.
+The e-Sushrut post is listed on `blog.html` and uses the shared Discord visit relay.
 After editing those `.dot` files, run `python3 scripts/build-article-diagrams.py`
 (requires Graphviz) and commit the rendered SVGs alongside their sources.
 The renderer also updates diagram image dimensions in the posts to reserve the

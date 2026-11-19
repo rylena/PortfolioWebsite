@@ -2,7 +2,7 @@
 
 Article: `posts/cdac-esushrut-session-token.html`. Created November 17, 2026;
 rewritten against original tool output November 18, 2026. The existing URL is
-retained, with the title **Hacking 4000 healthcare facilities**.
+retained, with the current title **Hacking 4,000 Hospitals**.
 
 No current hospital endpoints were probed to prepare either draft. Examples,
 request excerpts and observed results come from the saved investigation.
@@ -76,23 +76,16 @@ CERT-In fix confirmation/acknowledgement, and October 27 follow-up. Only a short
 fix-confirmation quote is included. The later remediation-verification procedure
 is excluded from the article at the user's request.
 
-## Product deployment context
+## Product and impact context
 
-The headline and opening introduce hospital management software before its
-product name. The 4,000+ healthcare-facility figure is sourced to the Ministry of
-Health and Family Welfare's August 14, 2025 PIB release, PRID 2156603:
-https://www.pib.gov.in/PressReleasePage.aspx?PRID=2156603&lang=2&reg=48 . It says
-e-Sushrut was in use at 17 AIIMS and more than 4,000 health facilities. This is
-product deployment context, not a count of facilities proven affected by these
-findings. The next paragraph identifies the two examined deployments.
-
-Deployment figure rechecked November 18, 2026: the latest overall total located
-in primary sources remains the August 2025 statement of more than 4,000 health
-facilities. The June 29, 2026 PIB release PRID 2278996 reports 800+ onboarded
-facilities for the separate lightweight eSushrut@Clinic product, not an updated
-overall total for the hospital HMIS examined here. Those figures are not added
-together. The headline describes the software's deployment footprint; the body
-continues to identify the two investigated deployments.
+The opening follows the supplied product-description screenshot: e-Sushrut is a
+Hospital Management Information System developed and deployed by C-DAC for
+patient information, hospital workflows and healthcare administration.
+The researcher subsequently requested “hacking 4000 hospitals,” then asked for
+grammatically polished capitalization and punctuation: “Hacking 4,000 Hospitals.”
+The article body omits deployment totals and names the tested installations; the
+headline does not establish a verified count of compromised hospitals.
+The tested installations remain identified in the article.
 
 ## Public references
 
@@ -134,8 +127,7 @@ was reviewed without copying its prose, diagrams, images or implementation.
 The November 18 copy edit shortened sentences and replaced formal wording.
 The original code blocks and evidence links were retained at that stage.
 Repeated caveats were cut while keeping the limits on token freshness, replay,
-patient-data access and the two-site comparison. The requested headline stays
-unchanged.
+patient-data access and the two-site comparison. This earlier edit retained the headline; the November 19 revision supersedes it.
 
 ## Public-data redaction and impact edit
 
@@ -190,5 +182,28 @@ The accompanying paragraph explains the inferred object-to-text mistake.
 The article includes the approved token meme and the CERT-In thank-you image.
 The private-dashboard video, poster, captions, playback styles and source entries
 were removed at the user's request before publication. Draft media and review
-artifacts remain outside the website repository. The post remains excluded from
-the blog listing.
+artifacts remain outside the website repository. The post was initially excluded from the blog listing; the November 19 revision adds it at the researcher’s request.
+
+
+## Impact, code explanations and blog listing (November 19)
+
+The researcher requested removal of numerical impact claims, a forthright
+explanation of patient-information risk, publication in the blog index, and a
+local preview before pushing. The headline, share card, social metadata and
+blog index now use “Hacking 4,000 Hospitals.” CVSS score
+badges were removed from the article. Technical constants and redacted
+counter-field mappings remain as evidence rather than impact totals.
+
+The impact section distinguishes observed dashboard/report metadata and
+operational-data disclosure from potential patient-record exposure. An unchecked
+patient-report action or a compromised authorized staff account is a conditional
+risk, not a verified patient-record retrieval or a demonstrated exploit chain.
+Offline guessing still requires a captured submitted hash, username and token.
+
+Five code figures now include semantic explanation strips; selected expressions
+are highlighted without changing the original code text. The new post is added
+to the visit relay’s allowed-page map, using the existing server-side secret.
+No live hospital endpoints or patient records were accessed for this edit.
+
+The final title, with the requested grammar edit, is “Hacking 4,000 Hospitals.” The named
+test scope and patient-record evidence boundaries remain explicit in the body.

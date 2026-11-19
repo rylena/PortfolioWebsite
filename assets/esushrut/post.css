@@ -195,6 +195,25 @@
 .es-source .es-code-muted { color: #95a9c7; }
 .es-source mark { color: var(--es-pink); background: #3c243a; padding: 0.2em 0; }
 
+/* Read the excerpt first, then follow its inputs, transformations and result. */
+.es-code-notes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin: 0;
+    padding: 1.5rem 1.25rem;
+    border-top: 1px solid var(--es-line);
+    background: var(--es-surface);
+}
+
+.es-code-notes > div { min-width: 0; }
+.es-code-notes dt { color: var(--es-mint); font-weight: 700; font-size: 0.875rem; }
+.es-code-notes > div:nth-child(2) dt { color: var(--es-amber); }
+.es-code-notes > div:nth-child(3) dt { color: var(--es-pink); }
+.es-code-notes dd { margin: 0.5rem 0 0; color: var(--es-muted); font-size: 0.875rem; line-height: 1.75; }
+.es-code-notes strong { display: block; margin-bottom: 0.5rem; color: var(--es-ink); font-size: 1rem; line-height: 1.5; }
+.esushrut-post .es-code-notes code { padding: 0; background: transparent; }
+
 .es-lab {
     padding: 2rem;
     border: 1px solid var(--es-line);
@@ -355,7 +374,7 @@
 
 .es-cve {
     display: grid;
-    grid-template-columns: 12.5rem minmax(0, 1fr) 3.5rem;
+    grid-template-columns: 12.5rem minmax(0, 1fr);
     align-items: start;
     gap: 1rem;
     padding: 1.2rem 0;
@@ -366,7 +385,6 @@
 
 .es-cve > a { font-family: ui-monospace, monospace; font-size: 0.84rem; }
 .es-cve small { display: block; color: var(--es-muted); font-size: 0.74rem; }
-.es-cve-rating { color: var(--es-amber); text-align: right; font-variant-numeric: tabular-nums; }
 
 .es-disclosure {
     margin: 2rem 0;
@@ -493,6 +511,8 @@
 .es-flow-branch span { display: block; color: var(--es-muted); font-size: 0.8rem; line-height: 1.75; }
 
 @media (max-width: 600px) {
+    .es-code-notes { grid-template-columns: 1fr; gap: 1.25rem; }
+    .es-code-notes > div + div { padding-top: 1.25rem; border-top: 1px solid var(--es-line); }
     .es-token { padding: 1.25rem; }
     .es-lab { padding: 1.25rem; }
     .es-token-key { gap: 0.7rem; grid-template-columns: 1fr 1fr 1.5fr; }
@@ -507,10 +527,9 @@
     .es-leak { grid-template-columns: 1fr; }
     .es-login-drawing { padding: 1.25rem; }
     .es-response-drawing { padding: 1.25rem; }
-    .es-cve { grid-template-columns: minmax(0, 1fr) 3.5rem; gap: 0.4rem 0.8rem; }
+    .es-cve { grid-template-columns: minmax(0, 1fr); gap: 0.4rem; }
     .es-cve > a { grid-column: 1; }
     .es-cve-description { grid-column: 1; }
-    .es-cve-rating { grid-column: 2; grid-row: 1 / 3; }
     .es-disclosure li { grid-template-columns: 1fr; gap: 0.15rem; }
     .es-flow-branches { grid-template-columns: 1fr; gap: 1.5rem; }
     .es-table-wrap td, .es-table-wrap th { padding: 0.7rem 0.4rem; }

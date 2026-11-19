@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hacking 4000 healthcare facilities | Rylen Anil</title>
-    <meta name="description" content="Three CVEs in hospital management software used by 4,000+ healthcare facilities in India: dashboard access, exposed counters and password hashing.">
+    <title>Hacking 4,000 Hospitals | Rylen Anil</title>
+    <meta name="description" content="Inside C-DAC e-Sushrut: authentication flaws, exposed hospital data and weak password hashing in software trusted with sensitive patient information.">
     <meta name="keywords" content="Rylen Anil, C-DAC, e-Sushrut, HMIS, CVE-2026-124643, CVE-2026-124644, CVE-2026-124645, CERT-In, session token">
     <meta name="author" content="Rylen Anil">
     <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
@@ -15,16 +15,16 @@
     <meta property="og:type" content="article">
     <meta property="og:locale" content="en_US">
     <meta property="og:site_name" content="Rylen Anil">
-    <meta property="og:title" content="Hacking 4000 healthcare facilities">
-    <meta property="og:description" content="Three CVEs in hospital management software used by 4,000+ healthcare facilities in India: dashboard access, exposed counters and password hashing.">
+    <meta property="og:title" content="Hacking 4,000 Hospitals">
+    <meta property="og:description" content="Inside C-DAC e-Sushrut: authentication flaws, exposed hospital data and weak password hashing in software trusted with sensitive patient information.">
     <meta property="og:url" content="https://rylenanil.com/posts/cdac-esushrut-session-token.html">
     <meta property="og:image" content="https://rylenanil.com/assets/share/cdac-esushrut-session-token.png">
     <meta property="og:image:type" content="image/png">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="Hacking 4000 healthcare facilities | Rylen Anil">
+    <meta property="og:image:alt" content="Hacking 4,000 Hospitals | Rylen Anil">
     <meta property="article:published_time" content="2026-11-17">
-    <meta property="article:modified_time" content="2026-11-18">
+    <meta property="article:modified_time" content="2026-11-19">
     <meta property="article:author" content="https://rylenanil.com/">
     <meta property="article:tag" content="Security Research">
     <meta property="article:tag" content="Responsible Disclosure">
@@ -32,22 +32,22 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@rylenanil">
     <meta name="twitter:creator" content="@rylenanil">
-    <meta name="twitter:title" content="Hacking 4000 healthcare facilities">
-    <meta name="twitter:description" content="Three CVEs in hospital management software used by 4,000+ healthcare facilities in India: dashboard access, exposed counters and password hashing.">
+    <meta name="twitter:title" content="Hacking 4,000 Hospitals">
+    <meta name="twitter:description" content="Inside C-DAC e-Sushrut: authentication flaws, exposed hospital data and weak password hashing in software trusted with sensitive patient information.">
     <meta name="twitter:image" content="https://rylenanil.com/assets/share/cdac-esushrut-session-token.png">
-    <meta name="twitter:image:alt" content="Hacking 4000 healthcare facilities | Rylen Anil">
+    <meta name="twitter:image:alt" content="Hacking 4,000 Hospitals | Rylen Anil">
     <script type="application/ld+json">
 {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
     "@id": "https://rylenanil.com/posts/cdac-esushrut-session-token.html#blogposting",
-    "headline": "Hacking 4000 healthcare facilities",
-    "description": "Three CVEs in hospital management software used by 4,000+ healthcare facilities in India: dashboard access, exposed counters and password hashing.",
+    "headline": "Hacking 4,000 Hospitals",
+    "description": "Inside C-DAC e-Sushrut: authentication flaws, exposed hospital data and weak password hashing in software trusted with sensitive patient information.",
     "image": [
         "https://rylenanil.com/assets/share/cdac-esushrut-session-token.png"
     ],
     "datePublished": "2026-11-17",
-    "dateModified": "2026-11-18",
+    "dateModified": "2026-11-19",
     "author": {
         "@type": "Person",
         "name": "Rylen Anil",
@@ -76,7 +76,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../assets/media.css?v=20261115">
     <link rel="stylesheet" href="../assets/article.css">
-    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261118-final-memes">
+    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261119-code-explanations">
     <script src="../assets/esushrut/hash-demo.js?v=20261118-redacted" defer></script>
     <script src="/visit-notifications.js" defer></script>
     <script src="/site.js" defer></script>
@@ -98,26 +98,36 @@
                 <span><time datetime="2026-11-17">Nov 17, 2026</time></span>
                 <span>14 min read</span>
             </div>
-            <h1>Hacking 4000 healthcare facilities</h1>
-            <p class="post-dek">How I found three bugs in hospital software used across India, what the code did, and what the results showed.</p>
+            <h1>Hacking 4,000 Hospitals</h1>
+            <p class="post-dek">Authentication flaws, exposed hospital data and the patient privacy at stake.</p>
         </header>
 
         <div class="post-layout">
             <article class="post-content" aria-label="C-DAC e-Sushrut vulnerability disclosure">
 
-<p class="post-lede">I’ve been credited with three CVEs in a hospital management system used across 4,000+ healthcare facilities in India.</p>
-<p>The software is called e-Sushrut. C-DAC builds it to manage patient records, registration and other hospital work. An <a href="https://www.pib.gov.in/PressReleasePage.aspx?PRID=2156603&amp;lang=2&amp;reg=48">August 2025 government announcement</a> said it was used at more than 4,000 health facilities, including 17 AIIMS. I tested two installations: Bokaro General Hospital and AIIMS Patna. All three vulnerabilities worked on both.</p>
+<p class="post-lede">Hospital software holds some of the most private information a person can share. I found authentication flaws and exposed data in the software trusted to manage that care.</p>
+<p>The software is e-Sushrut, a Hospital Management Information System (HMIS) developed and deployed by C-DAC. It manages patient information, hospital workflows and administrative processes in healthcare organizations.</p>
+<p>I tested the installations at Bokaro General Hospital and AIIMS Patna. I reproduced the dashboard access, exposed activity counts and password-hashing issue at both. The findings led to three CVEs.</p>
 <p>Bokaro’s login page had a link to its hospital dashboard. I opened it without signing in. The server sent back the dashboard page and its report information. The login HTML also exposed daily and total counts for outpatient visits, admissions, lab tests, prescriptions and pharmacy activity. And the password code used an odd-looking Java object string.</p>
-<nav aria-label="Technical sections" class="es-contents"><a href="#dashboard">Dashboard access · 124643</a><a href="#statistics">Exposed counters · 124644</a><a href="#hashing">Password hashing · 124645</a></nav>
+<nav aria-label="Article sections" class="es-contents"><a href="#impact">Patient privacy</a><a href="#dashboard">Dashboard access · 124643</a><a href="#statistics">Exposed counters · 124644</a><a href="#hashing">Password hashing · 124645</a></nav>
 <p>Captured hospital names, hostnames, identifiers, activity figures and token suffixes are redacted in the examples. The code and field order are preserved.</p>
 <p>These requests and files are from September 1, 2026. I reported the issues to CERT-In. They later passed on the organization’s fix confirmation. The assigned IDs are <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a>.</p>
+<h2 id="impact">Patient privacy was the bigger concern</h2>
+<p>An HMIS sits at the center of hospital care. It handles patient information alongside registration, clinical workflows and administration. A failure in its access controls puts more than a dashboard at stake: it threatens the boundary around confidential personal and medical information.</p>
+<p>The dashboard flaw let me reach report information without signing in. The login page disclosed hospital activity, and the password-hashing design allowed offline guessing if an attacker first captured a submitted hash, username and token. In a patient-data workflow, an unchecked report action could expose sensitive patient information. A compromised staff account could also expose the records that account is allowed to read.</p>
+<p>Those are potential paths to patient-data exposure. The evidence shown here establishes dashboard access and operational-data disclosure; it does not establish that I retrieved individual patient records. The concern is what failures like these can mean in a system that handles them.</p>
 <h2 id="dashboard">I could open the dashboard without signing in</h2>
 <p class="es-section-ref">CVE-2026-124643 · improper authentication</p>
 <p>Bokaro’s login page used the <code>/AHIMSG5/hissso/</code> path. I checked its forms, JavaScript files and links. One link pointed to the dashboard:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>The dashboard link in the landing HTML</span><span>Code excerpt</span></div><pre aria-label="The dashboard link in the landing HTML" tabindex="0"><code>&lt;a href="/HISUtilities/dashboard/dashBoardACTION.cnt?groupId=NQ==&amp;amp;dashboardFor=SE1JUw==&amp;amp;hospitalCode=REDACTED&amp;amp;seatId=REDACTED&amp;amp;isGlobal=1&amp;amp;isPreview=0"&gt;…&lt;/a&gt;</code></pre></div><figcaption>The link from the public page. Link text is left out. The <code>&amp;amp;</code> spelling comes from the HTML.</figcaption></figure>
 <p>The page gave me the full address and its URL parameters. I used that address in a separate request. I sent no username, password or saved login cookie.</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Historical unauthenticated request</span><span>September 1, 2026</span></div><pre aria-label="Historical unauthenticated request" tabindex="0"><code>GET /HISUtilities/dashboard/dashBoardACTION.cnt?groupId=NQ==&amp;dashboardFor=SE1JUw==&amp;hospitalCode=REDACTED&amp;seatId=REDACTED&amp;isGlobal=1&amp;isPreview=0 HTTP/1.1
-Host: [REDACTED]</code></pre></div><figcaption>The September 1 request. I sent no login details or saved cookies.</figcaption></figure>
+Host: [REDACTED]</code></pre>
+<dl class="es-code-notes" aria-label="Historical unauthenticated request: explained">
+<div><dt>Send</dt><dd><strong>No credentials</strong>The request has no username, password or saved login cookie.</dd></div>
+<div><dt>Select</dt><dd><strong>A hospital dashboard</strong>URL parameters choose the page; they do not authenticate the visitor.</dd></div>
+<div><dt>Observe</dt><dd><strong>Report metadata returned</strong>The saved response contained the dashboard and its report information.</dd></div>
+</dl></div><figcaption>The September 1 request. I sent no login details or saved cookies.</figcaption></figure>
 <h3>What the URL parameters meant</h3>
 <p>Two values used Base64, a text encoding anyone can decode. <code>NQ==</code> means <code>5</code>. <code>SE1JUw==</code> means <code>HMIS</code>. The dashboard HTML included both decoded values in hidden form fields.</p>
 <div aria-label="Dashboard request parameters" class="es-table-wrap" role="region" tabindex="0"><table class="es-parameter-table"><thead><tr><th>Parameter</th><th>Value</th><th>What the response showed</th></tr></thead><tbody>
@@ -142,11 +152,16 @@ server: Abhijaiya
 <h3>Checking where the report data came from</h3>
 <p>The page loaded <code>/HISUtilities/dashboard/js/dashboard.js</code>. I read it to find how the reports got their data. Each report widget had a key with three parts: dashboard ID, section ID and report ID. The code used those IDs to send another request to the same server address:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Following a report widget into dashboard.js</span><span>Code excerpt</span></div><pre aria-label="Following a report widget into dashboard.js" tabindex="0"><code>var key = getKeyValue(id);
-var arrId = key.split("_");
+var arrId = <span class="es-code-mint">key.split("_")</span>;
 var data = preparejsonForAjax(key, mode, pageNo, blockNo, loadFromDatabase);
 data.isAjaxRequest = "2";
 data = initSecurityParameterFromajaxjson(data);
-$.getJSON('/HISUtilities/dashboard/dashBoardACTION.cnt', data, showWidgetData);</code></pre></div><figcaption>From <code>callDataForSpecificWidget()</code>. The three parts of the key become <code>dashboardId</code>, <code>sectionId</code> and <code>rptId</code>. Code that only changed the page’s appearance is left out.</figcaption></figure>
+<span class="es-code-amber">$.getJSON</span>('/HISUtilities/dashboard/dashBoardACTION.cnt', data, showWidgetData);</code></pre>
+<dl class="es-code-notes" aria-label="Following a report widget into dashboard.js: explained">
+<div><dt>Identify</dt><dd><strong>Split the widget key</strong><code>key.split("_")</code> separates the dashboard, section and report IDs.</dd></div>
+<div><dt>Prepare</dt><dd><strong>Build the query</strong>The helper packs those IDs and request options into <code>data</code>.</dd></div>
+<div><dt>Request</dt><dd><strong>Call the controller</strong><code>$.getJSON()</code> asks for widget data. This code alone does not prove the request succeeded.</dd></div>
+</dl></div><figcaption>From <code>callDataForSpecificWidget()</code>. The three parts of the key become <code>dashboardId</code>, <code>sectionId</code> and <code>rptId</code>. Code that only changed the page’s appearance is left out.</figcaption></figure>
 <p>The finding was that a visitor could get the dashboard page and its report information without signing in. CERT-In recorded this as weak authentication and session checks. The fix needs to cover the dashboard page and each action it calls. The server should check the user’s login, hospital and role. It should get that identity from the login session, rather than trust an ID supplied in the URL.</p>
 <h2 id="statistics">The login page included hospital activity counts</h2>
 <p class="es-section-ref">CVE-2026-124644 · sensitive information disclosure</p>
@@ -162,13 +177,18 @@ $.getJSON('/HISUtilities/dashboard/dashBoardACTION.cnt', data, showWidgetData);<
 a = a.substring(2, a.length - 2).split("], [");
 
 // changeHospitalSelected(a): selected assignments
-b = a.split("#");
+b = <span class="es-code-mint">a.split("#")</span>;
 document.getElementById('OPDToday').innerHTML = b[1];
 document.getElementById('IPDToday').innerHTML = b[3];
 document.getElementById('LabTestToday').innerHTML = b[4];
 document.getElementById('OPDTotal').innerHTML = b[8];
 document.getElementById('IPDTotal').innerHTML = b[10];
-document.getElementById('LabTestTotal').innerHTML = b[11];</code></pre></div><figcaption>Selected lines from <code>sso_main_login.js</code>. You can read the <a href="../assets/esushrut/source/hospital-counter-mapping.js">captured mapping function</a>. Comments were added; other assignments are left out.</figcaption></figure>
+document.getElementById('LabTestTotal').innerHTML = b[11];</code></pre>
+<dl class="es-code-notes" aria-label="The client supplied the field names: explained">
+<div><dt>Unpack</dt><dd><strong>Remove the wrapper</strong><code>substring()</code> strips the outer brackets from the server value.</dd></div>
+<div><dt>Decode</dt><dd><strong>Split on #</strong><code>b[1]</code> is today’s OPD count; <code>b[8]</code> is the OPD total.</dd></div>
+<div><dt>Display</dt><dd><strong>Write into the page</strong><code>innerHTML</code> places each value beside its label. The data arrived before any login.</dd></div>
+</dl></div><figcaption>Selected lines from <code>sso_main_login.js</code>. You can read the <a href="../assets/esushrut/source/hospital-counter-mapping.js">captured mapping function</a>. Comments were added; other assignments are left out.</figcaption></figure>
 <p>The field names gave me the labels. Position 0 was the hospital code. Positions 1–7 were the “Today” counts. Positions 8–14 were the matching “Total” counts. OPD means outpatient visits. IPD refers to inpatient care. Rx means prescriptions.</p>
 
 <div aria-label="Hospital activity fields with captured figures redacted" class="es-table-wrap" role="region" tabindex="0"><table class="es-stats-table"><caption>Daily and total activity exposed in the response. Captured figures are redacted; labels come from the JavaScript.</caption><thead><tr><th>Client metric</th><th>Today</th><th>Total</th></tr></thead><tbody>
@@ -227,10 +247,15 @@ objPassHash.update(
 hashValue = objPassHash.getHash("HEX");
 
 var objPassHash1 = new jsSHA('SHA-512', 'TEXT', 1);
-objPassHash1.update(hashValue + sessionToken);
+objPassHash1.update(<span class="es-code-mint">hashValue</span> + <span class="es-code-pink">sessionToken</span>);
 hashValue = objPassHash1.getHash("HEX");
 
-document.getElementsByName("varPassword")[0].value = hashValue;</code></pre></div><figcaption>Bokaro’s active function on September 1. Error handling and debug comments are left out. <a href="../assets/esushrut/source/bokaro-securePassword.js">Read the captured function</a>.</figcaption></figure>
+document.getElementsByName("varPassword")[0].value = hashValue;</code></pre>
+<dl class="es-code-notes" aria-label="Bokaro: the active securePassword() code: explained">
+<div><dt>First hash</dt><dd><strong>Password + username</strong>SHA-512 turns the joined credentials into hex text.</dd></div>
+<div><dt>Second hash</dt><dd><strong>Hex text + token</strong>Another SHA-512 pass mixes in the server-supplied object string.</dd></div>
+<div><dt>Submit</dt><dd><strong>Replace the password</strong>The final hex hash overwrites the password field before form submission.</dd></div>
+</dl></div><figcaption>Bokaro’s active function on September 1. Error handling and debug comments are left out. <a href="../assets/esushrut/source/bokaro-securePassword.js">Read the captured function</a>.</figcaption></figure>
 <h3>Patna used the same steps, with SHA-1</h3>
 <p>I checked the e-Sushrut installation at AIIMS Patna. Its HTML set <code>var sessionToken = "[B@REDACTED"</code> in two places. Its <code>securePassword()</code> function used SHA-1:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>AIIMS Patna: the active SHA-1 construction</span><span>SHA-1 · original capture</span></div><pre aria-label="AIIMS Patna: the active SHA-1 construction" tabindex="0"><code>var objPassHash = new jsSHA(
@@ -263,8 +288,13 @@ u = username
 t = sessionToken
 H = SHA-512 at Bokaro; SHA-1 at Patna
 
-inner     = hex(H(p || u))
-submitted = hex(H(inner || t))</code></pre></div><figcaption><code>||</code> means “join these strings.” The second round uses the first hash as hex text.</figcaption></figure>
+inner     = hex(H(<span class="es-code-mint">p || u</span>))
+submitted = hex(H(<span class="es-code-amber">inner</span> || <span class="es-code-pink">t</span>))</code></pre>
+<dl class="es-code-notes" aria-label="What the browser computes: explained">
+<div><dt>Inputs</dt><dd><strong>p, u and t</strong>Password, username and the token from the login page.</dd></div>
+<div><dt>Transform</dt><dd><strong>Two fast hash rounds</strong>The second round hashes the first round’s hex text joined to the token.</dd></div>
+<div><dt>Consequence</dt><dd><strong>Guesses can stay offline</strong>After capturing a submitted hash and its username and token, an attacker can compare password guesses locally.</dd></div>
+</dl></div><figcaption><code>||</code> means “join these strings.” The second round uses the first hash as hex text.</figcaption></figure>
 <p>The first hash becomes hex text: 128 characters for SHA-512 or 40 for SHA-1. The second hash takes that text followed by the token. If the password, username and token stay the same, the result stays the same too.</p>
 <h3>Why the object string mattered</h3>
 <p>The browser hashed the Java object label, rather than the byte array’s contents. Generating random bytes would not help if the page received the object label instead of those bytes. The challenge should carry the actual random bytes in an encoding such as Base64. Its security also depends on how the server creates it and checks it.</p>
@@ -327,21 +357,18 @@ Same inputs + same token = same submitted hash.</code></pre></noscript>
 <img src="../assets/esushrut/memes/thank-you-cert-in.png" alt="A smiling man giving a thumbs-up." width="1920" height="1080" loading="lazy" decoding="async"/>
 <figcaption>thank you CERT-In</figcaption>
 </figure>
-<div aria-label="Assigned CVEs and CERT-In CVSS 4.0 scores" class="es-cves">
+<div aria-label="Assigned CVEs" class="es-cves">
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a>
 <div class="es-cve-description">Dashboard authentication and session validation<small>Improper authentication</small></div>
-<div class="es-cve-rating">8.7<small>High</small></div>
 </div>
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a>
 <div class="es-cve-description">Hospital operational data in the login response<small>Sensitive information disclosure</small></div>
-<div class="es-cve-rating">6.9<small>Medium</small></div>
 </div>
 <div class="es-cve">
 <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a>
 <div class="es-cve-description">Static value in client-side password hashing<small>Published as a hardcoded cryptographic key vulnerability</small></div>
-<div class="es-cve-rating">8.7<small>High</small></div>
 </div>
 </div>
 <p class="es-post-end">More research: <a href="hacking-gisec-before-speaking-at-gisec.html">Hacking GISEC Before Speaking at GISEC</a> · <a href="jee-advanced-2026-cloud-storage-disclosure.html">JEE Advanced’s exposed cloud storage</a></p>

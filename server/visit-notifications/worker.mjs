@@ -7,6 +7,7 @@ const pages = new Map([
     ['/posts/hacking-gisec-before-speaking.html', 'Hacking GISEC Before Speaking at GISEC'],
     ['/posts/hacking-gisec-before-speaking-at-gisec.html', 'Hacking GISEC Before Speaking at GISEC'],
     ['/posts/jee-advanced-2026-cloud-storage-disclosure.html', 'JEE Advanced disclosure'],
+    ['/posts/cdac-esushrut-session-token.html', 'Hacking 4,000 Hospitals'],
 ]);
 const maxBodyBytes = 512;
 
