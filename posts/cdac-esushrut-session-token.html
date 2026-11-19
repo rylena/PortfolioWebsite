@@ -207,7 +207,7 @@ print(fields[1])  # REDACTED: OPDToday
 print(fields[8])  # REDACTED: OPDTotal</code></pre></div><figcaption>Redaction preserves all 15 field positions. This example makes no network request.</figcaption></figure>
 <h3>What this exposed</h3>
 <p>I didn’t need to open the dashboard for this finding. The data was already in the login page’s HTML. Anyone who could open that page could read the string. No form submission was needed.</p>
-<p>The response exposed daily and total counts for outpatient visits, emergency care, inpatient admissions, lab tests, prescriptions, pharmacy activity and ABHA activity. Reading those fields revealed the hospital’s patient load and how heavily its services were being used. An unauthenticated visitor could collect that operational data straight from the login response.</p>
+<p><strong>This exposed real patient activity data without authentication.</strong></p>
 <p>The page had a <code>no-store</code> header. That tells a browser or cache not to save the response. It does not stop a visitor from reading it. Hiding the statistics on screen would not fix this either. The server needs to leave internal counts out of the public login response and require a login before sending them.</p>
 <h2 id="hashing">The password code used a Java object string</h2>
 <p class="es-section-ref">CVE-2026-124645 · static/predictable value in client-side password hashing</p>
