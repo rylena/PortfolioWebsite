@@ -218,3 +218,15 @@ CVE-2026-124643 is High / 8.7, CVE-2026-124644 is Medium / 6.9, and
 CVE-2026-124645 is High / 8.7. These are CVSS 4.0 base scores, not independently
 calculated ratings or product deployment metrics. The revision was previewed
 locally at mobile and desktop widths before the researcher approved publication.
+
+
+## CVE summary layout correction (November 19)
+
+After publication, the researcher identified the bottom CVE summary as visually
+broken. The summary now uses dedicated columns for the CVE, description and
+severity rating instead of placing the score on an implicit grid row. On narrow
+screens, the description sits below the CVE while the score stays to the right.
+The scores and other content are unchanged. Local browser checks at widths of
+320, 390, 600, 768, 1280 and 1920 pixels found no overlap or horizontal overflow;
+desktop and mobile captures were visually reviewed before publication. The
+stylesheet URL was updated to avoid reusing cached layout rules.
