@@ -258,3 +258,14 @@ The opening and statistics finding use the bold, first-person wording “I could
 see real patient activity data without logging in.” This describes the confirmed
 activity-data disclosure. The patient-record evidence boundary remains explicit;
 no individual medical-record retrieval is newly claimed.
+
+
+## Mobile introduction exclusions (November 20)
+
+At the researcher’s screenshot-guided request, the introductory hospital test
+summary, dashboard-access paragraph and Java-object-string teaser are hidden
+at widths up to 640 pixels. Desktop retains these paragraphs; the later technical
+sections retain their full context on all screens. The bold patient-activity
+impact and CVE severity labels remain visible. Local checks covered 320, 392,
+640, 641 and 1280 pixels, including the breakpoint boundary. The stylesheet cache
+key and modification metadata were updated before publication.

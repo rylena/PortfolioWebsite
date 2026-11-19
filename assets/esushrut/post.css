@@ -521,6 +521,8 @@
 .es-flow-branch span { display: block; color: var(--es-muted); font-size: 0.8rem; line-height: 1.75; }
 
 @media (max-width: 640px) {
+    .esushrut-post .es-intro-detail { display: none; }
+
     .esushrut-post .minimal-nav {
         flex-direction: row;
         flex-wrap: wrap;

@@ -24,7 +24,7 @@
     <meta property="og:image:height" content="630">
     <meta property="og:image:alt" content="Hacking 4,000 Hospitals | Rylen Anil">
     <meta property="article:published_time" content="2026-11-17">
-    <meta property="article:modified_time" content="2026-11-19">
+    <meta property="article:modified_time" content="2026-11-20">
     <meta property="article:author" content="https://rylenanil.com/">
     <meta property="article:tag" content="Security Research">
     <meta property="article:tag" content="Responsible Disclosure">
@@ -47,7 +47,7 @@
         "https://rylenanil.com/assets/share/cdac-esushrut-session-token.png"
     ],
     "datePublished": "2026-11-17",
-    "dateModified": "2026-11-19",
+    "dateModified": "2026-11-20",
     "author": {
         "@type": "Person",
         "name": "Rylen Anil",
@@ -76,7 +76,7 @@
     <link rel="stylesheet" href="../styles.css">
     <link rel="stylesheet" href="../assets/media.css?v=20261115">
     <link rel="stylesheet" href="../assets/article.css">
-    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261119-mobile-navigation">
+    <link rel="stylesheet" href="../assets/esushrut/post.css?v=20261120-mobile-intro">
     <script src="../assets/esushrut/hash-demo.js?v=20261118-redacted" defer></script>
     <script src="/visit-notifications.js" defer></script>
     <script src="/site.js" defer></script>
@@ -107,10 +107,10 @@
 
 <p class="post-lede">Hospital software holds some of the most private information a person can share. I found authentication flaws and exposed data in the software trusted to manage that care.</p>
 <p>The software is e-Sushrut, a Hospital Management Information System (HMIS) developed and deployed by C-DAC. It manages patient information, hospital workflows and administrative processes in healthcare organizations.</p>
-<p>I tested the installations at Bokaro General Hospital and AIIMS Patna. I reproduced the dashboard access, exposed activity counts and password-hashing issue at both. The findings led to three CVEs.</p>
-<p>Bokaro’s login page linked to its hospital dashboard. <strong>I opened it without signing in.</strong> The server returned the dashboard page and its report information.</p>
+<p class="es-intro-detail">I tested the installations at Bokaro General Hospital and AIIMS Patna. I reproduced the dashboard access, exposed activity counts and password-hashing issue at both. The findings led to three CVEs.</p>
+<p class="es-intro-detail">Bokaro’s login page linked to its hospital dashboard. <strong>I opened it without signing in.</strong> The server returned the dashboard page and its report information.</p>
 <p><strong>I could see real patient activity data without logging in.</strong> It was already present in the public login HTML.</p>
-<p>The password code used an odd-looking Java object string.</p>
+<p class="es-intro-detail">The password code used an odd-looking Java object string.</p>
 <nav aria-label="Article sections" class="es-contents">
 <a href="#impact">Patient privacy</a>
 <a href="#dashboard"><span>Dashboard access · 124643</span><span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span></a>
