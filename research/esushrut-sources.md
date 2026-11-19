@@ -230,3 +230,16 @@ The scores and other content are unchanged. Local browser checks at widths of
 320, 390, 600, 768, 1280 and 1920 pixels found no overlap or horizontal overflow;
 desktop and mobile captures were visually reviewed before publication. The
 stylesheet URL was updated to avoid reusing cached layout rules.
+
+
+## Screenshot-guided mobile navigation correction (November 19)
+
+The researcher’s screenshots clarified that the remaining problem was the top
+article-section navigation wrapping into uneven rows, plus the site navigation
+placing the brand on a separate line. The post-specific mobile rules now keep
+the brand and site links in a single row where they fit and stack the article
+section links consistently below 641 pixels. Each CVE’s severity stays directly
+below its link. Screenshots at the supplied 392-pixel width were reviewed; checks
+at 320, 375, 390, 392, 430, 600, 640, 641, 768 and 1280 pixels found no horizontal
+overflow. Other pages retain their existing header rules. The local preview was
+opened before publication, and the stylesheet cache key was updated.

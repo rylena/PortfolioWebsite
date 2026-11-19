@@ -520,6 +520,26 @@
 .es-flow-branch code { display: block; margin-bottom: 0.5rem; background: transparent !important; padding: 0 !important; font-size: 0.77rem !important; }
 .es-flow-branch span { display: block; color: var(--es-muted); font-size: 0.8rem; line-height: 1.75; }
 
+@media (max-width: 640px) {
+    .esushrut-post .minimal-nav {
+        flex-direction: row;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .esushrut-post .minimal-nav div { gap: 0.5rem 0.65rem; }
+    .esushrut-post .minimal-nav a { font-size: 0.875rem; white-space: nowrap; }
+
+    .es-contents {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 1rem;
+    }
+
+    .es-contents > a { min-width: 0; }
+}
+
 @media (max-width: 600px) {
     .es-code-notes { grid-template-columns: 1fr; gap: 1.25rem; }
     .es-code-notes > div + div { padding-top: 1.25rem; border-top: 1px solid var(--es-line); }
