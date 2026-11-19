@@ -243,3 +243,18 @@ below its link. Screenshots at the supplied 392-pixel width were reviewed; check
 at 320, 375, 390, 392, 430, 600, 640, 641, 768 and 1280 pixels found no horizontal
 overflow. Other pages retain their existing header rules. The local preview was
 opened before publication, and the stylesheet cache key was updated.
+
+
+## Shorter paragraphs and direct impact wording (November 19)
+
+The researcher requested shorter paragraphs for mobile while preserving severity
+scores, impact and technical detail. Twenty-five prose passages were tightened
+or divided by idea, reducing the longest direct article paragraph from 68 words
+to 30. The introductory CVE references now appear as a compact list. All code
+block text and displayed severity values were checked against the previous
+version and retained unchanged.
+
+The opening and statistics finding use the bold, first-person wording “I could
+see real patient activity data without logging in.” This describes the confirmed
+activity-data disclosure. The patient-record evidence boundary remains explicit;
+no individual medical-record retrieval is newly claimed.

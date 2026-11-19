@@ -108,7 +108,9 @@
 <p class="post-lede">Hospital software holds some of the most private information a person can share. I found authentication flaws and exposed data in the software trusted to manage that care.</p>
 <p>The software is e-Sushrut, a Hospital Management Information System (HMIS) developed and deployed by C-DAC. It manages patient information, hospital workflows and administrative processes in healthcare organizations.</p>
 <p>I tested the installations at Bokaro General Hospital and AIIMS Patna. I reproduced the dashboard access, exposed activity counts and password-hashing issue at both. The findings led to three CVEs.</p>
-<p>Bokaro’s login page had a link to its hospital dashboard. I opened it without signing in. The server sent back the dashboard page and its report information. The login HTML also exposed daily and total counts for outpatient visits, admissions, lab tests, prescriptions and pharmacy activity. And the password code used an odd-looking Java object string.</p>
+<p>Bokaro’s login page linked to its hospital dashboard. <strong>I opened it without signing in.</strong> The server returned the dashboard page and its report information.</p>
+<p><strong>I could see real patient activity data without logging in.</strong> It was already present in the public login HTML.</p>
+<p>The password code used an odd-looking Java object string.</p>
 <nav aria-label="Article sections" class="es-contents">
 <a href="#impact">Patient privacy</a>
 <a href="#dashboard"><span>Dashboard access · 124643</span><span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span></a>
@@ -116,11 +118,20 @@
 <a href="#hashing"><span>Password hashing · 124645</span><span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span></a>
 </nav>
 <p>Captured hospital names, hostnames, identifiers, activity figures and token suffixes are redacted in the examples. The code and field order are preserved.</p>
-<p>These requests and files are from September 1, 2026. I reported the issues to CERT-In. They later passed on the organization’s fix confirmation. The assigned IDs are <a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a> <span class="es-severity es-severity-high">(High · 8.7)</span>, <a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a> <span class="es-severity es-severity-medium">(Medium · 6.9)</span> and <a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a> <span class="es-severity es-severity-high">(High · 8.7)</span>.</p>
+<p>These captures are from September 1, 2026. I reported the issues to CERT-In, which later relayed the organization’s fix confirmation.</p>
+<p>The assigned CVEs:</p>
+<ul class="es-cve-links">
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-124643">CVE-2026-124643</a> <span class="es-severity es-severity-high">(High · 8.7)</span></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-124644">CVE-2026-124644</a> <span class="es-severity es-severity-medium">(Medium · 6.9)</span></li>
+<li><a href="https://www.cve.org/CVERecord?id=CVE-2026-124645">CVE-2026-124645</a> <span class="es-severity es-severity-high">(High · 8.7)</span></li>
+</ul>
 <h2 id="impact">Patient privacy was the bigger concern</h2>
-<p>An HMIS sits at the center of hospital care. It handles patient information alongside registration, clinical workflows and administration. A failure in its access controls puts more than a dashboard at stake: it threatens the boundary around confidential personal and medical information.</p>
-<p>The dashboard flaw let me reach report information without signing in. The login page disclosed hospital activity, and the password-hashing design allowed offline guessing if an attacker first captured a submitted hash, username and token. In a patient-data workflow, an unchecked report action could expose sensitive patient information. A compromised staff account could also expose the records that account is allowed to read.</p>
-<p>Those are potential paths to patient-data exposure. The evidence shown here establishes dashboard access and operational-data disclosure; it does not establish that I retrieved individual patient records. The concern is what failures like these can mean in a system that handles them.</p>
+<p>An HMIS handles patient information, registration, clinical workflows and administration.</p>
+<p>A failure in its access controls threatens the boundary around confidential personal and medical information.</p>
+<p>The dashboard flaw let me reach report information without signing in. The login page also disclosed hospital activity.</p>
+<p>The password-hashing design allowed offline guessing if an attacker first captured a submitted hash, username and token.</p>
+<p>An unchecked patient-report action could expose sensitive patient information. A compromised staff account could expose the records it was allowed to read.</p>
+<p>Those are potential paths to patient-data exposure. The evidence here establishes dashboard access and operational-data disclosure; it does not establish that I retrieved individual patient records.</p>
 <h2 id="dashboard">I could open the dashboard without signing in</h2>
 <p class="es-section-ref">CVE-2026-124643 · <span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span><br>improper authentication</p>
 <p>Bokaro’s login page used the <code>/AHIMSG5/hissso/</code> path. I checked its forms, JavaScript files and links. One link pointed to the dashboard:</p>
@@ -142,7 +153,8 @@ Host: [REDACTED]</code></pre>
 <tr><td><code>seatId</code></td><td><code>REDACTED</code></td><td>A value sent in the URL and copied into the HTML.</td></tr>
 <tr><td><code>isGlobal</code>, <code>isPreview</code></td><td><code>1</code>, <code>0</code></td><td>Page options copied into the HTML.</td></tr>
 </tbody></table></div>
-<p>These values told the server which dashboard to show. They did not prove who was asking. Anyone could copy a <code>seatId</code> into a URL. The server needed to check the caller’s login and access rights before returning the page.</p>
+<p>These values chose the dashboard. They did not prove who was asking. Anyone could copy a <code>seatId</code> into a URL.</p>
+<p>The server needed to check the caller’s login and access rights before returning the page.</p>
 <h3>What came back</h3>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Selected dashboard response content</span><span>Code excerpt</span></div><pre aria-label="Selected dashboard response content" tabindex="0"><code>HTTP/1.1 200 OK
 content-type: text/html;charset=ISO-8859-1
@@ -151,11 +163,14 @@ server: Abhijaiya
 &lt;title&gt;DASHBOARD&lt;/title&gt;
 &lt;input type='hidden' name='rptDisplayName' id='RPTDISPLAYNAME_REDACTED' value=' OPD Count' /&gt;
 &lt;input type="hidden" name="linkTab" id='linkTab_REDACTED' value='OPD Count' /&gt;</code></pre></div><figcaption>Selected headers and HTML lines from the response. The full body was 274,427 bytes. Cookie values are left out.</figcaption></figure>
-<p>I read the response body to check what had loaded. It had the dashboard title, report names and report IDs. The reports covered outpatient visits, emergencies, prescriptions and lab work. An ID such as <code>RPTDISPLAYNAME_REDACTED</code> linked a report name to a specific part of the dashboard.</p>
-<p>I repeated the request without a saved login. The server again returned HTTP <code>200</code> and a 274,427-byte page. Another request with <code>Cookie: none</code> gave the same result. The response set a new <code>TID</code> cookie, but I had not signed in.</p>
+<p>The response body contained the dashboard title, report names and report IDs. The reports covered outpatient visits, emergencies, prescriptions and lab work.</p>
+<p>An ID such as <code>RPTDISPLAYNAME_REDACTED</code> linked a report name to a specific part of the dashboard.</p>
+<p>I repeated the request without a saved login. The server again returned HTTP <code>200</code> and a 274,427-byte page.</p>
+<p>A request with <code>Cookie: none</code> gave the same result. The response set a new <code>TID</code> cookie, but I had not signed in.</p>
 
 <h3>Checking where the report data came from</h3>
-<p>The page loaded <code>/HISUtilities/dashboard/js/dashboard.js</code>. I read it to find how the reports got their data. Each report widget had a key with three parts: dashboard ID, section ID and report ID. The code used those IDs to send another request to the same server address:</p>
+<p>The page loaded <code>/HISUtilities/dashboard/js/dashboard.js</code>. I read it to find how the reports got their data.</p>
+<p>Each widget key had three parts: dashboard ID, section ID and report ID. The code used them to request data from the same server address:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Following a report widget into dashboard.js</span><span>Code excerpt</span></div><pre aria-label="Following a report widget into dashboard.js" tabindex="0"><code>var key = getKeyValue(id);
 var arrId = <span class="es-code-mint">key.split("_")</span>;
 var data = preparejsonForAjax(key, mode, pageNo, blockNo, loadFromDatabase);
@@ -167,7 +182,9 @@ data = initSecurityParameterFromajaxjson(data);
 <div><dt>Prepare</dt><dd><strong>Build the query</strong>The helper packs those IDs and request options into <code>data</code>.</dd></div>
 <div><dt>Request</dt><dd><strong>Call the controller</strong><code>$.getJSON()</code> asks for widget data. This code alone does not prove the request succeeded.</dd></div>
 </dl></div><figcaption>From <code>callDataForSpecificWidget()</code>. The three parts of the key become <code>dashboardId</code>, <code>sectionId</code> and <code>rptId</code>. Code that only changed the page’s appearance is left out.</figcaption></figure>
-<p>The finding was that a visitor could get the dashboard page and its report information without signing in. CERT-In recorded this as weak authentication and session checks. The fix needs to cover the dashboard page and each action it calls. The server should check the user’s login, hospital and role. It should get that identity from the login session, rather than trust an ID supplied in the URL.</p>
+<p>A visitor could get the dashboard page and its report information without signing in. CERT-In recorded this as weak authentication and session checks.</p>
+<p>The fix needs to cover the page and every action it calls. The server should check the user’s login, hospital and role.</p>
+<p>That identity should come from the login session. An ID supplied in the URL is not proof of identity.</p>
 <h2 id="statistics">The login page included hospital activity counts</h2>
 <p class="es-section-ref">CVE-2026-124644 · <span class="es-severity es-severity-medium">Medium · CVSS 4.0: 6.9</span><br>sensitive information disclosure</p>
 <p>The login HTML also had a JavaScript object named <code>_GET_MAIN_LOGIN</code>. Its <code>HOSPITALS</code> field held the hospital name and a long string of numbers:</p>
@@ -175,9 +192,10 @@ data = initSecurityParameterFromajaxjson(data);
     // Other fields omitted.
     HOSPITALS : "[[Hospital redacted, HOSPITAL_CODE#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED#REDACTED]]"
 };</code></pre></div><figcaption>The September 1 payload structure. The hospital name, code and activity figures are redacted. Other object fields are left out.</figcaption></figure>
-<p>The hospital name came first. After the comma were numbers separated by <code>#</code>. I needed to find out what each number meant, so I checked the JavaScript that read this string.</p>
+<p>The hospital name came first, followed by numbers separated by <code>#</code>. I checked the JavaScript that read the string to find out what each number meant.</p>
 <h3>The JavaScript explained the numbers</h3>
-<p>In <code>sso_main_login.js</code>, <code>convertJavaArrayListToJSArray()</code> removed the outer <code>[[</code> and <code>]]</code>. It split entries at <code>], [</code>. The code then took the numbers for the selected hospital. <code>changeHospitalSelected()</code> split them at each <code>#</code> and copied them into named page fields:</p>
+<p>In <code>sso_main_login.js</code>, <code>convertJavaArrayListToJSArray()</code> removed the outer <code>[[</code> and <code>]]</code>. It split entries at <code>], [</code>.</p>
+<p>For the selected hospital, <code>changeHospitalSelected()</code> split the numbers at each <code>#</code> and copied them into named page fields:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>The client supplied the field names</span><span>Code excerpt</span></div><pre aria-label="The client supplied the field names" tabindex="0"><code>// convertJavaArrayListToJSArray(a)
 a = a.substring(2, a.length - 2).split("], [");
 
@@ -194,7 +212,8 @@ document.getElementById('LabTestTotal').innerHTML = b[11];</code></pre>
 <div><dt>Decode</dt><dd><strong>Split on #</strong><code>b[1]</code> is today’s OPD count; <code>b[8]</code> is the OPD total.</dd></div>
 <div><dt>Display</dt><dd><strong>Write into the page</strong><code>innerHTML</code> places each value beside its label. The data arrived before any login.</dd></div>
 </dl></div><figcaption>Selected lines from <code>sso_main_login.js</code>. You can read the <a href="../assets/esushrut/source/hospital-counter-mapping.js">captured mapping function</a>. Comments were added; other assignments are left out.</figcaption></figure>
-<p>The field names gave me the labels. Position 0 was the hospital code. Positions 1–7 were the “Today” counts. Positions 8–14 were the matching “Total” counts. OPD means outpatient visits. IPD refers to inpatient care. Rx means prescriptions.</p>
+<p>The field names supplied the labels. Position 0 was the hospital code. Positions 1–7 were the “Today” counts; positions 8–14 were the matching “Total” counts.</p>
+<p>OPD means outpatient visits. IPD refers to inpatient care. Rx means prescriptions.</p>
 
 <div aria-label="Hospital activity fields with captured figures redacted" class="es-table-wrap" role="region" tabindex="0"><table class="es-stats-table"><caption>Daily and total activity exposed in the response. Captured figures are redacted; labels come from the JavaScript.</caption><thead><tr><th>Client metric</th><th>Today</th><th>Total</th></tr></thead><tbody>
 <tr><td>OPD</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Emergency</td><td>Redacted</td><td>Redacted</td></tr><tr><td>IPD</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Lab tests</td><td>Redacted</td><td>Redacted</td></tr><tr><td>ABHA</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Prescriptions (Rx)</td><td>Redacted</td><td>Redacted</td></tr><tr><td>Pharmacy</td><td>Redacted</td><td>Redacted</td></tr>
@@ -211,9 +230,10 @@ print(fields[0])  # HOSPITAL_CODE
 print(fields[1])  # REDACTED: OPDToday
 print(fields[8])  # REDACTED: OPDTotal</code></pre></div><figcaption>Redaction preserves all 15 field positions. This example makes no network request.</figcaption></figure>
 <h3>What this exposed</h3>
-<p>I didn’t need to open the dashboard for this finding. The data was already in the login page’s HTML. Anyone who could open that page could read the string. No form submission was needed.</p>
-<p><strong>This exposed real patient activity data without authentication.</strong></p>
-<p>The page had a <code>no-store</code> header. That tells a browser or cache not to save the response. It does not stop a visitor from reading it. Hiding the statistics on screen would not fix this either. The server needs to leave internal counts out of the public login response and require a login before sending them.</p>
+<p>I didn’t need the dashboard for this finding. The data was already in the public login HTML. No form submission was needed.</p>
+<p><strong>I could see real patient activity data without logging in.</strong></p>
+<p>The <code>no-store</code> header tells browsers and caches not to save a response. It does not stop a visitor from reading it.</p>
+<p>Hiding the statistics on screen would not fix this. The server needs to keep internal counts out of public login HTML and require authentication before sending them.</p>
 <h2 id="hashing">The password code used a Java object string</h2>
 <p class="es-section-ref">CVE-2026-124645 · <span class="es-severity es-severity-high">High · CVSS 4.0: 8.7</span><br>static/predictable value in client-side password hashing</p>
 <p>The same JavaScript object had a field named <code>SESSION_TOKEN</code>. I searched for where it was used. Bokaro’s login HTML set the value in two places:</p>
@@ -235,14 +255,17 @@ const _GET_MAIN_LOGIN = {
 </div>
 <figcaption>The token format in Bokaro’s first saved login page. The object-hash suffix is redacted.</figcaption>
 </figure>
-<p>The <code>[B@</code> prefix comes from Java. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()"><code>Object.toString()</code></a> prints this kind of string for a byte array. <code>[B</code> means “byte array.” The <code>@</code> is followed by the object’s hash code in hex. It does not print the bytes stored in the array.</p>
+<p>The <code>[B@</code> prefix comes from Java. <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Object.html#toString()"><code>Object.toString()</code></a> prints this kind of string for a byte array.</p>
+<p><code>[B</code> means “byte array.” After <code>@</code> comes the object’s hash code in hex. It does not print the bytes inside the array.</p>
 
-<p>The likely mistake was converting the byte-array object to text instead of encoding the random bytes inside it. The page received the object’s label as the login token. It wasn’t just an unwanted prefix; the token did not contain the array’s contents.</p>
+<p>The likely mistake was converting the byte-array object to text instead of encoding the random bytes inside it.</p>
+<p>The page received the object’s label as its login token. The token did not contain the array’s contents.</p>
 <figure class="es-figure es-token-meme">
 <img src="../assets/esushrut/memes/random-bytes-pawn.png" alt="Pawn-shop meme: Can I get the random bytes? Best I can do is [B@…" width="1254" height="1254" loading="lazy" decoding="async"/>
 </figure>
 <h3>How the value reached the password hash</h3><p>A hash turns some input into a fixed-length result. The same input gives the same result.</p>
-<p>The page loaded <code>ssoLogin.js</code>. In its login routine, <code>validate()</code> called <code>securePassword()</code>. That function read the password and username, hashed them, then hashed the result with <code>sessionToken</code>. It put the final hash back into the password field. The code also set <code>window.name = sessionToken</code>.</p>
+<p>The page loaded <code>ssoLogin.js</code>. Its login routine called <code>validate()</code>, which called <code>securePassword()</code>.</p>
+<p>That function hashed the password and username, then hashed the result with <code>sessionToken</code>. The final hash replaced the password field. The code also set <code>window.name = sessionToken</code>.</p>
 <p>Bokaro’s active function used SHA-512. An older SHA-1 version was still in the file, inside a comment. The active function was:</p>
 <figure class="es-figure"><div class="es-source"><div class="es-figure-header"><span>Bokaro: the active securePassword() code</span><span>SHA-512 · original capture</span></div><pre aria-label="Bokaro: the active securePassword() code" tabindex="0"><code>var objPassHash = new jsSHA('SHA-512', 'TEXT', 1);
 objPassHash.update(
@@ -300,11 +323,14 @@ submitted = hex(H(<span class="es-code-amber">inner</span> || <span class="es-co
 <div><dt>Transform</dt><dd><strong>Two fast hash rounds</strong>The second round hashes the first round’s hex text joined to the token.</dd></div>
 <div><dt>Consequence</dt><dd><strong>Guesses can stay offline</strong>After capturing a submitted hash and its username and token, an attacker can compare password guesses locally.</dd></div>
 </dl></div><figcaption><code>||</code> means “join these strings.” The second round uses the first hash as hex text.</figcaption></figure>
-<p>The first hash becomes hex text: 128 characters for SHA-512 or 40 for SHA-1. The second hash takes that text followed by the token. If the password, username and token stay the same, the result stays the same too.</p>
+<p>The first hash becomes hex text: 128 characters for SHA-512 or 40 for SHA-1. The second hash takes that text followed by the token.</p>
+<p>If the password, username and token stay the same, the result stays the same too.</p>
 <h3>Why the object string mattered</h3>
-<p>The browser hashed the Java object label, rather than the byte array’s contents. Generating random bytes would not help if the page received the object label instead of those bytes. The challenge should carry the actual random bytes in an encoding such as Base64. Its security also depends on how the server creates it and checks it.</p>
+<p>The browser hashed the Java object label. Generating random bytes would not help if the page received the label instead of those bytes.</p>
+<p>The challenge should carry the actual bytes in an encoding such as Base64. Its security also depends on how the server creates and checks it.</p>
 <h3>A login token can be public</h3>
-<p>A server can send a fresh random value with each login attempt. This is often called a nonce or challenge. The browser can read it. The server needs to remember which login attempt it belongs to, then check it when the form comes back.</p>
+<p>A server can send a fresh random value with each login attempt. This is called a nonce or challenge, and the browser can read it.</p>
+<p>The server must remember which attempt it belongs to and check it when the form comes back.</p>
 <p>Try both algorithms below. Keep the token the same or change it for each attempt to see what happens to the hash.</p>
 <figure class="es-figure">
 <div class="es-lab" data-hash-lab="" hidden="">
@@ -337,11 +363,16 @@ Same inputs + same token = same submitted hash.</code></pre></noscript>
 <figcaption>The second hash uses the first hash as hex text.</figcaption>
 </figure>
 <h3>What an attacker would need</h3>
-<p>Suppose an attacker captures a user’s submitted hash, username and token. They can try a password guess on their own machine. They run the same two hash steps and compare the result with the captured hash. They do not need to send each guess to the hospital. This is offline password guessing.</p>
-<p>A fresh token does not stop those guesses once the attacker has captured it too. It changes the hash for that attempt, but it does not make each guess slow. Both SHA-1 and SHA-512 are fast in this two-round setup.</p>
-<p>The server should issue a fresh challenge, tie it to a login attempt, and check its expiry and reuse rules. Stored passwords also need a dedicated password-hashing function that makes guesses slow. Adding another fast hash in the browser does not replace these steps.</p>
+<p>Suppose an attacker captures a user’s submitted hash, username and token.</p>
+<p>They can guess a password locally, run the same two hash steps and compare the result with the captured hash.</p>
+<p>They do not need to send each guess to the hospital. <strong>This is offline password guessing.</strong></p>
+<p>A fresh token does not stop those guesses once the attacker has captured it too. It changes the submitted hash, but does not make each guess slow.</p>
+<p>Both SHA-1 and SHA-512 are fast in this two-round setup.</p>
+<p>The server should issue a fresh challenge, tie it to a login attempt, and check its expiry and reuse rules.</p>
+<p>Stored passwords need a dedicated password-hashing function that makes guesses slow. Adding another fast hash in the browser does not replace these steps.</p>
 <h2 id="both-hospitals">AIIMS Patna had the same three issues</h2>
-<p>I reproduced the dashboard access, exposed activity counts and password-hashing issue at AIIMS Patna as well as Bokaro. The requests and counter-mapping examples above use the saved Bokaro responses. The password-code excerpts show both installations.</p>
+<p>I reproduced the dashboard access, exposed activity counts and password-hashing issue at AIIMS Patna as well as Bokaro.</p>
+<p>The request and counter-mapping examples use saved Bokaro responses. The password-code excerpts show both installations.</p>
 <figure class="es-figure es-photo">
 <img alt="The outpatient department building at AIIMS Patna, with its name above the entrance." decoding="async" height="452" loading="lazy" src="../assets/esushrut/aiims-patna-opd.webp" width="944"/>
 <figcaption>AIIMS Patna’s outpatient department. Context photograph from 2018, not an incident capture. Photo: AIIMS Patna, via <a href="https://commons.wikimedia.org/wiki/File:Aiimspatnaopd.png">Wikimedia Commons</a>, <a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>. Converted to WebP.</figcaption>
