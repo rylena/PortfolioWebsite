@@ -101,6 +101,7 @@ def build():
                 <a href="index.html#projects">projects</a>
                 <a href="blog.html">blog</a>
                 <a href="media.html" aria-current="page">media</a>
+                <a href="resume.pdf">resume</a>
             </div>
         </nav>
         <header class="minimal-header">
